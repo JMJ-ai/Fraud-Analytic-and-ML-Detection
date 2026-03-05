@@ -119,7 +119,7 @@ TABLEAU_PATHS = {
     "Fraud Overview": "views/FraudVisualizationAnalyticv1/FraudOverview",
     "Time & Behavioural Pattern": "views/FraudVisualizationAnalyticv1/Time&BehaviouralPattern",
     "Customer Risk Segmentation": "views/FraudVisualizationAnalyticv1/CUSTOMERRISKSEGMENTATION",
-    "Merchant & Channel Risk": "views/FraudVisualizationAnalyticv1/MERCHANT&CHANNELRISK"
+    "Merchant & Channel Risk": "views/FraudVisualizationAnalyticv1/MERCHANT&CHANNELRISK",
     "Model Monitoring": "views/FraudVisualizationAnalyticv1/MODELMONITORING"
 }
 # =====================================================

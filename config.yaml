@@ -17,8 +17,8 @@ tables:
   test: fraud.transaction_test
 
 files:
-  train_csv: data/transactions_train.csv
-  test_csv: data/transactions_test.csv
+  train_csv: "https://github.com/user-attachments/files/25766799/transactions_train.zip"
+  test_csv: "https://github.com/user-attachments/files/25766793/transactions_test.zip"
 
 model:
   path: models/fraud_model.pkl

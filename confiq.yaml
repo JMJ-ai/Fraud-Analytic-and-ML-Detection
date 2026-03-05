@@ -1,0 +1,17 @@
+app:
+  title: "Fraud Analytics and ML Detection"
+
+database:
+  host: "localhost"
+  port: 5432
+  dbname: "fraud_db"
+  user: "postgres"
+  password: "postgresXXX"
+  schema: "fraud"
+
+model:
+  algorithm: "AdaBoost Classifier"
+  auc_score: 0.96
+
+tableau:
+  dashboard_url: "https://public.tableau.com/views/YOUR_DASHBOARD"

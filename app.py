@@ -551,6 +551,8 @@ elif page == "Model Evaluation":
         "txn_count_1h"
     ]
 
+    target = "is_fraud"
+
     X_test = test_df[features]
     y_test = test_df[target]
 

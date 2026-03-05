@@ -34,9 +34,10 @@ This project explores:
 **Metadata**
 
 - Data source: Transactions_train.csv & Transaction_test.csv at [Kaggle](https://www.kaggle.com/code/rohit8527kmr7518/fraud-detection-eda-modelling-0-84-auc/input)
+- Datasets are not stored in the repository due to GitHub size limits. They will automatically download from GitHub Releases when the app runs for the first time.
 - Size:
-    - Train shape: (300113 rows, 21 columns)
-    - Test shape: (99887 rows, 21 columns)
+- Train shape: (300113 rows, 21 columns)
+- Test shape: (99887 rows, 21 columns)
 
 **Problem Statement**
 

@@ -21,4 +21,4 @@ model:
   auc_score: 0.84
 
 tableau:
-  dashboard_url: "https://public.tableau.com/views/YOUR_DASHBOARD"
+  dashboard_url: "https://public.tableau.com/views/FraudVisualizationAnalyticv1/TimeBehaviouralPattern?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link"

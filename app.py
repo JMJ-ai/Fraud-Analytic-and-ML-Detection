@@ -72,8 +72,8 @@ def load_data():
 
             st.warning("Database connection failed. Loading CSV instead.")
 
-            download_and_extract(TRAIN_URL, "transactions_train.zip")
-            download_and_extract(TEST_URL, "transactions_test.zip")
+            download_and_extract(TRAIN_URL, "transaction_train.zip")
+            download_and_extract(TEST_URL, "transaction_test.zip")
 
             train_df = pd.read_csv(TRAIN_CSV)
             test_df = pd.read_csv(TEST_CSV)

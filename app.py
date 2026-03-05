@@ -160,12 +160,12 @@ elif page == "EDA by Python":
 
     st.header("Exploratory Data Analysis by Python")
 
-    train_df = train_df.copy
+    eda_df = pd.DataFrame(train_df.copy())
 
     # Chart 1
     st.subheader("Target Data Distribution")
 
-    counts = train_df['is_fraud'].value_counts()
+    counts = eda_df['is_fraud'].value_counts()
 
     labels = ['Non Fraud', 'Fraud']
     values = [counts.get(0,0), counts.get(1,0)]
@@ -202,8 +202,8 @@ elif page == "EDA by Python":
     fig = go.Figure()
 
     fig.add_trace(go.Box(
-        x=train_df["is_fraud"],
-        y=train_df["transaction_amount"]
+        x=eda_df["is_fraud"],
+        y=eda_df["transaction_amount"]
     ))
 
     st.plotly_chart(fig, use_container_width=True)
@@ -224,7 +224,7 @@ elif page == "EDA by Python":
     # Chart 3
     st.subheader("Categorical Feature Distribution")
 
-    fraud_rate_channel = train_df.groupby("payment_channel")["is_fraud"].mean()
+    fraud_rate_channel = eda_df.groupby("payment_channel")["is_fraud"].mean()
 
     st.bar_chart(fraud_rate_channel)
 
@@ -239,7 +239,7 @@ elif page == "EDA by Python":
     # Chart 4
     st.subheader("Time Based Analysis")
 
-    fraud_hour = train_df.groupby("hour")["is_fraud"].mean()
+    fraud_hour = eda_df.groupby("hour")["is_fraud"].mean()
 
     st.line_chart(fraud_hour)
 

@@ -163,6 +163,7 @@ elif page == "EDA by Python":
     st.header("Exploratory Data Analysis by Python")
 
     eda_df = pd.DataFrame(train_df.copy())
+    eda_df['log_amount'] = np.log1p(eda_df['transaction_amount'])
 
     # Chart 1
     st.subheader("Target Data Distribution")

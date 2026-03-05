@@ -80,8 +80,6 @@ def load_data():
 
         except Exception as e:
 
-            st.warning("Database connection failed. Loading CSV instead.")
-
             download_and_extract(TRAIN_URL, "transaction_train.zip")
             download_and_extract(TEST_URL, "transaction_test.zip")
 
@@ -218,26 +216,6 @@ elif page == "EDA by Python":
 # -------------------------------
 
 elif page == "ML Fraud Detection":
-
-    # Animated background
-    st.markdown(
-        """
-        <style>
-        .stApp {
-        background: linear-gradient(-45deg,#1e3c72,#2a5298,#1e3c72);
-        background-size: 400% 400%;
-        animation: gradient 12s ease infinite;
-        }
-
-        @keyframes gradient {
-        0% {background-position:0% 50%}
-        50% {background-position:100% 50%}
-        100% {background-position:0% 50%}
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
 
     st.title("ML Fraud Detection")
 

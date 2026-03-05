@@ -25,8 +25,9 @@ TEST_CSV = f"{DATA_DIR}/transaction_test.csv"
 TRAIN_URL = config["files"]["train_url"]
 TEST_URL = config["files"]["test_url"]
 
+
 # -----------------------------
-# Download dataset
+# Download dataset if missing
 # -----------------------------
 def download_and_extract(url, filename):
 
@@ -40,12 +41,10 @@ def download_and_extract(url, filename):
 
         urllib.request.urlretrieve(url, zip_path)
 
-        st.success("Download complete.")
-
         with zipfile.ZipFile(zip_path, 'r') as zip_ref:
             zip_ref.extractall(DATA_DIR)
 
-        st.success("Dataset extracted.")
+        st.success(f"{filename} downloaded and extracted.")
 
 
 # -----------------------------
@@ -57,16 +56,25 @@ def load_data():
     if USE_DATABASE:
 
         try:
+
             db = config["database"]
 
+            # CREATE ENGINE FIRST
             engine = create_engine(
                 f"postgresql+psycopg2://{db['user']}:{db['password']}@{db['host']}:{db['port']}/{db['dbname']}"
             )
 
-            train_df = pd.read_sql("SELECT * FROM fraud.transaction_train", engine)
-            test_df = pd.read_sql("SELECT * FROM fraud.transaction_test", engine)
+            train_df = pd.read_sql(
+                f"SELECT * FROM {config['tables']['train']}",
+                engine
+            )
 
-            st.success("Connected to PostgreSQL database")
+            test_df = pd.read_sql(
+                f"SELECT * FROM {config['tables']['test']}",
+                engine
+            )
+
+            st.success("Connected to PostgreSQL")
 
         except Exception as e:
 
@@ -87,6 +95,11 @@ def load_data():
         test_df = pd.read_csv(TEST_CSV)
 
     return train_df, test_df
+
+
+train_df, test_df = load_data()
+train_df["transaction_time"] = pd.to_datetime(train_df["transaction_time"])
+test_df["transaction_time"] = pd.to_datetime(test_df["transaction_time"])
 
 # -------------------------------
 # Load models

@@ -546,6 +546,7 @@ elif page == "Model Evaluation":
     y_test = test_df[target]
 
     X_proc = preprocessor.transform(X_test)
+    X_proc = selector.transform(X_test)
    
 
     pred_prob = model.predict_proba(X_proc)[:,1]

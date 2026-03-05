@@ -19,8 +19,8 @@ with open("config.yaml") as f:
 USE_DATABASE = config["data"]["use_database"]
 
 DATA_DIR = "data"
-TRAIN_CSV = f"{DATA_DIR}/transaction_train.csv"
-TEST_CSV = f"{DATA_DIR}/transaction_test.csv"
+TRAIN_CSV = f"{DATA_DIR}/transactions_train.csv"
+TEST_CSV = f"{DATA_DIR}/transactions_test.csv"
 
 TRAIN_URL = config["files"]["train_url"]
 TEST_URL = config["files"]["test_url"]

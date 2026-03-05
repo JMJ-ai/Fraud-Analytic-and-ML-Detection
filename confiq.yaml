@@ -9,9 +9,16 @@ database:
   password: "postgresXXX"
   schema: "fraud"
 
+tables:
+  train: fraud.transaction_train
+  test: fraud.transaction_test
+
 model:
-  algorithm: "AdaBoost Classifier"
-  auc_score: 0.96
+  path: models/fraud_model.pkl
+  preprocessor: models/preprocessor.pkl
+  selector: models/selector.pkl
+  algorithm: AdaBoost
+  auc_score: 0.84
 
 tableau:
   dashboard_url: "https://public.tableau.com/views/YOUR_DASHBOARD"

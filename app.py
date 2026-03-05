@@ -225,61 +225,60 @@ elif page == "EDA by Python":
         non_fraud = eda_df[eda_df['is_fraud'] == 0][col]
         fraud = eda_df[eda_df['is_fraud'] == 1][col]
 
-    fig = make_subplots(
-        rows=1, cols=2,
-        subplot_titles=(
+        fig = make_subplots(
+            rows=1, cols=2,
+            subplot_titles=(
             f"{col} distribution by fraud",
             f"{col} boxplot by fraud"
         )
-     )
+         )
 
-    fig.add_trace(
-        go.Histogram(
-            x=non_fraud,
-            nbinsx=50,
-            name="Non-fraud",
-            histnorm='probability density',
-            opacity=0.6,
-            marker_color='steelblue'
-        ),
-        row=1, col=1
-    )
+        fig.add_trace(
+            go.Histogram(
+                x=non_fraud,
+                nbinsx=50,
+                name="Non-fraud",
+                histnorm='probability density',
+                opacity=0.6,
+                marker_color='steelblue'
+            ),
+            row=1, col=1
+        )
     
-    fig.add_trace(
-        go.Histogram(
-            x=fraud,
-            nbinsx=50,
-            name="Fraud",
-            histnorm='probability density',
-            opacity=0.6,
-            marker_color='crimson'
-        ),
-        row=1, col=1
-    )
+        fig.add_trace(
+            go.Histogram(
+                x=fraud,
+                nbinsx=50,
+                name="Fraud",
+                histnorm='probability density',
+                opacity=0.6,
+                marker_color='crimson'
+            ),
+            row=1, col=1
+        )
     
     # Overlay histograms
-    fig.update_layout(barmode='overlay')
     
     # Boxplots
-    fig.add_trace(
-        go.Box(
-            y=non_fraud,
-            name="Non-fraud",
-            marker_color='steelblue',
-            boxmean=True
-        ),
-        row=1, col=2
-    )
+        fig.add_trace(
+            go.Box(
+                y=non_fraud,
+                name="Non-fraud",
+                marker_color='steelblue',
+                boxmean=True
+            ),
+            row=1, col=2
+        )
     
-    fig.add_trace(
-        go.Box(
-            y=fraud,
-            name="Fraud",
-            marker_color='crimson',
-            boxmean=True
-        ),
-        row=1, col=2
-    )
+        fig.add_trace(
+            go.Box(
+                y=fraud,
+                name="Fraud",
+                marker_color='crimson',
+                boxmean=True
+            ),
+            row=1, col=2
+        )
 
     st.plotly_chart(fig, use_container_width=True)
 

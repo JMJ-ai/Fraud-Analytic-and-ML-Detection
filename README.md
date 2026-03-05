@@ -1,3 +1,4 @@
+![header.png]
 ### Project Overview 
 
 **Project Background**

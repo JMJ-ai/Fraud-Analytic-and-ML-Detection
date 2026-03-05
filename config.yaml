@@ -1,6 +1,9 @@
 app:
   title: "Fraud Analytics and ML Detection"
 
+data:
+  use_database: true
+
 database:
   host: "localhost"
   port: 5432

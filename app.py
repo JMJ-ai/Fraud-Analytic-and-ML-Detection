@@ -144,7 +144,7 @@ if page == "Fraud Dashboard":
     st.markdown(
         """
         <iframe
-        src="YOUR_TABLEAU_EMBED_LINK"
+        src="https://public.tableau.com/views/FraudVisualizationAnalyticv1/FraudOverview?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link"
         width="100%"
         height="700">
         </iframe>

@@ -265,6 +265,16 @@ elif page == "ML Fraud Detection":
 
         st.subheader("Prediction Tool")
 
+        payment_channel = st.selectbox(
+            "Payment Channel",
+            ["card","upi","bank_transfer","wallet"]
+        )
+
+        device_type = st.selectbox(
+            "Device Type",
+            ["mobile","desktop","tablet"]
+        )
+
         amount = st.number_input("Transaction Amount")
 
         ip_risk = st.slider("IP Risk Score", 0.0, 1.0)
@@ -286,7 +296,8 @@ elif page == "ML Fraud Detection":
         dev_amount = st.number_input("Amount Deviation")
 
         if st.button("Predict Fraud"):
-
+            
+            input_df["log_amount"] = np.log1p(input_df["transaction_amount"])
             input_df = pd.DataFrame({
                 "transaction_amount":[amount],
                 "ip_risk_score":[ip_risk],
@@ -297,7 +308,10 @@ elif page == "ML Fraud Detection":
                 "failed_txn_count_24h":[failed_txn],
                 "txn_count_1h":[txn_1h],
                 "avg_monthly_spend":[avg_spend],
+                "payment_channel":[payment_channel],
+                "device_type":[device_type],
                 "amount_deviation_from_user_mean":[dev_amount]
+
             })
 
             X = preprocessor.transform(input_df)

@@ -102,6 +102,12 @@ def load_data():
 train_df, test_df = load_data()
 train_df["transaction_time"] = pd.to_datetime(train_df["transaction_time"])
 test_df["transaction_time"] = pd.to_datetime(test_df["transaction_time"])
+for df in [train_df, test_df]:
+    df['hour'] = df['transaction_time'].dt.hour
+    df['day'] = df['transaction_time'].dt.day
+    df['month'] = df['transaction_time'].dt.month
+    df['dayofweek'] = df['transaction_time'].dt.dayofweek
+    df['is_weekend'] = (df['dayofweek'] >= 5).astype(int)
 
 # -------------------------------
 # Load models

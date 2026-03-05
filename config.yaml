@@ -21,11 +21,11 @@ files:
   test_url: "https://github.com/user-attachments/files/25766793/transactions_test.zip"
 
 model:
-  path: models/xgboost_model.pkl
+  path: models/adaboost_model.pkl
   preprocessor: models/preprocessor.pkl
   selector: models/selector.pkl
   algorithm: AdaBoost
-  auc_score: 0.9687
+  auc_score: 0.832
 
 tableau:
   dashboard_url: "https://public.tableau.com/views/FraudVisualizationAnalyticv1/TimeBehaviouralPattern?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link"

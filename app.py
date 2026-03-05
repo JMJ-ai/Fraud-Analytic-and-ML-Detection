@@ -33,8 +33,8 @@ def load_data():
 
     else:
 
-        train_df = pd.read_csv(config["files"]["train_csv"])
-        test_df = pd.read_csv(config["files"]["test_csv"])
+        train_df = pd.read_csv(config["files"]["transactions_train.csv"])
+        test_df = pd.read_csv(config["files"]["transactions_testcsv"])
 
     return train_df, test_df
 

@@ -16,6 +16,10 @@ tables:
   train: fraud.transaction_train
   test: fraud.transaction_test
 
+files:
+  train_csv: data/transactions_train.csv
+  test_csv: data/transactions_test.csv
+
 model:
   path: models/fraud_model.pkl
   preprocessor: models/preprocessor.pkl

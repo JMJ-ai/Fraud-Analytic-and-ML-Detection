@@ -179,12 +179,22 @@ elif page == "EDA by Python":
     )
 
     fig.add_trace(
-        go.Bar(x=labels,y=values),
+        go.Bar(
+            x=labels,
+            y=values,
+            marker=dict(color=['steelblue', 'crimson'])
+        ),           
         row=1,col=1
     )
 
     fig.add_trace(
-        go.Pie(labels=labels,values=values),
+        go.Pie(
+            labels=labels,
+            values=values'
+            marker=dict(colors=['steelblue', 'crimson']),
+            textinfo='percent+label',
+            rotation=90
+        ),
         row=1,col=2
     )
 
@@ -201,12 +211,68 @@ elif page == "EDA by Python":
     # Chart 2
     st.subheader("Numerical Features Distribution")
 
-    fig = go.Figure()
+    num_cols = ['transaction_amount', 'log_amount', 'hour', 'day', 'month', 'dayofweek', 'avg_monthly_spend']
 
-    fig.add_trace(go.Box(
-        x=eda_df["is_fraud"],
-        y=eda_df["transaction_amount"]
-    ))
+
+    for col in num_cols:
+        non_fraud = eda_df[eda_df['is_fraud'] == 0][col]
+        fraud = eda_df[eda_df['is_fraud'] == 1][col]
+
+    fig = make_subplots(
+        rows=1, cols=2,
+        subplot_titles=(
+            f"{col} distribution by fraud",
+            f"{col} boxplot by fraud"
+        )
+     )
+
+    fig.add_trace(
+        go.Histogram(
+            x=non_fraud,
+            nbinsx=50,
+            name="Non-fraud",
+            histnorm='probability density',
+            opacity=0.6,
+            marker_color='steelblue'
+        ),
+        row=1, col=1
+    )
+    
+    fig.add_trace(
+        go.Histogram(
+            x=fraud,
+            nbinsx=50,
+            name="Fraud",
+            histnorm='probability density',
+            opacity=0.6,
+            marker_color='crimson'
+        ),
+        row=1, col=1
+    )
+    
+    # Overlay histograms
+    fig.update_layout(barmode='overlay')
+    
+    # Boxplots
+    fig.add_trace(
+        go.Box(
+            y=non_fraud,
+            name="Non-fraud",
+            marker_color='steelblue',
+            boxmean=True
+        ),
+        row=1, col=2
+    )
+    
+    fig.add_trace(
+        go.Box(
+            y=fraud,
+            name="Fraud",
+            marker_color='crimson',
+            boxmean=True
+        ),
+        row=1, col=2
+    )
 
     st.plotly_chart(fig, use_container_width=True)
 
@@ -226,9 +292,34 @@ elif page == "EDA by Python":
     # Chart 3
     st.subheader("Categorical Feature Distribution")
 
-    fraud_rate_channel = eda_df.groupby("payment_channel")["is_fraud"].mean()
+    cat_cols_eda = [
+        'payment_channel', 
+        'device_type', 
+        'is_weekend',  
+        'is_international'
+    ]
 
-    st.bar_chart(fraud_rate_channel)
+    for col in cat_cols_eda:
+    
+# Calculate fraud rate
+    fraud_rate = (
+        eda_df
+        .groupby(col)['is_fraud']
+        .mean()
+        .reset_index()
+        .sort_values(by='is_fraud')
+    )
+    
+    # Plot horizontal bar chart
+        fig = px.bar(
+            fraud_rate,
+            x='is_fraud',
+            y=col,
+            orientation='h',
+            color=col,                 # <-- color by column
+            title=f'Fraud rate by {col}',
+            labels={'is_fraud': 'Fraud rate'}
+        )
 
     st.markdown("""
 **Fraud Rate by Payment Channel**
@@ -240,11 +331,48 @@ elif page == "EDA by Python":
 
     # Chart 4
     st.subheader("Time Based Analysis")
+    train_df['transaction_time'] = pd.to_datetime(train_df['transaction_time'])
 
-    fraud_hour = eda_df.groupby("hour")["is_fraud"].mean()
+    # Create hour and date columns
+    train_df['hour'] = train_df['transaction_time'].dt.hour
+    train_df['date'] = train_df['transaction_time'].dt.date
 
-    st.line_chart(fraud_hour)
+    # Compute fraud rates
+    hourly_fraud = train_df.groupby('hour')['is_fraud'].mean().reset_index()
+    daily_fraud = train_df.groupby('date')['is_fraud'].mean().reset_index()
 
+    # Create subplots (1 row, 2 columns)
+    fig = make_subplots(
+        rows=1,
+        cols=2,
+        subplot_titles=("Fraud Rate by Hour of Day", "Fraud Rate by Date")
+    )
+
+    # --- Hourly Fraud ---
+    fig.add_trace(
+        go.Scatter(
+            x=hourly_fraud['hour'],
+            y=hourly_fraud['is_fraud'],
+            mode='lines',
+            line=dict(color='royalblue', width=2),
+            name='Hourly Fraud Rate'
+        ),
+        row=1,
+        col=1
+    )
+
+    # --- Daily Fraud ---
+    fig.add_trace(
+        go.Scatter(
+            x=daily_fraud['date'],
+            y=daily_fraud['is_fraud'],
+            mode='lines',
+            line=dict(color='crimson', width=2),
+            name='Daily Fraud Rate'
+        ),
+        row=1,
+        col=2
+    )
     st.markdown("""
 **Hourly Fraud Pattern**
 

@@ -327,6 +327,7 @@ elif page == "EDA by Python":
             title=f'Fraud rate by {col}',
             labels={'is_fraud': 'Fraud rate'}
         )
+    st.plotly_chart(fig, use_container_width=True)   
 
     st.markdown("""
 **Fraud Rate by Payment Channel**
@@ -380,6 +381,7 @@ elif page == "EDA by Python":
         row=1,
         col=2
     )
+    st.plotly_chart(fig, use_container_width=True)
     st.markdown("""
 **Hourly Fraud Pattern**
 

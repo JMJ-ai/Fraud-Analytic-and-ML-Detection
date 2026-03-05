@@ -160,7 +160,7 @@ elif page == "EDA by Python":
 
     st.header("Exploratory Data Analysis by Python")
 
-    eda_df = df.copy()
+    eda_df = train_df.copy
 
     # Chart 1
     st.subheader("Target Data Distribution")

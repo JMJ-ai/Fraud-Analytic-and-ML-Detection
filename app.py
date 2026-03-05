@@ -5,17 +5,49 @@ import yaml
 import joblib
 import plotly.express as px
 import matplotlib.pyplot as plt
+import zipfile
+import urllib.request
 
-from sqlalchemy import create_engine
-from sklearn.metrics import roc_auc_score, confusion_matrix, ConfusionMatrixDisplay
-
-with open("config.yaml") as file:
-    config = yaml.safe_load(file)
+# -----------------------------
+# Load config
+# -----------------------------
+with open("config.yaml") as f:
+    config = yaml.safe_load(f)
 
 USE_DATABASE = config["data"]["use_database"]
 
+DATA_DIR = "data"
+TRAIN_CSV = f"{DATA_DIR}/transaction_train.csv"
+TEST_CSV = f"{DATA_DIR}/transaction_test.csv"
+
+TRAIN_URL = config["files"]["train_url"]
+TEST_URL = config["files"]["test_url"]
+
 # -----------------------------
-# Data loading function
+# Download dataset
+# -----------------------------
+def download_and_extract(url, filename):
+
+    os.makedirs(DATA_DIR, exist_ok=True)
+
+    zip_path = os.path.join(DATA_DIR, filename)
+
+    if not os.path.exists(zip_path):
+
+        st.info(f"Downloading {filename}...")
+
+        urllib.request.urlretrieve(url, zip_path)
+
+        st.success("Download complete.")
+
+        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+            zip_ref.extractall(DATA_DIR)
+
+        st.success("Dataset extracted.")
+
+
+# -----------------------------
+# Load data
 # -----------------------------
 @st.cache_data
 def load_data():
@@ -33,8 +65,14 @@ def load_data():
 
     else:
 
-        train_df = pd.read_csv(config["files"]["train_csv"])
-        test_df = pd.read_csv(config["files"]["test_csv"])
+        if not os.path.exists(TRAIN_CSV):
+            download_and_extract(TRAIN_URL, "transaction_train.zip")
+
+        if not os.path.exists(TEST_CSV):
+            download_and_extract(TEST_URL, "transaction_test.zip")
+
+        train_df = pd.read_csv(TRAIN_CSV)
+        test_df = pd.read_csv(TEST_CSV)
 
     return train_df, test_df
 

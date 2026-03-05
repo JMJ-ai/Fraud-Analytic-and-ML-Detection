@@ -174,10 +174,9 @@ page = st.sidebar.radio(
 # PAGE 1 DASHBOARD
 # -------------------------------
 
-elif page == "Fraud Dashboard":
+if page == "Fraud Dashboard":
 
-    st.title("Fraud Dashboard by Tableau")
-     # Tableau
+    st.subheader("Interactive Tableau Dashboard")
     embed_tableau(TABLEAU_PATHS["Fraud Overview"])
     embed_tableau(TABLEAU_PATHS["Time & Behavioural Pattern"])
     embed_tableau(TABLEAU_PATHS["Customer Risk Segmentatiom"])

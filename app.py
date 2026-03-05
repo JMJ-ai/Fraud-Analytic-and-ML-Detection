@@ -538,11 +538,20 @@ elif page == "Model Evaluation":
 
     st.title("Model Evaluation")
     
-    id_cols =['transaction_id', 'customer_id', 'merchant_id']
-    suspcious_col = "post_auth_risk_score"
-    target = "is_fraud"
-    time_cols = "transaction_time"
-    X_test = test_df.drop(id_cols + [suspcious_col]+ [target] + [time_cols], axis=1)
+    features = [
+        "ip_risk_score",
+        "avg_monthly_spend",
+        "merchant_risk_score",
+        "account_age_days",
+        "geo_distance_from_last_txn",
+        "transaction_amount",
+        "amount_deviation_from_user_mean",
+        "txn_count_24h",
+        "failed_txn_count_24h",
+        "txn_count_1h"
+    ]
+
+    X_test = test_df[features]
     y_test = test_df[target]
 
     X_proc = preprocessor.transform(X_test)
@@ -554,6 +563,12 @@ elif page == "Model Evaluation":
     auc = roc_auc_score(y_test, pred_prob)
 
     st.metric("ROC AUC Score", round(auc,3))
+
+    st.write("Test shape:", X_test.shape)
+    st.write("Processed shape:", X_proc.shape)
+
+    st.write("Sample probabilities:")
+    st.write(pred_prob[:10])
 
     # Confusion Matrix
 

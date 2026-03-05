@@ -110,6 +110,34 @@ for df in [train_df, test_df]:
     df['is_weekend'] = (df['dayofweek'] >= 5).astype(int)
 test_df['log_amount'] = np.log1p(test_df['transaction_amount'])
 
+# =====================================================
+# TABLEAU PATHS
+# Replace with your real workbook + dashboard names
+# Example: views/ASEANFoodSecurity/Overview
+# =====================================================
+TABLEAU_PATHS = {
+    "Fraud Overview": "views/FraudVisualizationAnalyticv1/FraudOverview",
+    "Time & Behavioural Pattern": "views/FraudVisualizationAnalyticv1/Time&BehaviouralPattern",
+    "Customer Risk Segmentation": "views/FraudVisualizationAnalyticv1/CUSTOMERRISKSEGMENTATION",
+    "Merchant & Channel Risk": "views/FraudVisualizationAnalyticv1/MERCHANT&CHANNELRISK"
+    "Model Monitoring": "views/FraudVisualizationAnalyticv1/MODELMONITORING"
+}
+# =====================================================
+# SAFE TABLEAU EMBED FUNCTION
+# =====================================================
+def embed_tableau(path, height=700):
+    html_code = f"""
+    <script type='module' src='https://public.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js'></script>
+    <tableau-viz
+        src="https://public.tableau.com/{path}"
+        width="100%"
+        height="{height}"
+        toolbar="hidden"
+        hide-tabs>
+    </tableau-viz>
+    """
+    st.components.v1.html(html_code, height=height)
+
 # -------------------------------
 # Load models
 # -------------------------------
@@ -146,20 +174,15 @@ page = st.sidebar.radio(
 # PAGE 1 DASHBOARD
 # -------------------------------
 
-if page == "Fraud Dashboard":
+elif page == "Fraud Dashboard":
 
     st.title("Fraud Dashboard by Tableau")
-
-    st.markdown(
-        """
-        <iframe
-        src="https://public.tableau.com/views/FraudVisualizationAnalyticv1/FraudOverview?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link"
-        width="100%"
-        height="700">
-        </iframe>
-        """,
-        unsafe_allow_html=True
-    )
+     # Tableau
+    embed_tableau(TABLEAU_PATHS["Fraud Overview"])
+    embed_tableau(TABLEAU_PATHS["Time & Behavioural Pattern"])
+    embed_tableau(TABLEAU_PATHS["Customer Risk Segmentatiom"])
+    embed_tableau(TABLEAU_PATHS["Merchant & Channel Risk"])
+    embed_tableau(TABLEAU_PATHS["Model Monitoring"])
 
 # -------------------------------
 # PAGE 2 EDA

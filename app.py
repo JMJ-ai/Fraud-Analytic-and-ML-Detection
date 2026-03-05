@@ -314,6 +314,8 @@ elif page == "ML Fraud Detection":
 
             })
 
+            input_df["log_amount"] = np.log1p(input_df["transaction_amount"])
+
             X = preprocessor.transform(input_df)
             X = selector.transform(X)
 

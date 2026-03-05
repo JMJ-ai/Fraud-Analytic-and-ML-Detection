@@ -100,6 +100,8 @@ def load_data():
 
 
 train_df, test_df = load_data()
+train_df = train_df.sort_values("transaction_time")
+test_df = test_df.sort_values("transaction_time")
 train_df["transaction_time"] = pd.to_datetime(train_df["transaction_time"])
 test_df["transaction_time"] = pd.to_datetime(test_df["transaction_time"])
 for df in [train_df, test_df]:

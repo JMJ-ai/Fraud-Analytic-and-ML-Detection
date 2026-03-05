@@ -108,7 +108,17 @@ for df in [train_df, test_df]:
     df['month'] = df['transaction_time'].dt.month
     df['dayofweek'] = df['transaction_time'].dt.dayofweek
     df['is_weekend'] = (df['dayofweek'] >= 5).astype(int)
+#Feature engineering
+train_df['log_amount'] = np.log1p(train_df['transaction_amount'])
 test_df['log_amount'] = np.log1p(test_df['transaction_amount'])
+bool_cols = ['is_fraud', 'is_international']
+for col in bool_cols:
+    train_df[col] = train_df[col].astype(int)
+    test_df[col] = test_df[col].astype(int)
+ordinal_cols = ['kyc_level', 'credit_score_band']
+for col in ordinal_cols:
+    train_df[col] = train_df[col].astype(int)
+    test_df[col] = test_df[col].astype(int)
 
 # =====================================================
 # TABLEAU PATHS
@@ -301,6 +311,11 @@ elif page == "EDA by Python":
             col=2
         )
 
+        fig.update_layout(
+            title_text=f"{col} Analysis by Fraud",
+            showlegend=True
+        )
+
         st.plotly_chart(fig, use_container_width=True)
 
     st.markdown("""
@@ -401,6 +416,15 @@ elif page == "EDA by Python":
         row=1,
         col=2
     )
+
+    fig.update_layout(
+        showlegend=False,
+        title_text="Fraud Rate Analysis Over Time"
+    )
+
+    fig.update_yaxes(title_text="Fraud Rate", row=1, col=1)
+    fig.update_yaxes(title_text="Fraud Rate", row=1, col=2)
+
     st.plotly_chart(fig, use_container_width=True)
     st.markdown("""
 **Hourly Fraud Pattern**
@@ -442,16 +466,6 @@ elif page == "ML Fraud Detection":
 
         st.subheader("Prediction Tool")
 
-        payment_channel = st.selectbox(
-            "Payment Channel",
-            ["card","upi","bank_transfer","wallet"]
-        )
-
-        device_type = st.selectbox(
-            "Device Type",
-            ["mobile","desktop","tablet"]
-        )
-
         amount = st.number_input("Transaction Amount")
 
         ip_risk = st.slider("IP Risk Score", 0.0, 1.0)
@@ -484,8 +498,6 @@ elif page == "ML Fraud Detection":
                 "failed_txn_count_24h":[failed_txn],
                 "txn_count_1h":[txn_1h],
                 "avg_monthly_spend":[avg_spend],
-                "payment_channel":[payment_channel],
-                "device_type":[device_type],
                 "amount_deviation_from_user_mean":[dev_amount]
 
             })

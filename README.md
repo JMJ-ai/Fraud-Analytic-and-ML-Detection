@@ -1,5 +1,5 @@
-!(header.png)
-### Project Overview 
+![header](header.png)
+[## Project Overview 
 
 **Project Background**
 

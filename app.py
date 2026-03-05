@@ -158,58 +158,98 @@ if page == "Fraud Dashboard":
 
 elif page == "EDA by Python":
 
-    st.title("Exploratory Data Analysis")
+    st.header("Exploratory Data Analysis by Python")
 
-    # Chart 1 Target distribution
-    st.subheader("Target Distribution")
+    eda_df = df.copy()
 
-    fraud_dist = train_df["is_fraud"].value_counts().reset_index()
-    fraud_dist.columns = ["Class", "Count"]
+    # Chart 1
+    st.subheader("Target Data Distribution")
 
-    fig = px.bar(fraud_dist, x="Class", y="Count")
+    counts = eda_df['is_fraud'].value_counts()
 
-    st.plotly_chart(fig)
+    labels = ['Non Fraud', 'Fraud']
+    values = [counts.get(0,0), counts.get(1,0)]
+
+    fig = make_subplots(
+        rows=1, cols=2,
+        specs=[[{"type":"bar"},{"type":"pie"}]],
+        subplot_titles=("Fraud Count","Fraud Proportion")
+    )
+
+    fig.add_trace(
+        go.Bar(x=labels,y=values),
+        row=1,col=1
+    )
+
+    fig.add_trace(
+        go.Pie(labels=labels,values=values),
+        row=1,col=2
+    )
+
+    st.plotly_chart(fig, use_container_width=True)
 
     st.markdown("""
 **Key Findings**
 
-• Extreme class imbalance  
-• 98.4% non-fraud  
-• 1.62% fraud transactions
+- Extreme Class Imbalance
+- 98.4% transactions are non-fraud
+- Only 1.62% are fraud
 """)
 
-    # Chart 2 Transaction amount
+    # Chart 2
+    st.subheader("Numerical Features Distribution")
 
-    st.subheader("Transaction Amount Distribution")
+    fig = go.Figure()
 
-    fig = px.box(
-        train_df,
-        x="is_fraud",
-        y="transaction_amount"
-    )
+    fig.add_trace(go.Box(
+        x=eda_df["is_fraud"],
+        y=eda_df["transaction_amount"]
+    ))
 
-    st.plotly_chart(fig)
+    st.plotly_chart(fig, use_container_width=True)
 
-    # Chart 3 Payment channel fraud rate
+    st.markdown("""
+**Transaction Amount vs Fraud**
 
-    st.subheader("Fraud Rate by Payment Channel")
+- Overlapping distributions between fraud and non-fraud
+- Similar medians and quartiles
+- Non-fraud has larger outliers
 
-    channel = (
-        train_df
-        .groupby("payment_channel")["is_fraud"]
-        .mean()
-        .reset_index()
-    )
+**Log Amount vs Fraud**
 
-    fig = px.bar(channel,
-                 x="payment_channel",
-                 y="is_fraud",
-                 labels={
-                     "payment_channel": "Payment Channel",
-                     "is_fraud": "Fraud Rate"
-                 })
+- Normalized distribution
+- No strong separation
+""")
 
-    st.plotly_chart(fig)
+    # Chart 3
+    st.subheader("Categorical Feature Distribution")
+
+    fraud_rate_channel = eda_df.groupby("payment_channel")["is_fraud"].mean()
+
+    st.bar_chart(fraud_rate_channel)
+
+    st.markdown("""
+**Fraud Rate by Payment Channel**
+
+- Highest risk: Card
+- Followed by: UPI
+- Lowest risk: Wallet
+""")
+
+    # Chart 4
+    st.subheader("Time Based Analysis")
+
+    fraud_hour = eda_df.groupby("hour")["is_fraud"].mean()
+
+    st.line_chart(fraud_hour)
+
+    st.markdown("""
+**Hourly Fraud Pattern**
+
+- Peak between 6pm-7pm
+- Early morning spike around 2am
+- Lowest around 9am
+""")
 
 # -------------------------------
 # PAGE 3 ML DETECTION

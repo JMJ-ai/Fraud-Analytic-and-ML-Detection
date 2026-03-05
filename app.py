@@ -56,30 +56,37 @@ def load_data():
 
     if USE_DATABASE:
 
-        db = config["database"]
+        try:
+            db = config["database"]
 
-        engine = create_engine(
-            f"postgresql+psycopg2://{db['user']}:{db['password']}@{db['host']}:{db['port']}/{db['dbname']}"
-        )
+            engine = create_engine(
+                f"postgresql+psycopg2://{db['user']}:{db['password']}@{db['host']}:{db['port']}/{db['dbname']}"
+            )
 
-        train_df = pd.read_sql("SELECT * FROM fraud.transaction_train", engine)
-        test_df = pd.read_sql("SELECT * FROM fraud.transaction_test", engine)
+            train_df = pd.read_sql("SELECT * FROM fraud.transaction_train", engine)
+            test_df = pd.read_sql("SELECT * FROM fraud.transaction_test", engine)
+
+            st.success("Connected to PostgreSQL database")
+
+        except Exception as e:
+
+            st.warning("Database connection failed. Loading CSV instead.")
+
+            download_and_extract(TRAIN_URL, "transactions_train.zip")
+            download_and_extract(TEST_URL, "transactions_test.zip")
+
+            train_df = pd.read_csv(TRAIN_CSV)
+            test_df = pd.read_csv(TEST_CSV)
 
     else:
 
-        if not os.path.exists(TRAIN_CSV):
-            download_and_extract(TRAIN_URL, "transaction_train.zip")
-
-        if not os.path.exists(TEST_CSV):
-            download_and_extract(TEST_URL, "transaction_test.zip")
+        download_and_extract(TRAIN_URL, "transaction_train.zip")
+        download_and_extract(TEST_URL, "transaction_test.zip")
 
         train_df = pd.read_csv(TRAIN_CSV)
         test_df = pd.read_csv(TEST_CSV)
 
     return train_df, test_df
-
-
-train_df, test_df = load_data()
 
 # -------------------------------
 # Load models

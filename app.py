@@ -508,7 +508,7 @@ elif page == "ML Fraud Detection":
                 "failed_txn_count_24h":[failed_txn],
                 "txn_count_1h":[txn_1h],
                 "avg_monthly_spend":[avg_spend],
-                "payment_channel":[payment_channe],
+                "payment_channel":[payment_channel],
                 "device_type":[device_type],
                 "amount_deviation_from_user_mean":[dev_amount]
 

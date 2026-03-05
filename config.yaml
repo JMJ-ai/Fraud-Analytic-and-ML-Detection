@@ -21,7 +21,7 @@ files:
   test_url: "https://github.com/user-attachments/files/25766793/transactions_test.zip"
 
 model:
-  path: models/fraud_model.pkl
+  path: models/adaboost.pkl
   preprocessor: models/preprocessor.pkl
   selector: models/selector.pkl
   algorithm: AdaBoost

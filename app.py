@@ -108,6 +108,7 @@ for df in [train_df, test_df]:
     df['month'] = df['transaction_time'].dt.month
     df['dayofweek'] = df['transaction_time'].dt.dayofweek
     df['is_weekend'] = (df['dayofweek'] >= 5).astype(int)
+test_df['log_amount'] = np.log1p(test_df['transaction_amount'])
 
 # -------------------------------
 # Load models

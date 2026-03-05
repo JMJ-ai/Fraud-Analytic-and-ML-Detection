@@ -10,6 +10,8 @@ import urllib.request
 from sqlalchemy import create_engine
 import os
 
+from sklearn.metrics import roc_auc_score, ConfusionMatrixDisplay
+
 # -----------------------------
 # Load config
 # -----------------------------
@@ -132,28 +134,6 @@ page = st.sidebar.radio(
         "Project Methodology"
     ]
 )
-
-# -------------------------------
-# Load data
-# -------------------------------
-
-@st.cache_data
-def load_data():
-
-    train_df = pd.read_sql(
-        f"SELECT * FROM {config['tables']['train']}",
-        engine
-    )
-
-    test_df = pd.read_sql(
-        f"SELECT * FROM {config['tables']['test']}",
-        engine
-    )
-
-    return train_df, test_df
-
-
-train_df, test_df = load_data()
 
 # -------------------------------
 # PAGE 1 DASHBOARD

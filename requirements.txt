@@ -11,4 +11,3 @@ matplotlib
 seaborn
 plotly
 xgboost
-adaboost

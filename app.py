@@ -249,7 +249,7 @@ elif page == "ML Fraud Detection":
 
     with col1:
 
-       
+        st.image("assests/model_icon.png", width=120)
         st.subheader("Prediction Model Info")
 
         st.write(f"Algorithm: {config['model']['algorithm']}")
@@ -261,7 +261,7 @@ elif page == "ML Fraud Detection":
 
     with col2:
 
-        st.image("assets/predict_icon.png", width=120)
+        st.image("assests/predict_icon.png", width=120)
 
         st.subheader("Prediction Tool")
 

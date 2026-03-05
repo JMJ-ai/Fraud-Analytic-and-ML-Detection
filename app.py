@@ -302,15 +302,15 @@ elif page == "EDA by Python":
     for col in cat_cols_eda:
     
 # Calculate fraud rate
-    fraud_rate = (
-        eda_df
-        .groupby(col)['is_fraud']
-        .mean()
-        .reset_index()
-        .sort_values(by='is_fraud')
-    )
+        fraud_rate = (
+            eda_df
+            .groupby(col)['is_fraud']
+            .mean()
+            .reset_index()
+            .sort_values(by='is_fraud')
+        )
     
-    # Plot horizontal bar chart
+        # Plot horizontal bar chart
         fig = px.bar(
             fraud_rate,
             x='is_fraud',

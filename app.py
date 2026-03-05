@@ -548,7 +548,10 @@ elif page == "Model Evaluation":
         "amount_deviation_from_user_mean",
         "txn_count_24h",
         "failed_txn_count_24h",
-        "txn_count_1h"
+        "txn_count_1h",
+        "log_amount",
+        "payment_channel",
+        "device_type"
     ]
 
     target = "is_fraud"

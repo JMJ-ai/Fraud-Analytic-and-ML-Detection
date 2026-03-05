@@ -125,7 +125,7 @@ TABLEAU_PATHS = {
 # =====================================================
 # SAFE TABLEAU EMBED FUNCTION
 # =====================================================
-def embed_tableau(path, height=700):
+def embed_tableau(path, height=650):
     html_code = f"""
     <script type='module' src='https://public.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js'></script>
     <tableau-viz
@@ -178,10 +178,6 @@ if page == "Fraud Dashboard":
 
     st.subheader("Interactive Tableau Dashboard")
     embed_tableau(TABLEAU_PATHS["Fraud Overview"])
-    embed_tableau(TABLEAU_PATHS["Time & Behavioural Pattern"])
-    embed_tableau(TABLEAU_PATHS["Customer Risk Segmentation"])
-    embed_tableau(TABLEAU_PATHS["Merchant & Channel Risk"])
-    embed_tableau(TABLEAU_PATHS["Model Monitoring"])
 
 # -------------------------------
 # PAGE 2 EDA

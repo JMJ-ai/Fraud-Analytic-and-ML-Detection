@@ -297,7 +297,6 @@ elif page == "ML Fraud Detection":
 
         if st.button("Predict Fraud"):
             
-            input_df["log_amount"] = np.log1p(input_df["transaction_amount"])
             input_df = pd.DataFrame({
                 "transaction_amount":[amount],
                 "ip_risk_score":[ip_risk],

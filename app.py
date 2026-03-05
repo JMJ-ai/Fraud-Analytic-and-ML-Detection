@@ -190,7 +190,7 @@ elif page == "EDA by Python":
     fig.add_trace(
         go.Pie(
             labels=labels,
-            values=values'
+            values=values,
             marker=dict(colors=['steelblue', 'crimson']),
             textinfo='percent+label',
             rotation=90

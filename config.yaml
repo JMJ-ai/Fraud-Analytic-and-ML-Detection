@@ -25,7 +25,7 @@ model:
   preprocessor: models/preprocessor.pkl
   selector: models/selector.pkl
   algorithm: AdaBoost
-  auc_score: 0.84
+  auc_score: 0.9687
 
 tableau:
   dashboard_url: "https://public.tableau.com/views/FraudVisualizationAnalyticv1/TimeBehaviouralPattern?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link"

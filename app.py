@@ -179,7 +179,7 @@ if page == "Fraud Dashboard":
     st.subheader("Interactive Tableau Dashboard")
     embed_tableau(TABLEAU_PATHS["Fraud Overview"])
     embed_tableau(TABLEAU_PATHS["Time & Behavioural Pattern"])
-    embed_tableau(TABLEAU_PATHS["Customer Risk Segmentatiom"])
+    embed_tableau(TABLEAU_PATHS["Customer Risk Segmentation"])
     embed_tableau(TABLEAU_PATHS["Merchant & Channel Risk"])
     embed_tableau(TABLEAU_PATHS["Model Monitoring"])
 

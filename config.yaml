@@ -9,7 +9,7 @@ database:
   port: 5432
   dbname: "fraud_db"
   user: "postgres"
-  password: "postgresXXX"
+  password: "postgres123"
   schema: "fraud"
 
 tables:

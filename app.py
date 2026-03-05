@@ -9,18 +9,37 @@ import matplotlib.pyplot as plt
 from sqlalchemy import create_engine
 from sklearn.metrics import roc_auc_score, confusion_matrix, ConfusionMatrixDisplay
 
-# -------------------------------
-# Load config
-# -------------------------------
+with open("config.yaml") as file:
+    config = yaml.safe_load(file)
 
-with open("config.yaml", "r") as f:
-    config = yaml.safe_load(f)
+USE_DATABASE = config["data"]["use_database"]
 
-db = config["database"]
+# -----------------------------
+# Data loading function
+# -----------------------------
+@st.cache_data
+def load_data():
 
-engine = create_engine(
-    f"postgresql://{db['user']}:{db['password']}@{db['host']}:{db['port']}/{db['dbname']}"
-)
+    if USE_DATABASE:
+
+        db = config["database"]
+
+        engine = create_engine(
+            f"postgresql+psycopg2://{db['user']}:{db['password']}@{db['host']}:{db['port']}/{db['dbname']}"
+        )
+
+        train_df = pd.read_sql("SELECT * FROM fraud.transaction_train", engine)
+        test_df = pd.read_sql("SELECT * FROM fraud.transaction_test", engine)
+
+    else:
+
+        train_df = pd.read_csv(config["files"]["train_csv"])
+        test_df = pd.read_csv(config["files"]["test_csv"])
+
+    return train_df, test_df
+
+
+train_df, test_df = load_data()
 
 # -------------------------------
 # Load models

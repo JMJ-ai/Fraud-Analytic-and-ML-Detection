@@ -107,32 +107,76 @@ def set_background(image_url):
 # -------------------------------------------------
 # PARTICLE JS BACKGROUND
 # -------------------------------------------------
-def particle_background():
+
+def set_particles_background(config_url):
 
     st.markdown(
-        """
-        <div id="particles-js"></div>
-
+        f"""
         <style>
-        #particles-js {
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-        top: 0;
-        left: 0;
-        }
+        /* 1. Background and Header Setup */
+        .stApp {{
+            background-image: url("{image_url}");
+            background-size: cover;
+            background-attachment: fixed;
+        }}
+        header {{visibility: hidden;}}
+        footer {{visibility: hidden;}}
+
+        /* 2. Remove radio bullets */
+        div[role="radiogroup"] > label > div:first-child {{
+            display: none !important;
+        }}
+
+        /* 3. Style text as simple titles */
+        div[role="radiogroup"] {{
+            gap: 30px; /* Space between the text titles */
+            justify-content: center;
+        }}
+
+        div[role="radiogroup"] label {{
+            background: none !important;
+            border: none !important;
+            padding: 0 !important;
+            cursor: pointer;
+        }}
+
+        /* Normal Text Style */
+        div[role="radiogroup"] label div {{
+            color: rgba(255, 255, 255, 0.6) !important; /* Semi-transparent white */
+            font-size: 18px !important;
+            transition: 0.3s;
+        }}
+
+        /* Hover and Selected Style */
+        div[role="radiogroup"] label:hover div,
+        div[role="radiogroup"] label:has(input:checked) div {{
+            color: white !important; /* Solid white when active/hovered */
+            font-weight: bold !important;
+            text-decoration: underline; /* Optional: adds a line under active tab */
+            text-underline-offset: 8px;
+        }}
+
+        #particles-js {{
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }}
         </style>
 
+        <div id="particles-js"></div>
         <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
-
         <script>
-        particlesJS.load('particles-js', 'assets/particles.json');
+            /*Load config from static folder path */
+            particlesJS.load('particles-js', '{config_url}', function() {{
+                console.log('callback - particles-js config loaded');
+            }});
         </script>
         """,
-        unsafe_allow_html=True
-    )
-
+        unsafe_allow_html=True)
 # -------------------------------------------------
 # DOWNLOAD DATA
 # -------------------------------------------------
@@ -554,7 +598,7 @@ elif nav == "Exploratory Data Analysis (EDA)":
 # =================================================
 elif nav == "ML Detection":
 
-    particle_background()
+    set_particles_background("static/particles.js")
 
     st.title("ML Fraud Detection")
 

@@ -162,9 +162,9 @@ def set_particles_background(config_url):
         </style>
 
         <div id="particles-js"></div>
-        <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+        <script src="https://cdn.jsdelivr.net"></script>
         <script>
-            /*Load config from static folder path */
+            /* Load config from static folder path */
             particlesJS.load('particles-js', '{config_url}', function() {{
                 console.log('callback - particles-js config loaded');
             }});
@@ -593,7 +593,6 @@ elif nav == "Exploratory Data Analysis (EDA)":
 elif nav == "ML Detection":
 
     set_particles_background("static/particles.js")
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
     st.title("ML Fraud Detection")
 
@@ -679,11 +678,7 @@ elif nav == "ML Detection":
                 st.error("⚠️ Oh no! It's fraud!")
             else:
                 st.success("🟢 Phew! Not fraud")
-        <script>
-            particlesJS.load('particles-js', 'assests/particles.json', function() {
-                console.log('Particles.js config loaded');
-             });
-        </script>
+    
 
 # =================================================
 # TAB 5 MODEL EVALUATION

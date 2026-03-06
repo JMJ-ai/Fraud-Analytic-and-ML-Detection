@@ -704,7 +704,6 @@ width: 100%;
 background-color: rgba(0,0,0,0.85);
 color: white;
 text-align: center;
-padding: 10px;
 font-size: 14px;
 z-index: 9999;
 }

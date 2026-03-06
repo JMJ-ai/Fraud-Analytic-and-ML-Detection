@@ -343,7 +343,8 @@ if nav == "Home":
 
     with col1:
     # use_container_width ensures the image fills its column
-        st.image("assests/fraud.jpg", use_container_width=True)
+        url = "https://simplyadtype.wordpress.com/wp-content/uploads/2020/09/gif-1.gif"
+        st.image(url, use_container_width=True)
 
     with col2:
         st.markdown(

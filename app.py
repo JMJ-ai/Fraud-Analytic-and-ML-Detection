@@ -56,13 +56,52 @@ def set_background(image_url):
     st.markdown(
         f"""
         <style>
-
+        /* 1. Set the background image */
         .stApp {{
-        background-image: url("{image_url}");
-        background-size: cover;
-        background-attachment: fixed;
+            background-image: url("{image_url}");
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
         }}
 
+        /* 2. Hide Streamlit Header/Footer */
+        header {{visibility: hidden;}}
+        footer {{visibility: hidden;}}
+        .block-container {{ padding-top: 2rem; }}
+
+        /* 3. REMOVE BULLET ICONS and style radio buttons */
+        /* Hides the circular radio input */
+        div[data-testid="stWidgetLabel"] {{ display: none; }}
+        
+        div[data-testid="stHorizontalBlock"] div[role="radiogroup"] > label > div:first-child {{
+            display: none !important;
+        }}
+
+        /* Style the labels to look like buttons/tabs */
+        div[role="radiogroup"] {{
+            gap: 10px;
+            justify-content: center;
+        }}
+
+        div[role="radiogroup"] label {{
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            padding: 8px 20px !important;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white !important;
+        }}
+
+        /* Change style when selected */
+        div[role="radiogroup"] label[data-baseweb="radio"] div:last-child {{
+            color: white !important;
+            font-weight: bold;
+        }}
+
+        div[role="radiogroup"] label:has(input:checked) {{
+            background-color: rgba(255, 255, 255, 0.4) !important;
+            border: 1px solid white !important;
+        }}
         </style>
         """,
         unsafe_allow_html=True
@@ -231,6 +270,7 @@ nav = st.radio(
 if nav == "Home":
 
     set_background("https://i.pinimg.com/736x/c4/67/f1/c467f106abe8e13631985aa6785c1a1e.jpg")
+    st.title("Home")
 
     col1,col2 = st.columns([1,2])
 

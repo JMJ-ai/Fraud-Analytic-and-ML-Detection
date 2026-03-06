@@ -330,13 +330,13 @@ nav = st.radio(
 # =================================================
 if nav == "Home":
 
-    set_background("https://i.pinimg.com/736x/c4/67/f1/c467f106abe8e13631985aa6785c1a1e.jpg")
+    set_background("https://i.pinimg.com/originals/6f/9f/75/6f9f75612c2f7d357a03e608b9259316.gif")
     st.title("Home")
 
     col1,col2 = st.columns([1,2])
 
     with col1:
-        st.image("assests/home_image.jpg", use_container_width=True)
+        st.image("assests/home_image.jpg", width=300)
 
     with col2:
 

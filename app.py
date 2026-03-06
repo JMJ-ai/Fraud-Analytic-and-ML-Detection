@@ -557,34 +557,34 @@ with tabs[3]:
 
         if st.button("Predict Fraud"):
 
-    amount = safe_to_float(amount)
-    ip_risk = safe_to_float(ip_risk)
-    merchant_risk = safe_to_float(merchant_risk)
-    geo_dist = safe_to_float(geo_dist)
-    avg_spend = safe_to_float(avg_spend)
-    dev_amount = safe_to_float(dev_amount)
+            amount = safe_to_float(amount)
+            ip_risk = safe_to_float(ip_risk)
+            merchant_risk = safe_to_float(merchant_risk)
+            geo_dist = safe_to_float(geo_dist)
+            avg_spend = safe_to_float(avg_spend)
+            dev_amount = safe_to_float(dev_amount)
 
-    account_age = safe_to_int(account_age)
-    txn_24h = safe_to_int(txn_24h)
-    failed_txn = safe_to_int(failed_txn)
-    txn_1h = safe_to_int(txn_1h)
+            account_age = safe_to_int(account_age)
+            txn_24h = safe_to_int(txn_24h)
+            failed_txn = safe_to_int(failed_txn)
+            txn_1h = safe_to_int(txn_1h)
 
-    input_df = pd.DataFrame({
+            input_df = pd.DataFrame({
 
-        "transaction_amount":[amount],
-        "ip_risk_score":[ip_risk],
-        "merchant_risk_score":[merchant_risk],
-        "account_age_days":[account_age],
-        "geo_distance_from_last_txn":[geo_dist],
-        "txn_count_24h":[txn_24h],
-        "failed_txn_count_24h":[failed_txn],
-        "txn_count_1h":[txn_1h],
-        "avg_monthly_spend":[avg_spend],
-        "payment_channel":[payment_channel],
-        "device_type":[device_type],
-        "amount_deviation_from_user_mean":[dev_amount]
+                "transaction_amount":[amount],
+                "ip_risk_score":[ip_risk],
+                "merchant_risk_score":[merchant_risk],
+                "account_age_days":[account_age],
+                "geo_distance_from_last_txn":[geo_dist],
+                "txn_count_24h":[txn_24h],
+                "failed_txn_count_24h":[failed_txn],
+                "txn_count_1h":[txn_1h],
+                "avg_monthly_spend":[avg_spend],
+                "payment_channel":[payment_channel],
+                "device_type":[device_type],
+                "amount_deviation_from_user_mean":[dev_amount]
 
-    })
+            })
 
             input_df["log_amount"]=np.log1p(input_df["transaction_amount"])
 

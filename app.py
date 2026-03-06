@@ -593,6 +593,7 @@ elif nav == "Exploratory Data Analysis (EDA)":
 elif nav == "ML Detection":
 
     set_particles_background("static/particles.js")
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
     st.title("ML Fraud Detection")
 
@@ -678,6 +679,11 @@ elif nav == "ML Detection":
                 st.error("⚠️ Oh no! It's fraud!")
             else:
                 st.success("🟢 Phew! Not fraud")
+        <script>
+            particlesJS.load('particles-js', 'assests/particles.json', function() {
+                console.log('Particles.js config loaded');
+             });
+        </script>
 
 # =================================================
 # TAB 5 MODEL EVALUATION

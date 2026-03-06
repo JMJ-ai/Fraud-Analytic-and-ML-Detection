@@ -63,7 +63,7 @@ def set_background(image_url):
 # -------------------------------------------------
 def particle_background():
 
-    with open("assets/particles.json") as f:
+    with open("assests/particles.json") as f:
         particles_config = json.load(f)
 
     st.markdown(
@@ -84,7 +84,7 @@ def particle_background():
         <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
 
         <script>
-        particlesJS.load('particles-js', 'assets/particles.json');
+        particlesJS.load('particles-js', 'assests/particles.json');
         </script>
         """,
         unsafe_allow_html=True
@@ -231,7 +231,7 @@ with tabs[0]:
     col1,col2 = st.columns([1,2])
 
     with col1:
-        st.image("assets/home_image.jpg")
+        st.image("assests/home_image.jpg")
 
     with col2:
 
@@ -521,7 +521,7 @@ with tabs[3]:
 
     with col1:
 
-        st.image("assets/model_icon.png",width=120)
+        st.image("assests/model_icon.png",width=120)
 
         st.subheader("Prediction Model Info")
 
@@ -530,7 +530,7 @@ with tabs[3]:
 
     with col2:
 
-        st.image("assets/predict_icon.png",width=120)
+        st.image("assests/predict_icon.png",width=120)
 
         st.subheader("Prediction Tool")
 
@@ -637,7 +637,7 @@ with tabs[5]:
 
     st.title("Project Methodology")
 
-    st.image("assets/ml_pipeline.png")
+    st.image("assests/ml_pipeline.png")
 
 # -------------------------------------------------
 # FOOTER

@@ -85,7 +85,7 @@ def set_background(image_url):
 
         /* Normal Text Style */
         div[role="radiogroup"] label div {{
-            color: rgba(255, 255, 255, 0.6) !important; /* Semi-transparent white */
+            color: rgba(0, 0, 0, 0.6) !important; /* Semi-transparent white */
             font-size: 18px !important;
             transition: 0.3s;
         }}
@@ -112,7 +112,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 
-def set_particles_background(config_url="./assets/particles.json"):
+def set_particles_background(config_url="./assests/particles.json"):
 
     # --- CSS Styling ---
     st.markdown(
@@ -142,7 +142,7 @@ def set_particles_background(config_url="./assets/particles.json"):
 
         /* Normal text */
         div[role="radiogroup"] label div {
-            color: rgba(255,255,255,0.6) !important;
+            color: rgba(0, 0, 0, 0.6) !important;
             font-size: 18px !important;
             transition: 0.3s;
         }
@@ -618,7 +618,7 @@ elif nav == "Exploratory Data Analysis (EDA)":
 # =================================================
 elif nav == "ML Detection":
 
-    set_particles_background("./assets/particles.json")
+    set_particles_background("./assests/particles.json")
 
     st.title("ML Fraud Detection")
 

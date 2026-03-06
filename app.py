@@ -336,7 +336,7 @@ if nav == "Home":
     col1,col2 = st.columns([1,2])
 
     with col1:
-        st.image("assests/home_image.jpg", width=300)
+        st.image("assests/home_image.jpg", width=500, height=400)
 
     with col2:
 

@@ -108,73 +108,95 @@ def set_background(image_url):
 # PARTICLE JS BACKGROUND
 # -------------------------------------------------
 
-def set_particles_background(config_filename):
-    config_url = f"app/static/{config_filename}"
+import streamlit as st
+import streamlit.components.v1 as components
+
+
+def set_particles_background(config_url="./assets/particles.json"):
+
+    # --- CSS Styling ---
     st.markdown(
-        f"""
+        """
         <style>
 
-        header {{visibility: hidden;}}
-        footer {{visibility: hidden;}}
+        header {visibility: hidden;}
+        footer {visibility: hidden;}
 
         /* Remove radio bullets */
-        div[role="radiogroup"] > label > div:first-child {{
+        div[role="radiogroup"] > label > div:first-child {
             display: none !important;
-        }}
+        }
 
         /* Navigation layout */
-        div[role="radiogroup"] {{
+        div[role="radiogroup"] {
             gap: 30px;
             justify-content: center;
-        }}
+        }
 
-        div[role="radiogroup"] label {{
+        div[role="radiogroup"] label {
             background: none !important;
             border: none !important;
             padding: 0 !important;
             cursor: pointer;
-        }}
+        }
 
         /* Normal text */
-        div[role="radiogroup"] label div {{
+        div[role="radiogroup"] label div {
             color: rgba(255,255,255,0.6) !important;
             font-size: 18px !important;
             transition: 0.3s;
-        }}
+        }
 
         /* Hover + active */
         div[role="radiogroup"] label:hover div,
-        div[role="radiogroup"] label:has(input:checked) div {{
+        div[role="radiogroup"] label:has(input:checked) div {
             color: white !important;
             font-weight: bold !important;
             text-decoration: underline;
             text-underline-offset: 8px;
-        }}
-
-        /* Particles background */
-        #particles-js {{
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: -1;
-        }}
+        }
 
         </style>
-
-        <div id="particles-js"></div>
-
-        <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-
-        <script>
-        window.addEventListener("load", function() {{
-            particlesJS.load('particles-js', '{config_url}', function() {{
-                console.log('Particles.js loaded');
-            }});
-        </script>
         """,
-        unsafe_allow_html=True)
+        unsafe_allow_html=True
+    )
+
+    # --- Particles Background ---
+    particles_html = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <style>
+
+    #particles-js {{
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }}
+
+    </style>
+    </head>
+
+    <body>
+
+    <div id="particles-js"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+    <script>
+    particlesJS.load('particles-js', '{config_url}', function() {{
+        console.log('particles loaded');
+    }});
+    </script>
+
+    </body>
+    </html>
+    """
+
+    components.html(particles_html, height=0, width=0)
 # -------------------------------------------------
 # DOWNLOAD DATA
 # -------------------------------------------------
@@ -596,7 +618,7 @@ elif nav == "Exploratory Data Analysis (EDA)":
 # =================================================
 elif nav == "ML Detection":
 
-    set_particles_background("particles.json")
+    set_particles_background("./assets/particles.json")
 
     st.title("ML Fraud Detection")
 

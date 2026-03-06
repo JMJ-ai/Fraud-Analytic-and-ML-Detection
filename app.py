@@ -231,7 +231,7 @@ with tabs[0]:
     col1,col2 = st.columns([1,2])
 
     with col1:
-        st.image("assests/home_image.jpg")
+        st.image("assests/home_image.jpg", use_container_width=True)
 
     with col2:
 
@@ -613,7 +613,7 @@ with tabs[4]:
     st.write("Processed shape:", X_proc.shape)
 
     st.write("Sample probabilities:")
-    st.write(pred_prob[:10])
+    st.write(prob[:10])
 
 
     pred=model.predict(X_proc)

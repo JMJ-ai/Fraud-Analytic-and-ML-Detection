@@ -91,9 +91,6 @@ def set_background(image_url):
 # -------------------------------------------------
 def particle_background():
 
-    with open("assests/particles.json") as f:
-        particles_config = json.load(f)
-
     st.markdown(
         """
         <div id="particles-js"></div>
@@ -112,7 +109,7 @@ def particle_background():
         <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
 
         <script>
-        particlesJS.load('particles-js', 'assests/particles.json');
+        particlesJS.load('particles-js', 'assets/particles.json');
         </script>
         """,
         unsafe_allow_html=True
@@ -243,7 +240,7 @@ def embed_tableau(path, height=650):
 nav = st.radio(
     "",
     ["Home","Fraud Overview","Exploratory Data Analysis (EDA)","ML Detection","Model Evaluation","Methodology"],
-    horizontal+True,
+    horizontal=True,
     label_visibility="collapsed"
 )
 # =================================================

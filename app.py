@@ -341,7 +341,7 @@ if nav == "Home":
     col1,col2 = st.columns([1,2])
 
     with col1:
-        st.image("assests/fraud.jpg,", use_container_width=True)
+        st.image("assests/fraud.jpg", use_container_width=True)
     with col2:
 
         st.markdown(
@@ -771,9 +771,14 @@ elif nav == "Model Evaluation":
 
     st.title("Model Evaluation")
 
-    X_test=test_df.drop("is_fraud",axis=1)
-    y_test=test_df["is_fraud"]
-
+    id_cols =['transaction_id', 'customer_id', 'merchant_id']
+    suspcious_col = "post_auth_risk_score"
+    target = "is_fraud"
+    time_cols = "transaction_time"
+   
+    X_test = test_df.drop(id_cols + [suspcious_col]+ [target] + [time_cols], axis=1)
+    y_test = test_df[target]
+    
     X_proc=preprocessor.transform(X_test)
     X_proc=selector.transform(X_proc)
 

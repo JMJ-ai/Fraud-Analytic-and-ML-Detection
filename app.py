@@ -56,52 +56,49 @@ def set_background(image_url):
     st.markdown(
         f"""
         <style>
-        /* 1. Set the background image */
+        /* 1. Background and Header Setup */
         .stApp {{
             background-image: url("{image_url}");
             background-size: cover;
             background-attachment: fixed;
-            background-position: center;
         }}
-
-        /* 2. Hide Streamlit Header/Footer */
         header {{visibility: hidden;}}
         footer {{visibility: hidden;}}
-        .block-container {{ padding-top: 2rem; }}
 
-        /* 3. REMOVE BULLET ICONS and style radio buttons */
-        /* Hides the circular radio input */
-        div[data-testid="stWidgetLabel"] {{ display: none; }}
-        
-        div[data-testid="stHorizontalBlock"] div[role="radiogroup"] > label > div:first-child {{
+        /* 2. Remove radio bullets */
+        div[role="radiogroup"] > label > div:first-child {{
             display: none !important;
         }}
 
-        /* Style the labels to look like buttons/tabs */
+        /* 3. Style text as simple titles */
         div[role="radiogroup"] {{
-            gap: 10px;
+            gap: 30px; /* Space between the text titles */
             justify-content: center;
         }}
 
         div[role="radiogroup"] label {{
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 5px;
-            padding: 8px 20px !important;
-            transition: all 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white !important;
+            background: none !important;
+            border: none !important;
+            padding: 0 !important;
+            cursor: pointer;
         }}
 
-        /* Change style when selected */
-        div[role="radiogroup"] label[data-baseweb="radio"] div:last-child {{
-            color: white !important;
-            font-weight: bold;
+        /* Normal Text Style */
+        div[role="radiogroup"] label div {{
+            color: rgba(255, 255, 255, 0.6) !important; /* Semi-transparent white */
+            font-size: 18px !important;
+            transition: 0.3s;
         }}
 
-        div[role="radiogroup"] label:has(input:checked) {{
-            background-color: rgba(255, 255, 255, 0.4) !important;
-            border: 1px solid white !important;
+        /* Hover and Selected Style */
+        div[role="radiogroup"] label:hover div,
+        div[role="radiogroup"] label:has(input:checked) div {{
+            color: white !important; /* Solid white when active/hovered */
+            font-weight: bold !important;
+            text-decoration: underline; /* Optional: adds a line under active tab */
+            text-underline-offset: 8px;
         }}
+
         </style>
         """,
         unsafe_allow_html=True

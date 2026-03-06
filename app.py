@@ -618,7 +618,7 @@ elif nav == "Exploratory Data Analysis (EDA)":
 # =================================================
 elif nav == "ML Detection":
 
-    set_particles_background("./assests/particles.json")
+    set_background("https://i.pinimg.com/originals/7d/f1/43/7df143904208d2295c8428caaf86cb3c.gif")
 
     st.title("ML Fraud Detection")
 

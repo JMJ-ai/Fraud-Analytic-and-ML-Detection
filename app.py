@@ -701,7 +701,7 @@ position: relative;
 left: 0;
 bottom: 0;
 width: 100%;
-background-color: rgba(0,0,0,0.85);
+background-color: transparent;
 color: white;
 text-align: center;
 padding: 20px 0;

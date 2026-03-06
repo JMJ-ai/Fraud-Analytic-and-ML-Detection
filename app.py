@@ -38,6 +38,16 @@ TEST_CSV = f"{DATA_DIR}/transactions_test.csv"
 TRAIN_URL = config["files"]["train_url"]
 TEST_URL = config["files"]["test_url"]
 
+def safe_to_float(value):
+    try:
+        return float(int(value))
+    except:
+        return 0.0
+def safe_to_int(value):
+    try:
+        return int(value)
+    except:
+        return 0
 # -------------------------------------------------
 # BACKGROUND IMAGE FUNCTION
 # -------------------------------------------------

@@ -818,7 +818,8 @@ elif nav == "Methodology":
 
     st.title("Project Methodology")
 
-    st.image("assests/flowchart.png", width=700)
+    with st.container(horizontal_alignment="center"):
+        st.image("assests/flowchart.png", width=800)
 
 # -------------------------------------------------
 # FOOTER

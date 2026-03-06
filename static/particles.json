@@ -1,7 +1,7 @@
 {
   "particles": {
     "number": {"value": 60},
-    "color": {"value": "#ffffff"},
+    "color": {"value": "#111"},
     "shape": {"type": "circle"},
     "opacity": {"value":0.08},
     "size": {"value":3},

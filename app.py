@@ -637,8 +637,6 @@ with tabs[5]:
 
     st.title("Project Methodology")
 
-    st.image("assests/ml_pipeline.png")
-
 # -------------------------------------------------
 # FOOTER
 # -------------------------------------------------

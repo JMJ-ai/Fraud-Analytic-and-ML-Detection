@@ -596,7 +596,7 @@ elif nav == "Exploratory Data Analysis (EDA)":
 # =================================================
 elif nav == "ML Detection":
 
-    set_particles_background("particles.js")
+    set_particles_background("particles.json")
 
     st.title("ML Fraud Detection")
 

@@ -52,7 +52,6 @@ def safe_to_int(value):
 # BACKGROUND IMAGE FUNCTION
 # ------------------------------------------------    
 def set_background(image_url):
-
     st.markdown(
         f"""
         <style>
@@ -62,8 +61,15 @@ def set_background(image_url):
             background-size: cover;
             background-attachment: fixed;
         }}
+        
+        /* Hides header/footer and removes the top padding gap */
         header {{visibility: hidden;}}
         footer {{visibility: hidden;}}
+        
+        .block-container {{
+            padding-top: 0rem !important;
+            padding-bottom: 0rem !important;
+        }}
 
         /* 2. Remove radio bullets */
         div[role="radiogroup"] > label > div:first-child {{
@@ -72,7 +78,7 @@ def set_background(image_url):
 
         /* 3. Style text as simple titles */
         div[role="radiogroup"] {{
-            gap: 30px; /* Space between the text titles */
+            gap: 30px; 
             justify-content: center;
         }}
 
@@ -85,7 +91,7 @@ def set_background(image_url):
 
         /* Normal Text Style */
         div[role="radiogroup"] label div {{
-            color: rgba(256, 256, 256) !important; /* Semi-transparent white */
+            color: rgba(255, 255, 255, 0.7) !important; /* Fixed RGBA syntax */
             font-size: 18px !important;
             transition: 0.3s;
         }}
@@ -93,12 +99,11 @@ def set_background(image_url):
         /* Hover and Selected Style */
         div[role="radiogroup"] label:hover div,
         div[role="radiogroup"] label:has(input:checked) div {{
-            color: white !important; /* Solid white when active/hovered */
+            color: white !important; 
             font-weight: bold !important;
-            text-decoration: underline; /* Optional: adds a line under active tab */
+            text-decoration: underline; 
             text-underline-offset: 8px;
         }}
-
         </style>
         """,
         unsafe_allow_html=True
@@ -330,13 +335,13 @@ nav = st.radio(
 # =================================================
 if nav == "Home":
 
-    set_background("https://i.pinimg.com/originals/6f/9f/75/6f9f75612c2f7d357a03e608b9259316.gif")
-    st.title("Home")
+    set_background("https://i.pinimg.com/736x/cb/38/21/cb3821211ff00fb8456a24467e709004.jpg")
+    
 
     col1,col2 = st.columns([1,2])
 
     with col1:
-        st.image("assests/home_image.jpg", width=500, height=400)
+        st.html('<img src="https://i.pinimg.com/736x/24/ed/d6/24edd642c1e025a90c09a68fe9637be3.jpg" style="width:500px; height:1000px;">
 
     with col2:
 
@@ -497,6 +502,8 @@ elif nav == "Exploratory Data Analysis (EDA)":
         st.plotly_chart(fig, use_container_width=True)
 
     st.markdown("""
+**Key Findings:**
+
 **Transaction Amount vs Fraud**
 
 - Overlapping distributions between fraud and non-fraud
@@ -505,8 +512,33 @@ elif nav == "Exploratory Data Analysis (EDA)":
 
 **Log Amount vs Fraud**
 
-- Normalized distribution
-- No strong separation
+- Normalized distribution for both fraud and non-fraud centered around 7.5 to 8.0
+- No strong separation and confirming that transactiob amount alone is not a strong differentiator for detecting fraud.
+
+**Hour vs. Fraud**
+
+- Slight Evening Peak: There is a noticeable increase in fraud density during the evening hours (approx. 17:00 to 22:00).
+- Uniformity: Generally, both classes are distributed across all 24 hours, but fraud appears slightly more "concentrated" in certain blocks than non-fraud.
+
+**Day vs. Fraud**
+
+- Random Distribution: Fraud occurs fairly consistently throughout the month.
+- Minor Fluctuations: There are small spikes around day 5 and day 20, but the overall distributions (boxplots) for fraud and non-fraud are virtually identical.
+
+**Month vs. Fraud**
+
+- Late Year Surge: There is a distinct increase in the proportion of fraud during the later months, specifically months 7, 8, and 9.
+- Potential Seasonality: The boxplot for fraud shows a higher median month compared to non-fraud, suggesting fraud activity may increase as the year progresses.
+
+**Day of Week vs. Fraud**
+
+- Weekend Spike: Fraudulent transactions show a slight peak on Day 4 and Day 5 (Friday/Saturday).
+- Stability: Despite the minor weekend peak, the median and interquartile ranges are almost identical for both groups across the week.
+
+**Average Monthly Spend**
+
+- Consistent Behavior: The spending habits of users who were victims of fraud are nearly identical to those who were not.
+- No Financial Divergence: Both groups show a distribution peak around 5k, indicating that "high spenders" are not necessarily more or less targeted than "low spenders" in this dataset.
 """)
 
     # Chart 3
@@ -543,11 +575,29 @@ elif nav == "Exploratory Data Analysis (EDA)":
         st.plotly_chart(fig, use_container_width=True)   
 
     st.markdown("""
+
+**Key Findings:**
+
 **Fraud Rate by Payment Channel**
 
 - Highest risk: Card
 - Followed by: UPI
 - Lowest risk: Wallet
+
+**Fraud Rate by Device Type**
+- Highest Risk: Mobile and desktop devices show nearly identical, elevated fraud rates.
+- Lowest Risk: Tablets have a slightly lower fraud rate compared to the other two device types.
+- Consistency: The device type does not appear to be a drastic differentiator, as all rates remain near the 0.016 mark.
+
+**Fraud Rate by Is_Weekend
+
+- Weekend Spike: Fraud rates are notably higher on the weekend (is_weekend = 1) compared to weekdays.
+- Weekday Baseline: Transactions occurring during the week (is_weekend = 0) have a fraud rate of approximately 0.016, while weekends push toward 0.017.
+
+**Fraud Rate by Is_International**
+
+- Major Differentiator: This is the most significant factor shown; international transactions (is_international = 1) have a much higher fraud rate than domestic ones.
+- Risk Magnitude: The international fraud rate (approx. 0.034) is more than double the domestic fraud rate (approx. 0.015).
 """)
 
     # Chart 4
@@ -605,11 +655,19 @@ elif nav == "Exploratory Data Analysis (EDA)":
 
     st.plotly_chart(fig, use_container_width=True)
     st.markdown("""
+
+**Key Findings:**
 **Hourly Fraud Pattern**
 
 - Peak between 6pm-7pm
 - Early morning spike around 2am
 - Lowest around 9am
+
+**Transactional Time Analysis: By Date**
+
+- Upward Trend: The fraud rate shows a general increasing trend as the year progresses from January 2023 toward September 2023
+- High-Frequency Volatility: The "sawtooth" pattern indicates that fraud occurs in sharp, inconsistent bursts rather than a steady stream.
+- Significant Surge: A noticeable shift to a higher baseline fraud rate occurs around July 2023, with the highest peaks reaching nearly 0. 3 in late August/early September.
 """)
 
     
@@ -630,6 +688,9 @@ elif nav == "ML Detection":
 
         st.write("Algorithm:",config["model"]["algorithm"])
         st.write("AUC Score:",config["model"]["auc_score"])
+
+        url = "https://i.pinimg.com/originals/bb/88/64/bb88641bbc1dc8e9583ee7029c546eff.gif"
+        st.image(url, width=500)
 
     with col2:
 

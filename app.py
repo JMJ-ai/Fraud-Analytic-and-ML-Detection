@@ -254,7 +254,7 @@ tabs = st.tabs([
 # =================================================
 with tabs[0]:
 
-    background_home("https://www.pinterest.com/pin/1090715603489243050/")
+    background_home("https://i.pinimg.com/736x/c4/67/f1/c467f106abe8e13631985aa6785c1a1e.jpg")
 
     col1,col2 = st.columns([1,2])
 

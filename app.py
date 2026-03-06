@@ -51,6 +51,22 @@ def safe_to_int(value):
 # -------------------------------------------------
 # BACKGROUND IMAGE FUNCTION
 # -------------------------------------------------
+def set_background_home(image_url):
+
+    st.markdown(
+        f"""
+        <style>
+
+        .stApp {{
+        background-image: url("{image_url}");
+        background-size: cover;
+        background-attachment: fixed;
+        }}
+
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
 def set_background(image_url):
 
     st.markdown(
@@ -236,7 +252,7 @@ tabs = st.tabs([
 # =================================================
 with tabs[0]:
 
-    set_background("https://i.pinimg.com/736x/9d/be/f5/9dbef56b9bcec4174ace6442499b7bb0.jpg")
+    set_background_home("https://www.pinterest.com/pin/1090715603489243050/")
 
     col1,col2 = st.columns([1,2])
 

@@ -809,7 +809,8 @@ elif nav == "Model Evaluation":
     X_test = test_df.drop(id_cols + [suspcious_col]+ [target] + [time_cols], axis=1)
     y_test = test_df[target]
     
-    X_proc = preprocessor.transform(X_test)
+    X_test_processed = preprocessor.transform(X_test)
+    X_proc = pd.DataFrame(X_test_processed, columns=feature_names)
     X_proc = X_proc[selected_features]
 
     prob=model.predict_proba(X_proc)[:,1]

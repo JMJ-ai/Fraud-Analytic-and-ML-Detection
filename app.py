@@ -4,19 +4,28 @@ import numpy as np
 import yaml
 import joblib
 import plotly.express as px
-import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
+import matplotlib.pyplot as plt
 import zipfile
 import urllib.request
 from sqlalchemy import create_engine
 import os
+import json
 
 from sklearn.metrics import roc_auc_score, ConfusionMatrixDisplay
 
-# -----------------------------
-# Load config
-# -----------------------------
+# -------------------------------------------------
+# PAGE CONFIG
+# -------------------------------------------------
+st.set_page_config(
+    page_title="Fraud Analytics and ML Detection",
+    layout="wide"
+)
+
+# -------------------------------------------------
+# LOAD CONFIG
+# -------------------------------------------------
 with open("config.yaml") as f:
     config = yaml.safe_load(f)
 
@@ -29,10 +38,61 @@ TEST_CSV = f"{DATA_DIR}/transactions_test.csv"
 TRAIN_URL = config["files"]["train_url"]
 TEST_URL = config["files"]["test_url"]
 
+# -------------------------------------------------
+# BACKGROUND IMAGE FUNCTION
+# -------------------------------------------------
+def set_background(image_url):
 
-# -----------------------------
-# Download dataset if missing
-# -----------------------------
+    st.markdown(
+        f"""
+        <style>
+
+        .stApp {{
+        background-image: url("{image_url}");
+        background-size: cover;
+        background-attachment: fixed;
+        }}
+
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+# -------------------------------------------------
+# PARTICLE JS BACKGROUND
+# -------------------------------------------------
+def particle_background():
+
+    with open("assets/particles.json") as f:
+        particles_config = json.load(f)
+
+    st.markdown(
+        """
+        <div id="particles-js"></div>
+
+        <style>
+        #particles-js {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        top: 0;
+        left: 0;
+        }
+        </style>
+
+        <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+
+        <script>
+        particlesJS.load('particles-js', 'assets/particles.json');
+        </script>
+        """,
+        unsafe_allow_html=True
+    )
+
+# -------------------------------------------------
+# DOWNLOAD DATA
+# -------------------------------------------------
 def download_and_extract(url, filename):
 
     os.makedirs(DATA_DIR, exist_ok=True)
@@ -41,19 +101,14 @@ def download_and_extract(url, filename):
 
     if not os.path.exists(zip_path):
 
-        st.info(f"Downloading {filename}...")
-
         urllib.request.urlretrieve(url, zip_path)
 
         with zipfile.ZipFile(zip_path, 'r') as zip_ref:
             zip_ref.extractall(DATA_DIR)
 
-        st.success(f"{filename} downloaded and extracted.")
-
-
-# -----------------------------
-# Load data
-# -----------------------------
+# -------------------------------------------------
+# LOAD DATA
+# -------------------------------------------------
 @st.cache_data
 def load_data():
 
@@ -63,7 +118,6 @@ def load_data():
 
             db = config["database"]
 
-            # CREATE ENGINE FIRST
             engine = create_engine(
                 f"postgresql+psycopg2://{db['user']}:{db['password']}@{db['host']}:{db['port']}/{db['dbname']}"
             )
@@ -78,61 +132,64 @@ def load_data():
                 engine
             )
 
-            st.success("Connected to PostgreSQL")
+        except:
 
-        except Exception as e:
-
-            download_and_extract(TRAIN_URL, "transaction_train.zip")
-            download_and_extract(TEST_URL, "transaction_test.zip")
+            download_and_extract(TRAIN_URL,"transaction_train.zip")
+            download_and_extract(TEST_URL,"transaction_test.zip")
 
             train_df = pd.read_csv(TRAIN_CSV)
             test_df = pd.read_csv(TEST_CSV)
 
     else:
 
-        download_and_extract(TRAIN_URL, "transaction_train.zip")
-        download_and_extract(TEST_URL, "transaction_test.zip")
+        download_and_extract(TRAIN_URL,"transaction_train.zip")
+        download_and_extract(TEST_URL,"transaction_test.zip")
 
         train_df = pd.read_csv(TRAIN_CSV)
         test_df = pd.read_csv(TEST_CSV)
 
     return train_df, test_df
 
-
 train_df, test_df = load_data()
-train_df = train_df.sort_values("transaction_time")
-test_df = test_df.sort_values("transaction_time")
+
+# -------------------------------------------------
+# FEATURE ENGINEERING
+# -------------------------------------------------
 train_df["transaction_time"] = pd.to_datetime(train_df["transaction_time"])
 test_df["transaction_time"] = pd.to_datetime(test_df["transaction_time"])
-for df in [train_df, test_df]:
-    df['hour'] = df['transaction_time'].dt.hour
-    df['day'] = df['transaction_time'].dt.day
-    df['month'] = df['transaction_time'].dt.month
-    df['dayofweek'] = df['transaction_time'].dt.dayofweek
-    df['is_weekend'] = (df['dayofweek'] >= 5).astype(int)
-#Feature engineering
-train_df['log_amount'] = np.log1p(train_df['transaction_amount'])
-test_df['log_amount'] = np.log1p(test_df['transaction_amount'])
+
+for df in [train_df,test_df]:
+
+    df["hour"] = df["transaction_time"].dt.hour
+    df["day"] = df["transaction_time"].dt.day
+    df["month"] = df["transaction_time"].dt.month
+    df["dayofweek"] = df["transaction_time"].dt.dayofweek
+    df["is_weekend"] = (df["dayofweek"] >=5).astype(int)
+
+train_df["log_amount"] = np.log1p(train_df["transaction_amount"])
+test_df["log_amount"] = np.log1p(test_df["transaction_amount"])
+
 bool_cols = ['is_fraud', 'is_international']
 for col in bool_cols:
     train_df[col] = train_df[col].astype(int)
     test_df[col] = test_df[col].astype(int)
+
 ordinal_cols = ['kyc_level', 'credit_score_band']
+
 for col in ordinal_cols:
     train_df[col] = train_df[col].astype(int)
     test_df[col] = test_df[col].astype(int)
 
-# =====================================================
-# TABLEAU PATHS
-# Replace with your real workbook + dashboard names
-# Example: views/ASEANFoodSecurity/Overview
+# -------------------------------------------------
+# LOAD MODEL
+# -------------------------------------------------
+model = joblib.load(config["model"]["path"])
+preprocessor = joblib.load(config["model"]["preprocessor"])
+selector = joblib.load(config["model"]["selector"])
+
 # =====================================================
 TABLEAU_PATHS = {
-    "Fraud Overview": "views/FraudVisualizationAnalyticv1/FraudOverview",
-    "Time & Behavioural Pattern": "views/FraudVisualizationAnalyticv1/Time&BehaviouralPattern",
-    "Customer Risk Segmentation": "views/FraudVisualizationAnalyticv1/CUSTOMERRISKSEGMENTATION",
-    "Merchant & Channel Risk": "views/FraudVisualizationAnalyticv1/MERCHANT&CHANNELRISK",
-    "Model Monitoring": "views/FraudVisualizationAnalyticv1/MODELMONITORING"
+    "Fraud Overview": "views/FraudVisualizationAnalyticv1/FraudOverview"
 }
 # =====================================================
 # SAFE TABLEAU EMBED FUNCTION
@@ -151,53 +208,67 @@ def embed_tableau(path, height=650):
     st.components.v1.html(html_code, height=height)
 
 # -------------------------------
-# Load models
-# -------------------------------
 
-model = joblib.load(config["model"]["path"])
-preprocessor = joblib.load(config["model"]["preprocessor"])
-selector = joblib.load(config["model"]["selector"])
+# -------------------------------------------------
+# TABS NAVIGATION
+# -------------------------------------------------
+tabs = st.tabs([
+"Home",
+"Fraud Overview",
+"Exploratory Data Analysis (EDA)",
+"ML Detection",
+"Model Evaluation",
+"Methodology"
+])
 
-# -------------------------------
-# Streamlit page config
-# -------------------------------
+# =================================================
+# TAB 1 HOME
+# =================================================
+with tabs[0]:
 
-st.set_page_config(
-    page_title="Fraud Analytics and ML Detection",
-    layout="wide"
-)
+    set_background("https://i.pinimg.com/736x/9d/be/f5/9dbef56b9bcec4174ace6442499b7bb0.jpg")
 
-# -------------------------------
-# Navbar
-# -------------------------------
+    col1,col2 = st.columns([1,2])
 
-page = st.sidebar.radio(
-    "Navigation",
-    [
-        "Fraud Dashboard",
-        "EDA by Python",
-        "ML Fraud Detection",
-        "Model Evaluation",
-        "Project Methodology"
-    ]
-)
+    with col1:
+        st.image("assets/home_image.jpg")
 
-# -------------------------------
-# PAGE 1 DASHBOARD
-# -------------------------------
+    with col2:
 
-if page == "Fraud Dashboard":
+        st.markdown(
+        """
+        <h1 style='font-size:60px;color:white'>
+        Fraud Analytics & Machine Learning Detection
+        </h1>
 
-    st.subheader("Interactive Tableau Dashboard")
+        <h3 style='color:white'>
+        End-to-End Fraud Detection System
+        </h3>
+        """,
+        unsafe_allow_html=True
+        )
+
+# =================================================
+# TAB 2 DASHBOARD
+# =================================================
+with tabs[1]:
+
+    set_background("https://i.pinimg.com/1200x/78/1d/4c/781d4c6becbd05f20e26057f6cbaf9bc.jpg")
+
+    st.title("Fraud Dashboard")
+
     embed_tableau(TABLEAU_PATHS["Fraud Overview"])
 
-# -------------------------------
-# PAGE 2 EDA
-# -------------------------------
 
-elif page == "EDA by Python":
 
-    st.header("Exploratory Data Analysis by Python")
+# =================================================
+# TAB 3 EDA
+# =================================================
+with tabs[2]:
+
+    set_background("https://i.pinimg.com/1200x/78/1d/4c/781d4c6becbd05f20e26057f6cbaf9bc.jpg")
+
+    st.title("Exploratory Data Analysis")
 
     eda_df = pd.DataFrame(train_df.copy())
     eda_df['log_amount'] = np.log1p(eda_df['transaction_amount'])
@@ -436,125 +507,107 @@ elif page == "EDA by Python":
 - Lowest around 9am
 """)
 
-# -------------------------------
-# PAGE 3 ML DETECTION
-# -------------------------------
+    
+# =================================================
+# TAB 4 ML DETECTION
+# =================================================
+with tabs[3]:
 
-elif page == "ML Fraud Detection":
+    particle_background()
 
     st.title("ML Fraud Detection")
 
-    col1, col2 = st.columns(2)
-
-    # ---------------------------
-    # Model info
-    # ---------------------------
+    col1,col2=st.columns(2)
 
     with col1:
 
-        st.image("assests/model_icon.png", width=120)
+        st.image("assets/model_icon.png",width=120)
+
         st.subheader("Prediction Model Info")
 
-        st.write(f"Algorithm: {config['model']['algorithm']}")
-        st.write(f"AUC Score: {config['model']['auc_score']}")
-
-    # ---------------------------
-    # Prediction tool
-    # ---------------------------
+        st.write("Algorithm:",config["model"]["algorithm"])
+        st.write("AUC Score:",config["model"]["auc_score"])
 
     with col2:
 
-        st.image("assests/predict_icon.png", width=120)
+        st.image("assets/predict_icon.png",width=120)
 
         st.subheader("Prediction Tool")
 
-        payment_channel = st.selectbox(
-            "Payment Channel",
-            ["card","upi","bank_transfer","wallet"]
+        payment_channel=st.selectbox(
+        "Payment Channel",
+        ["card","upi","bank_transfer","wallet"]
         )
 
-        device_type = st.selectbox(
-            "Device Type",
-            ["mobile","desktop","tablet"]
+        device_type=st.selectbox(
+        "Device Type",
+        ["mobile","desktop","tablet"]
         )
 
-        amount = st.number_input("Transaction Amount")
-
-        ip_risk = st.slider("IP Risk Score", 0.0, 1.0)
-
-        merchant_risk = st.slider("Merchant Risk Score", 0.0, 1.0)
-
-        account_age = st.number_input("Account Age Days")
-
-        geo_dist = st.number_input("Geo Distance")
-
-        txn_24h = st.number_input("Txn Count 24h")
-
-        failed_txn = st.number_input("Failed Txn 24h")
-
-        txn_1h = st.number_input("Txn Count 1h")
-
-        avg_spend = st.number_input("Avg Monthly Spend")
-
-        dev_amount = st.number_input("Amount Deviation")
+        amount=st.text_input("Transaction Amount")
+        ip_risk=st.text_input("IP Risk Score")
+        merchant_risk=st.text_input("Merchant Risk Score")
+        account_age=st.text_input("Account Age Days")
+        geo_dist=st.text_input("Geo Distance")
+        txn_24h=st.text_input("Txn Count 24h")
+        failed_txn=st.text_input("Failed Txn 24h")
+        txn_1h=st.text_input("Txn Count 1h")
+        avg_spend=st.text_input("Avg Monthly Spend")
+        dev_amount=st.text_input("Amount Deviation")
 
         if st.button("Predict Fraud"):
-            
-            input_df = pd.DataFrame({
-                "transaction_amount":[amount],
-                "ip_risk_score":[ip_risk],
-                "merchant_risk_score":[merchant_risk],
-                "account_age_days":[account_age],
-                "geo_distance_from_last_txn":[geo_dist],
-                "txn_count_24h":[txn_24h],
-                "failed_txn_count_24h":[failed_txn],
-                "txn_count_1h":[txn_1h],
-                "avg_monthly_spend":[avg_spend],
-                "payment_channel":[payment_channel],
-                "device_type":[device_type],
-                "amount_deviation_from_user_mean":[dev_amount]
+
+            input_df=pd.DataFrame({
+
+            "transaction_amount":[float(amount)],
+            "ip_risk_score":[float(ip_risk)],
+            "merchant_risk_score":[float(merchant_risk)],
+            "account_age_days":[int(account_age)],
+            "geo_distance_from_last_txn":[float(geo_dist)],
+            "txn_count_24h":[int(txn_24h)],
+            "failed_txn_count_24h":[int(failed_txn)],
+            "txn_count_1h":[int(txn_1h)],
+            "avg_monthly_spend":[float(avg_spend)],
+            "payment_channel":[payment_channel],
+            "device_type":[device_type],
+            "amount_deviation_from_user_mean":[float(dev_amount)]
 
             })
 
-            input_df["log_amount"] = np.log1p(input_df["transaction_amount"])
+            input_df["log_amount"]=np.log1p(input_df["transaction_amount"])
 
-            X = preprocessor.transform(input_df)
-            X = selector.transform(X)
+            X=preprocessor.transform(input_df)
+            X=selector.transform(X)
 
-            prob = model.predict_proba(X)[0][1]
+            prob=model.predict_proba(X)[0][1]
 
-            st.metric("Fraud Probability", f"{prob*100:.2f}%")
+            st.metric("Fraud Probability",f"{prob*100:.2f}%")
 
-            if prob > 0.7:
+            if prob>0.7:
                 st.error("⚠️ Oh no! It's fraud!")
             else:
                 st.success("🟢 Phew! Not fraud")
 
-# -------------------------------
-# PAGE 4 MODEL EVALUATION
-# -------------------------------
+# =================================================
+# TAB 5 MODEL EVALUATION
+# =================================================
+with tabs[4]:
 
-elif page == "Model Evaluation":
+    set_background("https://i.pinimg.com/1200x/78/1d/4c/781d4c6becbd05f20e26057f6cbaf9bc.jpg")
 
     st.title("Model Evaluation")
-    
-    id_cols =['transaction_id', 'customer_id', 'merchant_id']
-    suspcious_col = "post_auth_risk_score"
-    target = "is_fraud"
-    time_cols = "transaction_time"
-   
-    X_test = test_df.drop(id_cols + [suspcious_col]+ [target] + [time_cols], axis=1)
-    y_test = test_df[target]
 
-    X_proc = preprocessor.transform(X_test)
-    X_proc = selector.transform(X_proc)
-   
+    X_test=test_df.drop("is_fraud",axis=1)
+    y_test=test_df["is_fraud"]
 
-    pred_prob = model.predict_proba(X_proc)[:,1]
+    X_proc=preprocessor.transform(X_test)
+    X_proc=selector.transform(X_proc)
 
-    auc = roc_auc_score(y_test, pred_prob)
+    prob=model.predict_proba(X_proc)[:,1]
 
-    st.metric("ROC AUC Score", round(auc,3))
+    auc=roc_auc_score(y_test,prob)
+
+    st.metric("ROC AUC Score",round(auc,3))
 
     st.write("Test shape:", X_test.shape)
     st.write("Processed shape:", X_proc.shape)
@@ -562,11 +615,10 @@ elif page == "Model Evaluation":
     st.write("Sample probabilities:")
     st.write(pred_prob[:10])
 
-    # Confusion Matrix
 
-    pred = model.predict(X_proc)
+    pred=model.predict(X_proc)
 
-    fig, ax = plt.subplots()
+    fig,ax=plt.subplots()
 
     ConfusionMatrixDisplay.from_predictions(
         y_test,
@@ -576,43 +628,78 @@ elif page == "Model Evaluation":
 
     st.pyplot(fig)
 
-# -------------------------------
-# PAGE 5 METHODOLOGY
-# -------------------------------
+# =================================================
+# TAB 6 METHODOLOGY
+# =================================================
+with tabs[5]:
 
-elif page == "Project Methodology":
+    set_background("https://i.pinimg.com/1200x/78/1d/4c/781d4c6becbd05f20e26057f6cbaf9bc.jpg")
 
     st.title("Project Methodology")
 
     st.image("assets/ml_pipeline.png")
-# ---------------------------------------------------
+
+# -------------------------------------------------
 # FOOTER
-# ---------------------------------------------------
+# -------------------------------------------------
+footer_html = """
+<style>
 
-st.markdown(
-"""
----
-<div style="text-align:center">
+.footer {
+position: fixed;
+left: 0;
+bottom: 0;
+width: 100%;
+background-color: rgba(0,0,0,0.85);
+color: white;
+text-align: center;
+padding: 10px;
+font-size: 14px;
+z-index: 9999;
+}
 
-Jenifer M Jues • 2026
+.footer a {
+margin: 0 10px;
+text-decoration: none;
+}
 
-<br>
+.footer img {
+width: 28px;
+margin-left: 8px;
+margin-right: 8px;
+vertical-align: middle;
+transition: transform 0.2s;
+}
+
+.footer img:hover {
+transform: scale(1.2);
+}
+
+</style>
+
+<div class="footer">
+
+<p>
+Built with Data & Passion | © 2026 Jenifer M Jues
+</p>
 
 <a href="https://github.com/JMJ-ai/Fraud-Analytic-and-ML-Detection" target="_blank">
-    <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" width="35">
+<img src="https://cdn-icons-png.flaticon.com/512/25/25231.png">
 </a>
 
 <a href="https://www.linkedin.com/in/jenifermayangjues/" target="_blank">
-    <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="35">
+<img src="https://cdn-icons-png.flaticon.com/512/174/174857.png">
 </a>
 
 <a href="https://icons8.com/" target="_blank">
-    <img src="https://img.icons8.com/?size=100&id=ayJDJ6xQKgM6&format=png&color=000000" width="35">
+<img src="https://img.icons8.com/?size=100&id=ayJDJ6xQKgM6&format=png&color=000000">
+</a>
+
+<a href="mailto:jeniferjues@gmail.com">
+<img src="https://cdn-icons-png.flaticon.com/512/732/732200.png">
 </a>
 
 </div>
-""",
-unsafe_allow_html=True
-)
+"""
 
-st.caption("End-to-End Fraud Detection System using Machine Learning and Analytics")
+st.markdown(footer_html, unsafe_allow_html=True)

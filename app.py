@@ -22,7 +22,30 @@ st.set_page_config(
     page_title="Fraud Analytics and ML Detection",
     layout="wide"
 )
+# -------------------------------------------------
+# AUTO GENERATE MISSING FEATURES
+# -------------------------------------------------
+def build_full_feature_set(input_df):
 
+    df = input_df.copy()
+
+    # Derived features
+    df["log_amount"] = np.log1p(df["transaction_amount"])
+
+    # Time-based defaults
+    now = pd.Timestamp.now()
+    df["hour"] = now.hour
+    df["day"] = now.day
+    df["month"] = now.month
+    df["dayofweek"] = now.dayofweek
+    df["is_weekend"] = int(now.dayofweek >= 5)
+    df["date"] = now.date()
+    # Other defaults
+    df["is_international"] = 0
+    df["kyc_level"] = 1
+    df["credit_score_band"] = 2
+
+    return df
 # -------------------------------------------------
 # LOAD CONFIG
 # -------------------------------------------------
@@ -267,6 +290,9 @@ train_df, test_df = load_data()
 # -------------------------------------------------
 # FEATURE ENGINEERING
 # -------------------------------------------------
+train_df = train_df.sort_values("transaction_time")
+test_df = test_df.sort_values("transaction_time")
+
 train_df["transaction_time"] = pd.to_datetime(train_df["transaction_time"])
 test_df["transaction_time"] = pd.to_datetime(test_df["transaction_time"])
 
@@ -298,6 +324,8 @@ for col in ordinal_cols:
 model = joblib.load(config["model"]["path"])
 preprocessor = joblib.load(config["model"]["preprocessor"])
 selector = joblib.load(config["model"]["selector"])
+selected_features = joblib.load(config["model"]["selected_features"])
+
 
 # =====================================================
 TABLEAU_PATHS = {
@@ -749,12 +777,11 @@ elif nav == "ML Detection":
                 "amount_deviation_from_user_mean":[dev_amount]
 
             })
-
-            input_df["log_amount"]=np.log1p(input_df["transaction_amount"])
-
-            X=preprocessor.transform(input_df)
-            X=selector.transform(X)
-
+            
+            input_df = build_full_feature_set(input_df)
+            X_processed = preprocessor.transform(input_df)
+            X = pd.DataFrame(X_processed, columns=feature_names)
+            X = X[selected_features]
             prob=model.predict_proba(X)[0][1]
 
             st.metric("Fraud Probability",f"{prob*100:.2f}%")
@@ -783,7 +810,7 @@ elif nav == "Model Evaluation":
     y_test = test_df[target]
     
     X_proc=preprocessor.transform(X_test)
-    X_proc=selector.transform(X_proc)
+    X_proc=X_proc[selected_features]
 
     prob=model.predict_proba(X_proc)[:,1]
 

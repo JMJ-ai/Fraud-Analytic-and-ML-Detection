@@ -109,7 +109,7 @@ def set_background(image_url):
 # -------------------------------------------------
 
 def set_particles_background(config_filename):
-
+    config_url = f"app/static/{config_filename}"
     st.markdown(
         f"""
         <style>

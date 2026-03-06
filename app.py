@@ -726,10 +726,6 @@ transition: transform 0.2s;
 transform: scale(1.2);
 }
 
-.block-container {
-    padding-bottom: Orem !important;
-}
-
 </style>
 
 <div class="footer">

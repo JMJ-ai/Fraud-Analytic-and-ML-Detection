@@ -816,6 +816,8 @@ elif nav == "Methodology":
 
     st.title("Project Methodology")
 
+    st.image("assests/flowchart.jpg", width=700)
+
 # -------------------------------------------------
 # FOOTER
 # -------------------------------------------------

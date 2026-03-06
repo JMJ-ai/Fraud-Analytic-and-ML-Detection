@@ -697,13 +697,14 @@ footer_html = """
 <style>
 
 .footer {
-position: fixed;
+position: relative;
 left: 0;
 bottom: 0;
 width: 100%;
 background-color: rgba(0,0,0,0.85);
 color: white;
 text-align: center;
+padding: 20px 0;
 font-size: 14px;
 z-index: 9999;
 }
@@ -723,6 +724,10 @@ transition: transform 0.2s;
 
 .footer img:hover {
 transform: scale(1.2);
+}
+
+.block-container {
+    padding-bottom: Orem !important;
 }
 
 </style>

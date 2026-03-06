@@ -113,12 +113,6 @@ def set_particles_background(config_url):
     st.markdown(
         f"""
         <style>
-        /* 1. Background and Header Setup */
-        .stApp {{
-            background-image: url("{image_url}");
-            background-size: cover;
-            background-attachment: fixed;
-        }}
         header {{visibility: hidden;}}
         footer {{visibility: hidden;}}
 

@@ -85,7 +85,7 @@ def set_background(image_url):
 
         /* Normal Text Style */
         div[role="radiogroup"] label div {{
-            color: rgba(0, 0, 0, 0.6) !important; /* Semi-transparent white */
+            color: rgba(256, 256, 256) !important; /* Semi-transparent white */
             font-size: 18px !important;
             transition: 0.3s;
         }}
@@ -626,18 +626,14 @@ elif nav == "ML Detection":
 
     with col1:
 
-        st.image("assests/model_icon.png",width=120)
-
-        st.subheader("Prediction Model Info")
+        st.subheader("ℹ️Prediction Model Info")
 
         st.write("Algorithm:",config["model"]["algorithm"])
         st.write("AUC Score:",config["model"]["auc_score"])
 
     with col2:
 
-        st.image("assests/predict_icon.png",width=120)
-
-        st.subheader("Prediction Tool")
+        st.subheader("✨Prediction Tool")
 
         payment_channel=st.selectbox(
         "Payment Channel",

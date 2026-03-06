@@ -339,24 +339,26 @@ if nav == "Home":
     
 
     col1,col2 = st.columns([1,2])
+    col1, col2 = st.columns([1, 2])
 
     with col1:
+    # use_container_width ensures the image fills its column
         st.image("assests/fraud.jpg", use_container_width=True)
+
     with col2:
-
         st.markdown(
-        """
-        <h1 style='font-size:60px;color:white'>
-        Fraud Analytics & Machine Learning Detection
-        </h1>
-
-        <h3 style='color:white'>
-        End-to-End Fraud Detection System
-        </h3>
-        """,
-        unsafe_allow_html=True
+            """
+            <div style="display: flex; flex-direction: column; justify-content: center; height: 100%; min-height: 250px;">
+                <h1 style='font-size:60px; color:white; margin-bottom: 0px; line-height: 1.1;'>
+                    Fraud Analytics & Machine Learning Detection
+                </h1>
+                <h3 style='color:white; margin-top: 10px; font-weight: 400;'>
+                    End-to-End Fraud Detection System
+                </h3>
+            </div>
+            """,
+            unsafe_allow_html=True
         )
-
 # =================================================
 # TAB 2 DASHBOARD
 # =================================================
@@ -816,7 +818,7 @@ elif nav == "Methodology":
 
     st.title("Project Methodology")
 
-    st.image("assests/flowchart.jpg", width=700)
+    st.image("assests/flowchart.png", width=700)
 
 # -------------------------------------------------
 # FOOTER

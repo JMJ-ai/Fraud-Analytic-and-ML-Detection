@@ -108,22 +108,23 @@ def set_background(image_url):
 # PARTICLE JS BACKGROUND
 # -------------------------------------------------
 
-def set_particles_background(config_url):
+def set_particles_background(config_filename):
 
     st.markdown(
         f"""
         <style>
+
         header {{visibility: hidden;}}
         footer {{visibility: hidden;}}
 
-        /* 2. Remove radio bullets */
+        /* Remove radio bullets */
         div[role="radiogroup"] > label > div:first-child {{
             display: none !important;
         }}
 
-        /* 3. Style text as simple titles */
+        /* Navigation layout */
         div[role="radiogroup"] {{
-            gap: 30px; /* Space between the text titles */
+            gap: 30px;
             justify-content: center;
         }}
 
@@ -134,39 +135,42 @@ def set_particles_background(config_url):
             cursor: pointer;
         }}
 
-        /* Normal Text Style */
+        /* Normal text */
         div[role="radiogroup"] label div {{
-            color: rgba(255, 255, 255, 0.6) !important; /* Semi-transparent white */
+            color: rgba(255,255,255,0.6) !important;
             font-size: 18px !important;
             transition: 0.3s;
         }}
 
-        /* Hover and Selected Style */
+        /* Hover + active */
         div[role="radiogroup"] label:hover div,
         div[role="radiogroup"] label:has(input:checked) div {{
-            color: white !important; /* Solid white when active/hovered */
+            color: white !important;
             font-weight: bold !important;
-            text-decoration: underline; /* Optional: adds a line under active tab */
+            text-decoration: underline;
             text-underline-offset: 8px;
         }}
 
+        /* Particles background */
         #particles-js {{
             position: fixed;
             width: 100%;
             height: 100%;
-            z-index: -1;
             top: 0;
             left: 0;
             z-index: -1;
         }}
+
         </style>
 
         <div id="particles-js"></div>
-        <script src="https://cdn.jsdelivr.net"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
         <script>
-            /* Load config from static folder path */
+        window.addEventListener("load", function() {{
             particlesJS.load('particles-js', '{config_url}', function() {{
-                console.log('callback - particles-js config loaded');
+                console.log('Particles.js loaded');
             }});
         </script>
         """,
@@ -592,7 +596,7 @@ elif nav == "Exploratory Data Analysis (EDA)":
 # =================================================
 elif nav == "ML Detection":
 
-    set_particles_background("static/particles.js")
+    set_particles_background("particles.js")
 
     st.title("ML Fraud Detection")
 

@@ -50,25 +50,7 @@ def safe_to_int(value):
         return 0
 # -------------------------------------------------
 # BACKGROUND IMAGE FUNCTION
-# -------------------------------------------------
-def background_home(image_url):
-
-    st.markdown(
-        f"""
-        <style>
-
-        .stApp {{
-        background-image: url("{image_url}");
-        background-size: cover;
-        background-attachment: fixed;
-        }}
-
-        </style>
-        """,
-        unsafe_allow_html=True
-)
-# -------------------------------------------------
-    
+# ------------------------------------------------    
 def set_background(image_url):
 
     st.markdown(
@@ -248,7 +230,7 @@ nav = st.radio(
 # =================================================
 if nav == "Home":
 
-    background_home("https://i.pinimg.com/736x/c4/67/f1/c467f106abe8e13631985aa6785c1a1e.jpg")
+    set_background("https://i.pinimg.com/736x/c4/67/f1/c467f106abe8e13631985aa6785c1a1e.jpg")
 
     col1,col2 = st.columns([1,2])
 

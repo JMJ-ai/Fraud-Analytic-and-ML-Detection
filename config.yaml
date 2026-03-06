@@ -24,6 +24,7 @@ model:
   path: models/adaboost_model.pkl
   preprocessor: models/preprocessor.pkl
   selector: models/selector.pkl
+  selected_features: models/selected_features.pkl
   algorithm: AdaBoost
   auc_score: 0.832
 

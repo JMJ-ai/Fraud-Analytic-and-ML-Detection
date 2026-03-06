@@ -240,19 +240,16 @@ def embed_tableau(path, height=650):
 # -------------------------------------------------
 # TABS NAVIGATION
 # -------------------------------------------------
-tabs = st.tabs([
-"Home",
-"Fraud Overview",
-"Exploratory Data Analysis (EDA)",
-"ML Detection",
-"Model Evaluation",
-"Methodology"
-])
-
+nav = st.radio(
+    "",
+    ["Home","Fraud Overview","Exploratory Data Analysis (EDA)","ML Detection","Model Evaluation","Methodology"],
+    horizontal+True,
+    label_visibility="collapsed"
+)
 # =================================================
 # TAB 1 HOME
 # =================================================
-with tabs[0]:
+if nav == "Home":
 
     background_home("https://i.pinimg.com/736x/c4/67/f1/c467f106abe8e13631985aa6785c1a1e.jpg")
 
@@ -279,7 +276,7 @@ with tabs[0]:
 # =================================================
 # TAB 2 DASHBOARD
 # =================================================
-with tabs[1]:
+elif nav == "Fraud Overview":
 
     set_background("https://i.pinimg.com/1200x/78/1d/4c/781d4c6becbd05f20e26057f6cbaf9bc.jpg")
 
@@ -292,7 +289,7 @@ with tabs[1]:
 # =================================================
 # TAB 3 EDA
 # =================================================
-with tabs[2]:
+elif nav == "Exploratory Data Analysis (EDA)":
 
     set_background("https://i.pinimg.com/1200x/78/1d/4c/781d4c6becbd05f20e26057f6cbaf9bc.jpg")
 
@@ -539,7 +536,7 @@ with tabs[2]:
 # =================================================
 # TAB 4 ML DETECTION
 # =================================================
-with tabs[3]:
+elif nav == "ML Detection":
 
     particle_background()
 
@@ -631,7 +628,7 @@ with tabs[3]:
 # =================================================
 # TAB 5 MODEL EVALUATION
 # =================================================
-with tabs[4]:
+elif nav == "Model Evaluation":
 
     set_background("https://i.pinimg.com/1200x/78/1d/4c/781d4c6becbd05f20e26057f6cbaf9bc.jpg")
 
@@ -671,7 +668,7 @@ with tabs[4]:
 # =================================================
 # TAB 6 METHODOLOGY
 # =================================================
-with tabs[5]:
+elif nav == "Methodology":
 
     set_background("https://i.pinimg.com/1200x/78/1d/4c/781d4c6becbd05f20e26057f6cbaf9bc.jpg")
 

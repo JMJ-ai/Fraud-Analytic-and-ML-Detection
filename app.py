@@ -341,8 +341,7 @@ if nav == "Home":
     col1,col2 = st.columns([1,2])
 
     with col1:
-        st.html('<img src="https://i.pinimg.com/736x/24/ed/d6/24edd642c1e025a90c09a68fe9637be3.jpg" style="width:500px; height:1000px;">')
-
+        st.image("assests/fraud.jpg,", use_container_width=True)
     with col2:
 
         st.markdown(

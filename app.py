@@ -777,7 +777,7 @@ elif nav == "ML Detection":
             input_df = input_df.reindex(columns=training_columns, fill_value=0)
             
             pred = pipeline.predict(input_df)
-            prob = pipeline.predict_proba(input_df)
+            prob = pipeline.predict_proba(input_df)[0][1]
             st.metric("Fraud Probability",f"{prob*100:.2f}%")
 
             if prob>0.7:

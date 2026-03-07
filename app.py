@@ -802,8 +802,6 @@ elif nav == "Model Evaluation":
    
     X_test = test_df.drop(id_cols + [suspcious_col]+ [target] + [time_cols], axis=1)
     y_test = test_df[target]
-    
-    X_test = X_test.reindex(columns=training_columns, fill_value=0)
 
     # Predictions
     pred = pipeline.predict(X_test)

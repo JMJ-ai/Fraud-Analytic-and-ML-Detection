@@ -272,7 +272,7 @@ if nav == "Home":
 # =================================================
 # TAB 2 DASHBOARD
 # =================================================
-elif nav == "Fraud Overview":
+elif nav == "Dashboard":
 
     set_background("https://i.pinimg.com/1200x/78/1d/4c/781d4c6becbd05f20e26057f6cbaf9bc.jpg")
 

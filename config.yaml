@@ -21,10 +21,9 @@ files:
   test_url: "https://github.com/user-attachments/files/25766793/transactions_test.zip"
 
 model:
-  path: models/adaboost_model.pkl
-  preprocessor: models/preprocessor.pkl
-  selector: models/selector.pkl
-  selected_features: models/selected_features.pkl
+  training_columns: models/training_columns.pkl
+  pipeline: models/fraud_pipeline.pkl
+  
   algorithm: AdaBoost
   auc_score: 0.832
 

@@ -817,8 +817,8 @@ elif nav == "Model Evaluation":
 
     st.write("Test shape:", X_test.shape)
 
-    st.write("Sample probabilities:")
-    st.write(prob[:10])
+    st.write("X_test columns:", list(X_test.columns))
+    st.write("Training columns:", training_columns)
 
     precision = precision_score(y_test, pred)
     recall = recall_score(y_test, pred)

@@ -12,9 +12,8 @@ import urllib.request
 from sqlalchemy import create_engine
 import os
 import json
-
 from sklearn.metrics import roc_auc_score, ConfusionMatrixDisplay
-
+from sklearn.metrics import precision_score, recall_score, f1_score
 # -------------------------------------------------
 # PAGE CONFIG
 # -------------------------------------------------
@@ -321,12 +320,8 @@ for col in ordinal_cols:
 # -------------------------------------------------
 # LOAD MODEL
 # -------------------------------------------------
-model = joblib.load(config["model"]["path"])
-preprocessor = joblib.load(config["model"]["preprocessor"])
-selector = joblib.load(config["model"]["selector"])
-selected_features = joblib.load(config["model"]["selected_features"])
-
-
+pipeline = joblib.load(config["model"]["fraud_pipeline"])
+training_columns = joblib.load(config["model"]["training_columns"])
 # =====================================================
 TABLEAU_PATHS = {
     "Fraud Overview": "views/FraudVisualizationAnalyticv1/FraudOverview"
@@ -779,11 +774,10 @@ elif nav == "ML Detection":
             })
             
             input_df = build_full_feature_set(input_df)
-            X_processed = preprocessor.transform(input_df)
-            X = pd.DataFrame(X_processed, columns=feature_names)
-            X = X[selected_features]
-            prob=model.predict_proba(X)[0][1]
-
+            input_df = input_df.reindex(columns=training_columns, fill_value=0)
+            
+            pred = pipeline.predict(input_df)
+            prob = pipeline.predict_proba(input_df)
             st.metric("Fraud Probability",f"{prob*100:.2f}%")
 
             if prob>0.7:
@@ -809,26 +803,33 @@ elif nav == "Model Evaluation":
     X_test = test_df.drop(id_cols + [suspcious_col]+ [target] + [time_cols], axis=1)
     y_test = test_df[target]
     
-    X_test_processed = preprocessor.transform(X_test)
-    X_proc = pd.DataFrame(X_test_processed, columns=feature_names)
-    X_proc = X_proc[selected_features]
+    X_test = X_test.reindex(columns=training_columns, fill_value=0)
 
-    prob=model.predict_proba(X_proc)[:,1]
+    # Predictions
+    pred = pipeline.predict(X_test)
+    prob = pipeline.predict_proba(X_test)[:,1]
+    
 
-    auc=roc_auc_score(y_test,prob)
+    # ROC AUC
+    auc = roc_auc_score(y_test, prob)
 
-    st.metric("ROC AUC Score",round(auc,3))
+    st.metric("ROC AUC Score", round(auc,3))
 
     st.write("Test shape:", X_test.shape)
-    st.write("Processed shape:", X_proc.shape)
 
     st.write("Sample probabilities:")
     st.write(prob[:10])
 
+    precision = precision_score(y_test, pred)
+    recall = recall_score(y_test, pred)
+    f1 = f1_score(y_test, pred)
 
-    pred=model.predict(X_proc)
+    st.metric("Precision", round(precision,3))
+    st.metric("Recall", round(recall,3))
+    st.metric("F1 Score", round(f1,3))
 
-    fig,ax=plt.subplots()
+    # Confusion matrix
+    fig, ax = plt.subplots()
 
     ConfusionMatrixDisplay.from_predictions(
         y_test,

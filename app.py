@@ -56,10 +56,8 @@ USE_DATABASE = config["data"]["use_database"]
 
 DATA_DIR = "data"
 TRAIN_CSV = f"{DATA_DIR}/transactions_train.csv"
-TEST_CSV = f"{DATA_DIR}/transactions_test.csv"
 
 TRAIN_URL = config["files"]["train_url"]
-TEST_URL = config["files"]["test_url"]
 
 def safe_to_float(value):
     try:
@@ -131,100 +129,6 @@ def set_background(image_url):
         """,
         unsafe_allow_html=True
     )
-
-# -------------------------------------------------
-# PARTICLE JS BACKGROUND
-# -------------------------------------------------
-
-import streamlit as st
-import streamlit.components.v1 as components
-
-
-def set_particles_background(config_url="./assests/particles.json"):
-
-    # --- CSS Styling ---
-    st.markdown(
-        """
-        <style>
-
-        header {visibility: hidden;}
-        footer {visibility: hidden;}
-
-        /* Remove radio bullets */
-        div[role="radiogroup"] > label > div:first-child {
-            display: none !important;
-        }
-
-        /* Navigation layout */
-        div[role="radiogroup"] {
-            gap: 30px;
-            justify-content: center;
-        }
-
-        div[role="radiogroup"] label {
-            background: none !important;
-            border: none !important;
-            padding: 0 !important;
-            cursor: pointer;
-        }
-
-        /* Normal text */
-        div[role="radiogroup"] label div {
-            color: rgba(0, 0, 0, 0.6) !important;
-            font-size: 18px !important;
-            transition: 0.3s;
-        }
-
-        /* Hover + active */
-        div[role="radiogroup"] label:hover div,
-        div[role="radiogroup"] label:has(input:checked) div {
-            color: white !important;
-            font-weight: bold !important;
-            text-decoration: underline;
-            text-underline-offset: 8px;
-        }
-
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-
-    # --- Particles Background ---
-    particles_html = f"""
-    <!DOCTYPE html>
-    <html>
-    <head>
-    <style>
-
-    #particles-js {{
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        z-index: -1;
-    }}
-
-    </style>
-    </head>
-
-    <body>
-
-    <div id="particles-js"></div>
-
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-
-    <script>
-    particlesJS.load('particles-js', '{config_url}', function() {{
-        console.log('particles loaded');
-    }});
-    </script>
-
-    </body>
-    </html>
-    """
-
-    components.html(particles_html, height=0, width=0)
 # -------------------------------------------------
 # DOWNLOAD DATA
 # -------------------------------------------------
@@ -262,41 +166,29 @@ def load_data():
                 engine
             )
 
-            test_df = pd.read_sql(
-                f"SELECT * FROM {config['tables']['test']}",
-                engine
-            )
-
         except:
 
             download_and_extract(TRAIN_URL,"transaction_train.zip")
-            download_and_extract(TEST_URL,"transaction_test.zip")
 
             train_df = pd.read_csv(TRAIN_CSV)
-            test_df = pd.read_csv(TEST_CSV)
 
     else:
 
         download_and_extract(TRAIN_URL,"transaction_train.zip")
-        download_and_extract(TEST_URL,"transaction_test.zip")
-
+        
         train_df = pd.read_csv(TRAIN_CSV)
-        test_df = pd.read_csv(TEST_CSV)
+        
+    return train_df
 
-    return train_df, test_df
-
-train_df, test_df = load_data()
+train_df = load_data()
 
 # -------------------------------------------------
 # FEATURE ENGINEERING
 # -------------------------------------------------
 train_df = train_df.sort_values("transaction_time")
-test_df = test_df.sort_values("transaction_time")
-
 train_df["transaction_time"] = pd.to_datetime(train_df["transaction_time"])
-test_df["transaction_time"] = pd.to_datetime(test_df["transaction_time"])
 
-for df in [train_df,test_df]:
+for df in [train_df]:
 
     df["hour"] = df["transaction_time"].dt.hour
     df["day"] = df["transaction_time"].dt.day
@@ -305,19 +197,15 @@ for df in [train_df,test_df]:
     df["is_weekend"] = (df["dayofweek"] >=5).astype(int)
 
 train_df["log_amount"] = np.log1p(train_df["transaction_amount"])
-test_df["log_amount"] = np.log1p(test_df["transaction_amount"])
-
 bool_cols = ['is_fraud', 'is_international']
 for col in bool_cols:
     train_df[col] = train_df[col].astype(int)
-    test_df[col] = test_df[col].astype(int)
-
+    
 ordinal_cols = ['kyc_level', 'credit_score_band']
 
 for col in ordinal_cols:
     train_df[col] = train_df[col].astype(int)
-    test_df[col] = test_df[col].astype(int)
-
+   
 # -------------------------------------------------
 # LOAD MODEL
 # -------------------------------------------------
@@ -342,15 +230,12 @@ def embed_tableau(path, height=650):
     </tableau-viz>
     """
     st.components.v1.html(html_code, height=height)
-
-# -------------------------------
-
 # -------------------------------------------------
 # TABS NAVIGATION
 # -------------------------------------------------
 nav = st.radio(
     "",
-    ["Home","Fraud Overview","Exploratory Data Analysis (EDA)","ML Detection","Model Evaluation","Methodology"],
+    ["Home","Fraud Overview","Exploratory Data Analysis (EDA)","ML Detection", "Methodology"],
     horizontal=True,
     label_visibility="collapsed"
 )
@@ -785,63 +670,9 @@ elif nav == "ML Detection":
                 st.error("⚠️ Oh no! It's fraud!")
             else:
                 st.success("🟢 Phew! Not fraud")
-    
 
 # =================================================
-# TAB 5 MODEL EVALUATION
-# =================================================
-elif nav == "Model Evaluation":
-
-    set_background("https://i.pinimg.com/1200x/78/1d/4c/781d4c6becbd05f20e26057f6cbaf9bc.jpg")
-
-    st.title("Model Evaluation")
-
-    id_cols =['transaction_id', 'customer_id', 'merchant_id']
-    suspcious_col = "post_auth_risk_score"
-    target = "is_fraud"
-    time_cols = "transaction_time"
-   
-    X_test = test_df.drop(id_cols + [suspcious_col]+ [target] + [time_cols], axis=1)
-    y_test = test_df[target]
-
-    # Predictions
-    pred = pipeline.predict(X_test)
-    prob = pipeline.predict_proba(X_test)[:,1]
-    
-
-    # ROC AUC
-    auc = roc_auc_score(y_test, prob)
-
-    st.metric("ROC AUC Score", round(auc,3))
-
-    st.write("Test shape:", X_test.shape)
-
-    st.write("X_test columns:", list(X_test.columns))
-    st.write("Training columns:", training_columns)
-
-    st.write("Python:", sys.version)
-
-    precision = precision_score(y_test, pred)
-    recall = recall_score(y_test, pred)
-    f1 = f1_score(y_test, pred)
-
-    st.metric("Precision", round(precision,3))
-    st.metric("Recall", round(recall,3))
-    st.metric("F1 Score", round(f1,3))
-
-    # Confusion matrix
-    fig, ax = plt.subplots()
-
-    ConfusionMatrixDisplay.from_predictions(
-        y_test,
-        pred,
-        ax=ax
-    )
-
-    st.pyplot(fig)
-
-# =================================================
-# TAB 6 METHODOLOGY
+# TAB 5 METHODOLOGY
 # =================================================
 elif nav == "Methodology":
 

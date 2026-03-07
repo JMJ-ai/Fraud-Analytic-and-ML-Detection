@@ -320,6 +320,7 @@ for col in ordinal_cols:
 # -------------------------------------------------
 # LOAD MODEL
 # -------------------------------------------------
+model = joblib.load(config["model"]["path"])
 pipeline = joblib.load(config["model"]["fraud_pipeline"])
 training_columns = joblib.load(config["model"]["training_columns"])
 # =====================================================

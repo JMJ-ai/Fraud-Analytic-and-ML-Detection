@@ -818,6 +818,8 @@ elif nav == "Model Evaluation":
     st.write("X_test columns:", list(X_test.columns))
     st.write("Training columns:", training_columns)
 
+    st.write("Python:", sys.version)
+
     precision = precision_score(y_test, pred)
     recall = recall_score(y_test, pred)
     f1 = f1_score(y_test, pred)

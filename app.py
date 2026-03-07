@@ -235,7 +235,7 @@ def embed_tableau(path, height=650):
 # -------------------------------------------------
 nav = st.radio(
     "",
-    ["Home","Fraud Overview","Exploratory Data Analysis (EDA)","ML Detection", "Methodology"],
+    ["Home","Dashboard","Exploratory Data Analysis (EDA)","ML Detection", "Methodology"],
     horizontal=True,
     label_visibility="collapsed"
 )

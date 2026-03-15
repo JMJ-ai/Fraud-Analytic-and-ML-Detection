@@ -385,7 +385,7 @@ if nav == "Home":
 # =================================================
 elif nav == "Dashboard":
 
-    set_background("https://i.pinimg.com/1200x/73/12/d4/7312d47a09137b32e094d33257096209.jpg")
+    set_background("https://i.pinimg.com/736x/43/ae/7a/43ae7a905d7834b6cc30d867b261ef90.jpg")
 
     st.title("Fraud Dashboard")
 
@@ -398,7 +398,7 @@ elif nav == "Dashboard":
 # =================================================
 elif nav == "Exploratory Data Analysis (EDA)":
 
-    set_background("https://i.pinimg.com/1200x/73/12/d4/7312d47a09137b32e094d33257096209.jpg")
+    set_background("https://i.pinimg.com/736x/43/ae/7a/43ae7a905d7834b6cc30d867b261ef90.jpg")
 
     st.title("Exploratory Data Analysis")
     eda_df = train_df.copy()
@@ -751,7 +751,7 @@ elif nav == "ML Detection":
     </style>
     """, unsafe_allow_html=True)
 
-    set_background("https://i.pinimg.com/1200x/73/12/d4/7312d47a09137b32e094d33257096209.jpg")
+    set_background("https://i.pinimg.com/736x/43/ae/7a/43ae7a905d7834b6cc30d867b261ef90.jpg")
 
     st.title("ML Fraud Detection")
 
@@ -859,7 +859,7 @@ elif nav == "ML Detection":
 # =================================================
 elif nav == "Methodology":
 
-    set_background("https://i.pinimg.com/736x/d4/6f/a1/d46fa14d874ee0be170864d08227ccc8.jpg")
+    set_background("https://i.pinimg.com/736x/43/ae/7a/43ae7a905d7834b6cc30d867b261ef90.jpg")
 
     st.title("Project Methodology")
 
@@ -878,7 +878,7 @@ left: 0;
 bottom: 0;
 width: 100%;
 background-color: transparent;
-color: white;
+color: black;
 text-align: center;
 padding: 20px 0;
 font-size: 14px;

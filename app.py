@@ -112,7 +112,7 @@ def set_background(image_url):
         }}
 
         div[role="radiogroup"] label {{
-            background: white !important;
+            background: none !important;
             border: none !important;
             padding: 0 !important;
             cursor: pointer;
@@ -257,12 +257,22 @@ if nav == "Home":
     # SECTION 1 : MAIN TITLE (NO IMAGE)
     # =====================================
     st.markdown("""
+
     <div style="
-        flex:1;
-        min-width:3009x
-        padding:120px 20px;
-        text-align:center;
+        max-width:1100px;
+        margin:auto;
+        padding:80px 20px;
     ">
+
+    <div style="
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:40px;
+        flex-wrap:wrap;
+    ">
+    <!-- LEFT SIDE : TEXT -->
+    <div style="flex:1; min-width:300px; color:white;">
 
     <h1 style="font-size:90px;color:red;">
     Fraud Analytics and ML Detection

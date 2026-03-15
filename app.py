@@ -69,6 +69,14 @@ def safe_to_int(value):
         return int(value)
     except:
         return 0
+
+
+import base64
+
+def get_base64_image(image_path):
+    with open(image_path, "rb") as f:
+        return base64.b64encode(f.read()).decode()
+header_base64 = get_base64_image("assests/header2.png")
 # -------------------------------------------------
 # BACKGROUND IMAGE FUNCTION
 # ------------------------------------------------    
@@ -243,66 +251,35 @@ nav = st.radio(
 # HOME
 # =================================================
 if nav == "Home":
+    st.markdown(f"""
+    <style>
 
+    /* FULL WIDTH HEADER IMAGE */
+    .home-header {{
+        width:100vw;
+        height:420px;
+        margin-left:calc(-50vw + 50%);
+        background-image:url("data:image/png;base64,{header_base64}");
+        background-size:cover;
+        background-position:center;
+    }}
+
+    /* Pull navbar onto the header image */
+    div[role="radiogroup"] {{
+        margin-top:-360px;
+    }}
+
+    </style>
+    """, unsafe_allow_html=True)
+    
     # =====================================
     # SECTION 1 : MAIN TITLE (NO IMAGE)
     # =====================================
     st.markdown("""
-    <div style="
-        width:100vw;
-        margin-left:calc(-50vw + 50%);
-        background-image: url('static/header2.png');
-        background-size:cover;
-        background-attachment: fixed;
-        background-position:center;
-    ">
-
-    /* Hides header/footer and removes the top padding gap */
-    header {{visibility: hidden;}}
-    footer {{visibility: hidden;}}
-        
-    .block-container {{
-        padding-top: 0rem !important;
-        padding-bottom: 0rem !important;
-    }}
-
-    /* 2. Remove radio bullets */
-    div[role="radiogroup"] > label > div:first-child {{
-        display: none !important;
-    }}
-
-    /* 3. Style text as simple titles */
-    div[role="radiogroup"] {{
-        gap: 30px; 
-        justify-content: center;
-    }}
-
-    div[role="radiogroup"] label {{
-        background: none !important;
-        border: none !important;
-        padding: 0 !important;
-        cursor: pointer;
-    }}
-
-    /* Normal Text Style */
-    div[role="radiogroup"] label div {{
-         color: rgba(255, 255, 255, 0.7) !important; /* Fixed RGBA syntax */
-         font-size: 18px !important;
-         transition: 0.3s;
-    }}
-
-    /* Hover and Selected Style */
-    div[role="radiogroup"] label:hover div,
-    div[role="radiogroup"] label:has(input:checked) div {{
-        color: white !important; 
-        font-weight: bold !important;
-        text-decoration: underline; 
-        text-underline-offset: 8px;
-    }}
-
-    </div>
+    <div class="home-header"></div>
     """, unsafe_allow_html=True)
 
+    st.markdown("<div style='margin-top:-250px'></div>", unsafe_allow_html=True)
     # =====================================
     # SECTION 2 : ABOUT PROJECT
     # IMAGE + 40% DARK OVERLAY

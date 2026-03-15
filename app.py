@@ -120,7 +120,7 @@ def set_background(image_url):
 
         /* Normal Text Style */
         div[role="radiogroup"] label div {{
-            color: rgba(255, 255, 255, 0.7) !important; /* Fixed RGBA syntax */
+            color: white !important; /* Fixed RGBA syntax */
             font-size: 18px !important;
             transition: 0.3s;
         }}
@@ -128,9 +128,10 @@ def set_background(image_url):
         /* Hover and Selected Style */
         div[role="radiogroup"] label:hover div,
         div[role="radiogroup"] label:has(input:checked) div {{
-            color: white !important; 
+            color: #ff2b2b !important; 
             font-weight: bold !important;
             text-decoration: underline; 
+            text-decoration-color:#ff2b2b;
             text-underline-offset: 8px;
         }}
         </style>

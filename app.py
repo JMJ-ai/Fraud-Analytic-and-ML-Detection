@@ -129,57 +129,6 @@ def set_background(image_url):
         """,
         unsafe_allow_html=True
     )
-
-    def set_home_background():
-        st.markdown(
-            f"""
-            <style> 
-            /* Hides header/footer and removes the top padding gap */
-            header {{visibility: hidden;}}
-            footer {{visibility: hidden;}}
-        
-            .block-container {{
-                padding-top: 0rem !important;
-                padding-bottom: 0rem !important;
-            }}
-
-            /* 2. Remove radio bullets */
-            div[role="radiogroup"] > label > div:first-child {{
-                display: none !important;
-            }}
-
-            /* 3. Style text as simple titles */
-            div[role="radiogroup"] {{
-                gap: 30px; 
-                justify-content: center;
-            }}
-
-            div[role="radiogroup"] label {{
-                background: none !important;
-                border: none !important;
-                padding: 0 !important;
-                cursor: pointer;
-            }}
-
-            /* Normal Text Style */
-            div[role="radiogroup"] label div {{
-                color: rgba(255, 255, 255, 0.7) !important; /* Fixed RGBA syntax */
-                font-size: 18px !important;
-                transition: 0.3s;
-            }}
-
-            /* Hover and Selected Style */
-            div[role="radiogroup"] label:hover div,
-            div[role="radiogroup"] label:has(input:checked) div {{
-                color: white !important; 
-                font-weight: bold !important;
-                text-decoration: underline; 
-                text-underline-offset: 8px;
-            }}
-            </style>
-            """,
-            unsafe_allow_html=True
-        )
 # -------------------------------------------------
 # DOWNLOAD DATA
 # -------------------------------------------------
@@ -295,7 +244,6 @@ nav = st.radio(
 # =================================================
 if nav == "Home":
 
-    set_home_background()
     # =====================================
     # SECTION 1 : MAIN TITLE (NO IMAGE)
     # =====================================
@@ -308,6 +256,49 @@ if nav == "Home":
         background-attachment: fixed;
         background-position:center;
     ">
+
+    /* Hides header/footer and removes the top padding gap */
+    header {{visibility: hidden;}}
+    footer {{visibility: hidden;}}
+        
+    .block-container {{
+        padding-top: 0rem !important;
+        padding-bottom: 0rem !important;
+    }}
+
+    /* 2. Remove radio bullets */
+    div[role="radiogroup"] > label > div:first-child {{
+        display: none !important;
+    }}
+
+    /* 3. Style text as simple titles */
+    div[role="radiogroup"] {{
+        gap: 30px; 
+        justify-content: center;
+    }}
+
+    div[role="radiogroup"] label {{
+        background: none !important;
+        border: none !important;
+        padding: 0 !important;
+        cursor: pointer;
+    }}
+
+    /* Normal Text Style */
+    div[role="radiogroup"] label div {{
+         color: rgba(255, 255, 255, 0.7) !important; /* Fixed RGBA syntax */
+         font-size: 18px !important;
+         transition: 0.3s;
+    }}
+
+    /* Hover and Selected Style */
+    div[role="radiogroup"] label:hover div,
+    div[role="radiogroup"] label:has(input:checked) div {{
+        color: white !important; 
+        font-weight: bold !important;
+        text-decoration: underline; 
+        text-underline-offset: 8px;
+    }}
 
     </div>
     """, unsafe_allow_html=True)

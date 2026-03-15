@@ -128,10 +128,10 @@ def set_background(image_url):
         /* Hover and Selected Style */
         div[role="radiogroup"] label:hover div,
         div[role="radiogroup"] label:has(input:checked) div {{
-            color: #ff2b2b !important; 
+            color: black !important; 
             font-weight: bold !important;
             text-decoration: underline; 
-            text-decoration-color:#ff2b2b;
+            text-decoration-color:white;
             text-underline-offset: 8px;
         }}
         </style>
@@ -306,7 +306,7 @@ if nav == "Home":
     <div style="
         width:100vw;
         margin-left:calc(-50vw + 50%);
-        background-color:#062e0c;
+        background-color:#ede8e8;
         background-size:cover;
         background-position:center;    
     ">
@@ -357,7 +357,7 @@ if nav == "Home":
     <div style="
         width:100vw;
         margin-left:calc(-50vw + 50%);
-        background-color:#6e460e;
+        background-color:#8a0b0b;
     ">
 
     <div style="
@@ -398,7 +398,7 @@ elif nav == "Dashboard":
 # =================================================
 elif nav == "Exploratory Data Analysis (EDA)":
 
-    set_background("https://i.pinimg.com/736x/d4/6f/a1/d46fa14d874ee0be170864d08227ccc8.jpg")
+    set_background("https://i.pinimg.com/1200x/73/12/d4/7312d47a09137b32e094d33257096209.jpg")
 
     st.title("Exploratory Data Analysis")
     eda_df = train_df.copy()
@@ -477,6 +477,11 @@ elif nav == "Exploratory Data Analysis (EDA)":
             row=1,col=2
         )
 
+        fig.update_layout(
+                plot_bgcolor="rgba(0,0,0,0)",
+                paper_bgcolor="rgba(0,0,0,0)"
+        )
+
         st.plotly_chart(fig,use_container_width=True)
 
         st.markdown("""
@@ -492,7 +497,7 @@ elif nav == "Exploratory Data Analysis (EDA)":
     # Numerical Distribution
     # =========================
 
-    with st.container(key="eda_distribution"):
+    with st.container(key="eda_numeric"):
 
         st.subheader("Numerical Features Distribution")
 
@@ -557,6 +562,11 @@ elif nav == "Exploratory Data Analysis (EDA)":
                 row=1,col=2
             )
 
+            fig.update_layout(
+                plot_bgcolor="rgba(0,0,0,0)",
+                paper_bgcolor="rgba(0,0,0,0)"
+            )
+
             st.plotly_chart(fig,use_container_width=True)
 
         st.markdown("""
@@ -572,7 +582,7 @@ elif nav == "Exploratory Data Analysis (EDA)":
     # Categorical Distribution
     # =========================
 
-    with st.container(key="eda_distribution"):
+    with st.container(key="eda_cats"):
 
         st.subheader("Categorical Feature Distribution")
 
@@ -612,7 +622,9 @@ elif nav == "Exploratory Data Analysis (EDA)":
 
         fig.update_layout(
             height=600,
-            showlegend=False
+            showlegend=False,
+            plot_bgcolor="rgba(0,0,0,0)",
+            paper_bgcolor="rgba(0,0,0,0)"
         )
 
         st.plotly_chart(fig,use_container_width=True)
@@ -677,6 +689,11 @@ elif nav == "Exploratory Data Analysis (EDA)":
             row=1,col=2
         )
 
+        fig.update_layout(
+                plot_bgcolor="rgba(0,0,0,0)",
+                paper_bgcolor="rgba(0,0,0,0)"
+        )
+
         st.plotly_chart(fig,use_container_width=True)
 
         st.markdown("""
@@ -734,7 +751,7 @@ elif nav == "ML Detection":
     </style>
     """, unsafe_allow_html=True)
 
-    set_background("https://i.pinimg.com/736x/d4/6f/a1/d46fa14d874ee0be170864d08227ccc8.jpg")
+    set_background("https://i.pinimg.com/1200x/73/12/d4/7312d47a09137b32e094d33257096209.jpg")
 
     st.title("ML Fraud Detection")
 

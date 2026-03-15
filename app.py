@@ -240,35 +240,93 @@ nav = st.radio(
     label_visibility="collapsed"
 )
 # =================================================
-# TAB 1 HOME
+# HOME
 # =================================================
 if nav == "Home":
 
-    set_background("https://i.pinimg.com/736x/cb/38/21/cb3821211ff00fb8456a24467e709004.jpg")
-    
+    set_background("https://i.pinimg.com/736x/b0/23/3b/b0233bbc37682d2eb28d5692341296b1.jpg")
+    # =====================================
+    # SECTION 2 : ABOUT PROJECT
+    # IMAGE + 40% DARK OVERLAY
+    # =====================================
+    st.markdown("""
+    <div style="
+        width:100vw;
+        margin-left:calc(-50vw + 50%);
+        background-color:#062e0c;
+        background-size:cover;
+        background-position:center;    
+    ">
 
-    col1,col2 = st.columns([1,2])
-    col1, col2 = st.columns([1, 2])
+    <div style="
+        max-width:1000px;
+        margin:auto;
+        padding:80px 20px;
+        text-align:center;
+    ">
 
-    with col1:
-    # use_container_width ensures the image fills its column
-        url = "https://simplyadtype.wordpress.com/wp-content/uploads/2020/09/gif-1.gif"
-        st.image(url, use_container_width=True)
+    <h2 style="text-align:center;color:white;">
+    About This Project
+    </h2>
 
-    with col2:
-        st.markdown(
-            """
-            <div style="display: flex; flex-direction: column; justify-content: center; height: 100%; min-height: 250px;">
-                <h1 style='font-size:60px; color:white; margin-bottom: 0px; line-height: 1.1;'>
-                    Fraud Analytics & Machine Learning Detection
-                </h1>
-                <h3 style='color:white; margin-top: 10px; font-weight: 400;'>
-                    End-to-End Fraud Detection System
-                </h3>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+    <br>
+
+    <p style="color:white;font-size:18px;text-align:center;max-width:900px;margin:auto;">
+    Financial fraud is a growing threat, costing banks and e-commerce platforms billions of dollars annually.
+    Recent studies show ensemble machine learning models, such as CatBoost and XGBoost, can achieve a 
+    ROC-AUC of ~0.84 on temporal transaction datasets, highlighting the importance of feature engineering 
+    and robust model pipelines.
+    </p>
+
+    <br>
+
+    <p style="color:white;font-size:18px;text-align:center;max-width:900px;margin:auto;">
+    The goal is to explores feature selection to reduce redundancy, baseline modeling with LightGBM
+    model exploration using Random Forest, AdaBoost, and XGBoost and feature importance analysis to interpret results
+    </p>
+
+    <br>
+
+    <p style="text-align:center;color:white;">
+    Data source:
+    <a href="(https://www.kaggle.com/code/rohit8527kmr7518/fraud-detection-eda-modelling-0-84-auc/input" target="_blank" style="color:#FFD700;">Kaggle</a>
+
+    </div>
+    """, unsafe_allow_html=True)
+
+
+
+    # =====================================
+    # SECTION 3 : PROBLEM STATEMENT
+    # DARK BACKGROUND
+    # =====================================
+    st.markdown("""
+    <div style="
+        width:100vw;
+        margin-left:calc(-50vw + 50%);
+        background-color:#6e460e;
+    ">
+
+    <div style="
+        max-width:1000px;
+        margin:auto;
+        padding:80px 20px;
+        text-align:center;
+    ">
+
+    <h2 style="text-align:center;color:white;">
+    Problem Statement
+    </h2>
+
+    <br>
+
+    <p style="color:white;font-size:18px;text-align:center;max-width:900px;margin:auto;">
+    Detecting fraudulent transactions is challenging due to class imbalance, temporal drift, and noisy data. Traditional models
+    often fail when minority fraud patterns are overshadowed by the majority of legitimate transactions
+    </p>
+
+    </div>
+    """, unsafe_allow_html=True)
 # =================================================
 # TAB 2 DASHBOARD
 # =================================================
@@ -290,296 +348,336 @@ elif nav == "Exploratory Data Analysis (EDA)":
     set_background("https://i.pinimg.com/1200x/78/1d/4c/781d4c6becbd05f20e26057f6cbaf9bc.jpg")
 
     st.title("Exploratory Data Analysis")
-
-    eda_df = pd.DataFrame(train_df.copy())
-    eda_df['log_amount'] = np.log1p(eda_df['transaction_amount'])
-
-    # Chart 1
-    st.subheader("Target Data Distribution")
-
-    counts = eda_df['is_fraud'].value_counts()
-
-    labels = ['Non Fraud', 'Fraud']
-    values = [counts.get(0,0), counts.get(1,0)]
-
-    fig = make_subplots(
-        rows=1, cols=2,
-        specs=[[{"type":"bar"},{"type":"pie"}]],
-        subplot_titles=("Fraud Count","Fraud Proportion")
-    )
-
-    fig.add_trace(
-        go.Bar(
-            x=labels,
-            y=values,
-            marker=dict(color=['steelblue', 'crimson'])
-        ),           
-        row=1,col=1
-    )
-
-    fig.add_trace(
-        go.Pie(
-            labels=labels,
-            values=values,
-            marker=dict(colors=['steelblue', 'crimson']),
-            textinfo='percent+label',
-            rotation=90
-        ),
-        row=1,col=2
-    )
-
-    st.plotly_chart(fig, use_container_width=True)
-
     st.markdown("""
-**Key Findings**
+    <style>
 
-- Extreme Class Imbalance
-- 98.4% transactions are non-fraud
-- Only 1.62% are fraud
-""")
+    /* White glass container */
+    [class*="st-key-eda_"], 
+    [class*="st-key-cluster_"] {
 
-    # Chart 2
-    st.subheader("Numerical Features Distribution")
+        background: rgba(255,255,255,0.40);
+        backdrop-filter: blur(8px);
 
-    num_cols = ['transaction_amount', 'log_amount', 'hour', 'day', 'month', 'dayofweek', 'avg_monthly_spend']
+        padding: 25px;
+        border-radius: 16px;
 
-    for col in num_cols:
+        border: 1px solid rgba(255,255,255,0.6);
 
-        non_fraud = eda_df[eda_df['is_fraud'] == 0][col]
-        fraud = eda_df[eda_df['is_fraud'] == 1][col]
+        box-shadow: 
+            0px 6px 25px rgba(0,0,0,0.35);
 
-        fig = make_subplots(
-            rows=1,
-            cols=2,
-            subplot_titles=(
-                f"{col} distribution by fraud",
-                f"{col} boxplot by fraud"
+        transition: all 0.25s ease;
+    }
+
+    /* Hover animation */
+    [class*="st-key-eda_"]:hover,
+    [class*="st-key-cluster_"]:hover {
+
+        transform: translateY(-4px);
+        box-shadow: 
+            0px 10px 30px rgba(0,0,0,0.45);
+
+    }
+
+    </style>
+    """, unsafe_allow_html=True)
+
+    col1, col2, col3, col4 = st.columns(4)
+
+    with col1:
+         with st.container(key="eda_distribution"):
+            eda_df = pd.DataFrame(train_df.copy())
+            eda_df['log_amount'] = np.log1p(eda_df['transaction_amount'])
+
+            # Chart 1
+            st.subheader("Target Data Distribution")
+
+            counts = eda_df['is_fraud'].value_counts()
+
+            labels = ['Non Fraud', 'Fraud']
+            values = [counts.get(0,0), counts.get(1,0)]
+
+            fig = make_subplots(
+                rows=1, cols=2,
+                specs=[[{"type":"bar"},{"type":"pie"}]],
+                subplot_titles=("Fraud Count","Fraud Proportion")
             )
-        )
 
-        fig.add_trace(
-            go.Histogram(
-                x=non_fraud,
-                nbinsx=50,
-                name="Non-fraud",
-                histnorm='probability density',
-                opacity=0.6,
-                marker_color='steelblue'
-            ),
-            row=1,
-            col=1
-        )
+            fig.add_trace(
+                go.Bar(
+                    x=labels,
+                    y=values,
+                    marker=dict(color=['steelblue', 'crimson'])
+                ),           
+                row=1,col=1
+            )
 
-        fig.add_trace(
-            go.Histogram(
-                x=fraud,
-                nbinsx=50,
-                name="Fraud",
-                histnorm='probability density',
-                opacity=0.6,
-                marker_color='crimson'
-            ),
-            row=1,
-            col=1
-        )
+            fig.add_trace(
+                go.Pie(
+                    labels=labels,
+                    values=values,
+                    marker=dict(colors=['steelblue', 'crimson']),
+                    textinfo='percent+label',
+                    rotation=90
+                ),
+                row=1,col=2
+            )
 
-        fig.add_trace(
-            go.Box(
-                y=non_fraud,
-                name="Non-fraud",
-                marker_color='steelblue',
-                boxmean=True
-            ),
-            row=1,
-            col=2
-        )
+            st.plotly_chart(fig, use_container_width=True)
 
-        fig.add_trace(
-            go.Box(
-                y=fraud,
-                name="Fraud",
-                marker_color='crimson',
-                boxmean=True
-            ),
-            row=1,
-            col=2
-        )
+            st.markdown("""
+            **Key Findings**
 
-        fig.update_layout(
-            title_text=f"{col} Analysis by Fraud",
-            showlegend=True
-        )
+            - Extreme Class Imbalance
+            - 98.4% transactions are non-fraud
+            - Only 1.62% are fraud
+            """)
+    with col2:
+        with st.container(key="eda_distribution_numerical"):
+            # Chart 2
+            st.subheader("Numerical Features Distribution")
 
-        st.plotly_chart(fig, use_container_width=True)
+            num_cols = ['transaction_amount', 'log_amount', 'hour', 'day', 'month', 'dayofweek', 'avg_monthly_spend']
 
-    st.markdown("""
-**Key Findings:**
+            for col in num_cols:
 
-**Transaction Amount vs Fraud**
+                non_fraud = eda_df[eda_df['is_fraud'] == 0][col]
+                fraud = eda_df[eda_df['is_fraud'] == 1][col]
 
-- Overlapping distributions between fraud and non-fraud
-- Similar medians and quartiles
-- Non-fraud has larger outliers
+                fig = make_subplots(
+                    rows=1,
+                    cols=2,
+                    subplot_titles=(
+                        f"{col} distribution by fraud",
+                        f"{col} boxplot by fraud"
+                    )
+                )
 
-**Log Amount vs Fraud**
+                fig.add_trace(
+                    go.Histogram(
+                        x=non_fraud,
+                        nbinsx=50,
+                        name="Non-fraud",
+                        histnorm='probability density',
+                        opacity=0.6,
+                        marker_color='steelblue'
+                    ),
+                    row=1,
+                    col=1
+                 )
 
-- Normalized distribution for both fraud and non-fraud centered around 7.5 to 8.0
-- No strong separation and confirming that transactiob amount alone is not a strong differentiator for detecting fraud.
+                fig.add_trace(
+                    go.Histogram(
+                        x=fraud,
+                        nbinsx=50,
+                        name="Fraud",
+                        histnorm='probability density',
+                        opacity=0.6,
+                        marker_color='crimson'
+                    ),
+                    row=1,
+                    col=1
+                )
 
-**Hour vs. Fraud**
+                fig.add_trace(
+                    go.Box(
+                        y=non_fraud,
+                        name="Non-fraud",
+                        marker_color='steelblue',
+                        boxmean=True
+                    ),
+                    row=1,
+                    col=2
+                )
 
-- Slight Evening Peak: There is a noticeable increase in fraud density during the evening hours (approx. 17:00 to 22:00).
-- Uniformity: Generally, both classes are distributed across all 24 hours, but fraud appears slightly more "concentrated" in certain blocks than non-fraud.
+                fig.add_trace(
+                    go.Box(
+                        y=fraud,
+                        name="Fraud",
+                        marker_color='crimson',
+                        boxmean=True
+                    ),
+                    row=1,
+                    col=2
+                )
 
-**Day vs. Fraud**
+                fig.update_layout(
+                    title_text=f"{col} Analysis by Fraud",
+                    showlegend=True
+                )
 
-- Random Distribution: Fraud occurs fairly consistently throughout the month.
-- Minor Fluctuations: There are small spikes around day 5 and day 20, but the overall distributions (boxplots) for fraud and non-fraud are virtually identical.
+                st.plotly_chart(fig, use_container_width=True)
 
-**Month vs. Fraud**
+            st.markdown("""
+                **Key Findings:**
 
-- Late Year Surge: There is a distinct increase in the proportion of fraud during the later months, specifically months 7, 8, and 9.
-- Potential Seasonality: The boxplot for fraud shows a higher median month compared to non-fraud, suggesting fraud activity may increase as the year progresses.
+                **Transaction Amount vs Fraud**
 
-**Day of Week vs. Fraud**
+                - Overlapping distributions between fraud and non-fraud
+                - Similar medians and quartiles
+                - Non-fraud has larger outliers
 
-- Weekend Spike: Fraudulent transactions show a slight peak on Day 4 and Day 5 (Friday/Saturday).
-- Stability: Despite the minor weekend peak, the median and interquartile ranges are almost identical for both groups across the week.
+                **Log Amount vs Fraud**
 
-**Average Monthly Spend**
+                - Normalized distribution for both fraud and non-fraud centered around 7.5 to 8.0
+                - No strong separation and confirming that transactiob amount alone is not a strong differentiator for detecting fraud.
 
-- Consistent Behavior: The spending habits of users who were victims of fraud are nearly identical to those who were not.
-- No Financial Divergence: Both groups show a distribution peak around 5k, indicating that "high spenders" are not necessarily more or less targeted than "low spenders" in this dataset.
-""")
+                **Hour vs. Fraud**
 
-    # Chart 3
-    st.subheader("Categorical Feature Distribution")
+                - Slight Evening Peak: There is a noticeable increase in fraud density during the evening hours (approx. 17:00 to 22:00).
+                - Uniformity: Generally, both classes are distributed across all 24 hours, but fraud appears slightly more "concentrated" in certain blocks than non-fraud.
 
-    cat_cols_eda = [
-        'payment_channel', 
-        'device_type', 
-        'is_weekend',  
-        'is_international'
-    ]
+                **Day vs. Fraud**
 
-    for col in cat_cols_eda:
+                - Random Distribution: Fraud occurs fairly consistently throughout the month.
+                - Minor Fluctuations: There are small spikes around day 5 and day 20, but the overall distributions (boxplots) for fraud and non-fraud are virtually identical.
+
+                **Month vs. Fraud**
+
+                - Late Year Surge: There is a distinct increase in the proportion of fraud during the later months, specifically months 7, 8, and 9.
+                - Potential Seasonality: The boxplot for fraud shows a higher median month compared to non-fraud, suggesting fraud activity may increase as the year progresses.
+
+                **Day of Week vs. Fraud**
+
+                - Weekend Spike: Fraudulent transactions show a slight peak on Day 4 and Day 5 (Friday/Saturday).
+                - Stability: Despite the minor weekend peak, the median and interquartile ranges are almost identical for both groups across the week.
+
+                **Average Monthly Spend**
+
+                - Consistent Behavior: The spending habits of users who were victims of fraud are nearly identical to those who were not.
+                - No Financial Divergence: Both groups show a distribution peak around 5k, indicating that "high spenders" are not necessarily more or less targeted than "low spenders" in this dataset.
+            """)
+    with col3:
+        with st.container(key="eda_distribution_cat"):
+                # Chart 3
+            st.subheader("Categorical Feature Distribution")
+
+            cat_cols_eda = [
+                'payment_channel', 
+                'device_type', 
+                'is_weekend',  
+                'is_international'
+            ]
+
+            for col in cat_cols_eda:
     
-# Calculate fraud rate
-        fraud_rate = (
-            eda_df
-            .groupby(col)['is_fraud']
-            .mean()
-            .reset_index()
-            .sort_values(by='is_fraud')
-        )
+            # Calculate fraud rate
+                fraud_rate = (
+                    eda_df
+                    .groupby(col)['is_fraud']
+                    .mean()
+                    .reset_index()
+                    .sort_values(by='is_fraud')
+                )
     
-        # Plot horizontal bar chart
-        fig = px.bar(
-            fraud_rate,
-            x='is_fraud',
-            y=col,
-            orientation='h',
-            color=col,                 # <-- color by column
-            title=f'Fraud rate by {col}',
-            labels={'is_fraud': 'Fraud rate'}
-        )
-        st.plotly_chart(fig, use_container_width=True)   
+            # Plot horizontal bar chart
+                fig = px.bar(
+                    fraud_rate,
+                    x='is_fraud',
+                    y=col,
+                    orientation='h',
+                    color=col,                 # <-- color by column
+                    title=f'Fraud rate by {col}',
+                    labels={'is_fraud': 'Fraud rate'}
+                )
+                st.plotly_chart(fig, use_container_width=True)   
 
-    st.markdown("""
+            st.markdown("""
 
-**Key Findings:**
+        **Key Findings:**
 
-**Fraud Rate by Payment Channel**
+        **Fraud Rate by Payment Channel**
 
-- Highest risk: Card
-- Followed by: UPI
-- Lowest risk: Wallet
+        - Highest risk: Card
+        - Followed by: UPI
+        - Lowest risk: Wallet
 
-**Fraud Rate by Device Type**
-- Highest Risk: Mobile and desktop devices show nearly identical, elevated fraud rates.
-- Lowest Risk: Tablets have a slightly lower fraud rate compared to the other two device types.
-- Consistency: The device type does not appear to be a drastic differentiator, as all rates remain near the 0.016 mark.
+        **Fraud Rate by Device Type**
+        - Highest Risk: Mobile and desktop devices show nearly identical, elevated fraud rates.
+        - Lowest Risk: Tablets have a slightly lower fraud rate compared to the other two device types.
+        - Consistency: The device type does not appear to be a drastic differentiator, as all rates remain near the 0.016 mark.
 
-**Fraud Rate by Is_Weekend
+        **Fraud Rate by Is_Weekend
 
-- Weekend Spike: Fraud rates are notably higher on the weekend (is_weekend = 1) compared to weekdays.
-- Weekday Baseline: Transactions occurring during the week (is_weekend = 0) have a fraud rate of approximately 0.016, while weekends push toward 0.017.
+        - Weekend Spike: Fraud rates are notably higher on the weekend (is_weekend = 1) compared to weekdays.
+        - Weekday Baseline: Transactions occurring during the week (is_weekend = 0) have a fraud rate of approximately 0.016, while weekends push toward 0.017.
 
-**Fraud Rate by Is_International**
+        **Fraud Rate by Is_International**
 
-- Major Differentiator: This is the most significant factor shown; international transactions (is_international = 1) have a much higher fraud rate than domestic ones.
-- Risk Magnitude: The international fraud rate (approx. 0.034) is more than double the domestic fraud rate (approx. 0.015).
-""")
+        - Major Differentiator: This is the most significant factor shown; international transactions (is_international = 1) have a much higher fraud rate than domestic ones.
+        - Risk Magnitude: The international fraud rate (approx. 0.034) is more than double the domestic fraud rate (approx. 0.015).
+        """)
+    with col4:
+        with st.container(key="eda_time_analysis"):
+            # Chart 4
+            st.subheader("Time Based Analysis")
+            train_df['transaction_time'] = pd.to_datetime(train_df['transaction_time'])
 
-    # Chart 4
-    st.subheader("Time Based Analysis")
-    train_df['transaction_time'] = pd.to_datetime(train_df['transaction_time'])
+        # Create hour and date columns
+            train_df['hour'] = train_df['transaction_time'].dt.hour
+            train_df['date'] = train_df['transaction_time'].dt.date
 
-    # Create hour and date columns
-    train_df['hour'] = train_df['transaction_time'].dt.hour
-    train_df['date'] = train_df['transaction_time'].dt.date
+        # Compute fraud rates
+            hourly_fraud = train_df.groupby('hour')['is_fraud'].mean().reset_index()
+            daily_fraud = train_df.groupby('date')['is_fraud'].mean().reset_index()
 
-    # Compute fraud rates
-    hourly_fraud = train_df.groupby('hour')['is_fraud'].mean().reset_index()
-    daily_fraud = train_df.groupby('date')['is_fraud'].mean().reset_index()
+        # Create subplots (1 row, 2 columns)
+            fig = make_subplots(
+                rows=1,
+                cols=2,
+                subplot_titles=("Fraud Rate by Hour of Day", "Fraud Rate by Date")
+            )
 
-    # Create subplots (1 row, 2 columns)
-    fig = make_subplots(
-        rows=1,
-        cols=2,
-        subplot_titles=("Fraud Rate by Hour of Day", "Fraud Rate by Date")
-    )
+        # --- Hourly Fraud ---
+            fig.add_trace(
+                go.Scatter(
+                    x=hourly_fraud['hour'],
+                    y=hourly_fraud['is_fraud'],
+                    mode='lines',
+                    line=dict(color='royalblue', width=2),
+                    name='Hourly Fraud Rate'
+                ),
+                row=1,
+                col=1
+            )
 
-    # --- Hourly Fraud ---
-    fig.add_trace(
-        go.Scatter(
-            x=hourly_fraud['hour'],
-            y=hourly_fraud['is_fraud'],
-            mode='lines',
-            line=dict(color='royalblue', width=2),
-            name='Hourly Fraud Rate'
-        ),
-        row=1,
-        col=1
-    )
+        # --- Daily Fraud ---
+            fig.add_trace(
+                go.Scatter(
+                    x=daily_fraud['date'],
+                    y=daily_fraud['is_fraud'],
+                    mode='lines',
+                    line=dict(color='crimson', width=2),
+                    name='Daily Fraud Rate'
+                ),
+                row=1,
+                col=2
+            )
 
-    # --- Daily Fraud ---
-    fig.add_trace(
-        go.Scatter(
-            x=daily_fraud['date'],
-            y=daily_fraud['is_fraud'],
-            mode='lines',
-            line=dict(color='crimson', width=2),
-            name='Daily Fraud Rate'
-        ),
-        row=1,
-        col=2
-    )
+            fig.update_layout(
+                showlegend=False,
+                title_text="Fraud Rate Analysis Over Time"
+            )
 
-    fig.update_layout(
-        showlegend=False,
-        title_text="Fraud Rate Analysis Over Time"
-    )
+            fig.update_yaxes(title_text="Fraud Rate", row=1, col=1)
+            fig.update_yaxes(title_text="Fraud Rate", row=1, col=2)
 
-    fig.update_yaxes(title_text="Fraud Rate", row=1, col=1)
-    fig.update_yaxes(title_text="Fraud Rate", row=1, col=2)
+            st.plotly_chart(fig, use_container_width=True)
+            st.markdown("""
 
-    st.plotly_chart(fig, use_container_width=True)
-    st.markdown("""
+        **Key Findings:**
+        **Hourly Fraud Pattern**
 
-**Key Findings:**
-**Hourly Fraud Pattern**
+        - Peak between 6pm-7pm
+        - Early morning spike around 2am
+        - Lowest around 9am
 
-- Peak between 6pm-7pm
-- Early morning spike around 2am
-- Lowest around 9am
+        **Transactional Time Analysis: By Date**
 
-**Transactional Time Analysis: By Date**
-
-- Upward Trend: The fraud rate shows a general increasing trend as the year progresses from January 2023 toward September 2023
-- High-Frequency Volatility: The "sawtooth" pattern indicates that fraud occurs in sharp, inconsistent bursts rather than a steady stream.
-- Significant Surge: A noticeable shift to a higher baseline fraud rate occurs around July 2023, with the highest peaks reaching nearly 0. 3 in late August/early September.
-""")
+        - Upward Trend: The fraud rate shows a general increasing trend as the year progresses from January 2023 toward September 2023
+        - High-Frequency Volatility: The "sawtooth" pattern indicates that fraud occurs in sharp, inconsistent bursts rather than a steady stream.
+        - Significant Surge: A noticeable shift to a higher baseline fraud rate occurs around July 2023, with the highest peaks reaching nearly 0. 3 in late August/early September.
+            """)
 
     
 # =================================================
@@ -587,89 +685,149 @@ elif nav == "Exploratory Data Analysis (EDA)":
 # =================================================
 elif nav == "ML Detection":
 
+    st.markdown("""
+    <style>
+
+    /* MAIN DASHBOARD CONTAINER */
+    .st-key-main_container{
+        padding:30px;
+        border-radius:15px;
+        backdrop-filter: blur(6px);
+    }
+
+    /* SIDEBAR PANEL */
+    .st-key-sidebar{
+        background-color:#062906;
+        padding:25px;
+        border-radius:12px;
+        min-height:450px;
+        color:white;
+    }
+
+    /* MAIN CONTENT PANEL */
+    .st-key-mainpanel{
+        background-color:rgba(0,0,0,0);
+        padding:25px;
+        border-radius:12px;
+        min-height:450px;
+        color:white;
+    }
+
+    /* subtle card for results */
+    .result-card{
+        background:rgba(255,255,255,0.08);
+        padding:20px;
+        border-radius:12px;
+        border:1px solid rgba(255,255,255,0.15);
+        font-size:22px;
+        text-align:center;
+    }
+
+    </style>
+    """, unsafe_allow_html=True)
+
     set_background("https://i.pinimg.com/originals/7d/f1/43/7df143904208d2295c8428caaf86cb3c.gif")
 
     st.title("ML Fraud Detection")
 
-    col1,col2=st.columns(2)
+     with st.container(key="main_container"):
 
-    with col1:
+        sidebar, main_page = st.columns([1,2])
 
-        st.subheader("ℹ️Prediction Model Info")
-
-        st.write("Algorithm:",config["model"]["algorithm"])
-        st.write("AUC Score:",config["model"]["auc_score"])
-
-        url = "https://i.pinimg.com/originals/bb/88/64/bb88641bbc1dc8e9583ee7029c546eff.gif"
-        st.image(url, width=500)
-
-    with col2:
-
-        st.subheader("✨Prediction Tool")
-
-        payment_channel=st.selectbox(
-        "Payment Channel",
-        ["card","upi","bank_transfer","wallet"]
-        )
-
-        device_type=st.selectbox(
-        "Device Type",
-        ["mobile","desktop","tablet"]
-        )
-
-        amount=st.text_input("Transaction Amount")
-        ip_risk=st.text_input("IP Risk Score")
-        merchant_risk=st.text_input("Merchant Risk Score")
-        account_age=st.text_input("Account Age Days")
-        geo_dist=st.text_input("Geo Distance")
-        txn_24h=st.text_input("Txn Count 24h")
-        failed_txn=st.text_input("Failed Txn 24h")
-        txn_1h=st.text_input("Txn Count 1h")
-        avg_spend=st.text_input("Avg Monthly Spend")
-        dev_amount=st.text_input("Amount Deviation")
-
-        if st.button("Predict Fraud"):
-
-            amount = safe_to_float(amount)
-            ip_risk = safe_to_float(ip_risk)
-            merchant_risk = safe_to_float(merchant_risk)
-            geo_dist = safe_to_float(geo_dist)
-            avg_spend = safe_to_float(avg_spend)
-            dev_amount = safe_to_float(dev_amount)
-
-            account_age = safe_to_int(account_age)
-            txn_24h = safe_to_int(txn_24h)
-            failed_txn = safe_to_int(failed_txn)
-            txn_1h = safe_to_int(txn_1h)
-
-            input_df = pd.DataFrame({
-
-                "transaction_amount":[amount],
-                "ip_risk_score":[ip_risk],
-                "merchant_risk_score":[merchant_risk],
-                "account_age_days":[account_age],
-                "geo_distance_from_last_txn":[geo_dist],
-                "txn_count_24h":[txn_24h],
-                "failed_txn_count_24h":[failed_txn],
-                "txn_count_1h":[txn_1h],
-                "avg_monthly_spend":[avg_spend],
-                "payment_channel":[payment_channel],
-                "device_type":[device_type],
-                "amount_deviation_from_user_mean":[dev_amount]
-
-            })
+        # =========================
+        # SIDEBAR
+        # =========================
+        with sidebar:
+            with st.container(key="sidebar"):
             
-            input_df = build_full_feature_set(input_df)
-            input_df = input_df.reindex(columns=training_columns, fill_value=0)
-            
-            pred = pipeline.predict(input_df)
-            prob = pipeline.predict_proba(input_df)[0][1]
-            st.metric("Fraud Probability",f"{prob*100:.2f}%")
+                st.image("https://i.pinimg.com/1200x/68/fd/7b/68fd7b646d8f0b18ab50204dd32c807f.jpg")
+                st.write("Fill details below to predict crop production")
 
-            if prob>0.7:
-                st.error("⚠️ Oh no! It's fraud!")
-            else:
-                st.success("🟢 Phew! Not fraud")
+                payment_channel=st.selectbox(
+                "Payment Channel",
+                ["card","upi","bank_transfer","wallet"]
+                )
+
+                device_type=st.selectbox(
+                "Device Type",
+                ["mobile","desktop","tablet"]
+                )
+
+                amount=st.text_input("Transaction Amount")
+                ip_risk=st.text_input("IP Risk Score")
+                merchant_risk=st.text_input("Merchant Risk Score")
+                account_age=st.text_input("Account Age Days")
+                geo_dist=st.text_input("Geo Distance")
+                txn_24h=st.text_input("Txn Count 24h")
+                failed_txn=st.text_input("Failed Txn 24h")
+                txn_1h=st.text_input("Txn Count 1h")
+                avg_spend=st.text_input("Avg Monthly Spend")
+                dev_amount=st.text_input("Amount Deviation")
+
+                predict_button = st.button("Predict Production")
+
+        # =========================
+        # MAIN PAGE
+        # =========================
+        with main_page:
+            with st.container(key="mainpanel"):
+
+                st.subheader("Prediction Model Info")        
+
+                st.write("Algorithm:",config["model"]["algorithm"])
+                st.write("AUC Score:",config["model"]["auc_score"])
+
+                result_placeholder = st.empty()
+                if predict_button:
+
+                    amount = safe_to_float(amount)
+                    ip_risk = safe_to_float(ip_risk)
+                    merchant_risk = safe_to_float(merchant_risk)
+                    geo_dist = safe_to_float(geo_dist)
+                    avg_spend = safe_to_float(avg_spend)
+                    dev_amount = safe_to_float(dev_amount)
+
+                    account_age = safe_to_int(account_age)
+                    txn_24h = safe_to_int(txn_24h)
+                    failed_txn = safe_to_int(failed_txn)
+                    txn_1h = safe_to_int(txn_1h)
+    
+                    input_df = pd.DataFrame({
+                        "transaction_amount":[amount],
+                        "ip_risk_score":[ip_risk],
+                        "merchant_risk_score":[merchant_risk],
+                        "account_age_days":[account_age],
+                        "geo_distance_from_last_txn":[geo_dist],
+                        "txn_count_24h":[txn_24h],
+                        "failed_txn_count_24h":[failed_txn],
+                        "txn_count_1h":[txn_1h],
+                        "avg_monthly_spend":[avg_spend],
+                        "payment_channel":[payment_channel],
+                        "device_type":[device_type],
+                        "amount_deviation_from_user_mean":[dev_amount]
+
+                    })
+            
+                    input_df = build_full_feature_set(input_df)
+                    input_df = input_df.reindex(columns=training_columns, fill_value=0)
+            
+                    pred = pipeline.predict(input_df)
+                    prob = pipeline.predict_proba(input_df)[0][1]
+
+                    result_placeholder.markdown(
+                            f"""
+                            <div class="result-card">
+                            🌾 Fraud Probability<br><br>
+                            <b>{prob*100:.2f}</b>
+                            </div>
+                            """,
+                            unsafe_allow_html=True
+                        )
+            
+                    if prob>0.7:
+                        st.error("⚠️ Oh no! It's fraud!")
+                    else:
+                        st.success("🟢 Phew! Not fraud")
 
 # =================================================
 # TAB 5 METHODOLOGY

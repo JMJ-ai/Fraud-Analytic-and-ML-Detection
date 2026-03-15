@@ -274,7 +274,7 @@ if nav == "Home":
     <!-- LEFT SIDE : TEXT -->
     <div style="flex:1; min-width:300px; color:white;">
 
-    <h1 style="font-size:90px;color:red;">
+    <h1 style="color:#961006;">
     Fraud Analytics and ML Detection
     </h1>
 
@@ -442,7 +442,7 @@ elif nav == "Exploratory Data Analysis (EDA)":
     # Target Distribution
     # =========================
 
-    with st.container():
+    with st.container(key="eda_distribution"):
 
         st.subheader("Target Data Distribution")
 
@@ -492,7 +492,7 @@ elif nav == "Exploratory Data Analysis (EDA)":
     # Numerical Distribution
     # =========================
 
-    with st.container():
+    with st.container(key="eda_distribution"):
 
         st.subheader("Numerical Features Distribution")
 
@@ -572,7 +572,7 @@ elif nav == "Exploratory Data Analysis (EDA)":
     # Categorical Distribution
     # =========================
 
-    with st.container():
+    with st.container(key="eda_distribution"):
 
         st.subheader("Categorical Feature Distribution")
 
@@ -639,7 +639,7 @@ elif nav == "Exploratory Data Analysis (EDA)":
     # Time Based Analysis
     # =========================
 
-    with st.container():
+    with st.container(key="eda_trend"):
 
         st.subheader("Time Based Analysis")
 
@@ -705,7 +705,7 @@ elif nav == "ML Detection":
 
     /* SIDEBAR PANEL */
     .st-key-sidebar{
-        background-color:#062906;
+        background-color:#961006;
         padding:25px;
         border-radius:12px;
         min-height:450px;

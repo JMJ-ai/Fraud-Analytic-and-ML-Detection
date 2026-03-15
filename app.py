@@ -112,7 +112,7 @@ def set_background(image_url):
         }}
 
         div[role="radiogroup"] label {{
-            background: none !important;
+            background: white !important;
             border: none !important;
             padding: 0 !important;
             cursor: pointer;
@@ -120,7 +120,7 @@ def set_background(image_url):
 
         /* Normal Text Style */
         div[role="radiogroup"] label div {{
-            color: white !important; /* Fixed RGBA syntax */
+            color: black !important; /* Fixed RGBA syntax */
             font-size: 18px !important;
             transition: 0.3s;
         }}
@@ -252,36 +252,42 @@ nav = st.radio(
 # HOME
 # =================================================
 if nav == "Home":
-    set_background("https://i.pinimg.com/1200x/78/1d/4c/781d4c6becbd05f20e26057f6cbaf9bc.jpg")
-    st.markdown(f"""
-    <style>
-
-    /* FULL WIDTH HEADER IMAGE */
-    .home-header {{
-        width:100vw;
-        height:420px;
-        margin-left:calc(-50vw + 50%);
-        background-image:url("data:image/png;base64,{header_base64}");
-        background-size:cover;
-        background-position:center;
-    }}
-
-    /* Pull navbar onto the header image */
-    div[role="radiogroup"] {{
-        margin-top:-360px;
-    }}
-
-    </style>
-    """, unsafe_allow_html=True)
-    
+    set_background("https://i.pinimg.com/1200x/73/12/d4/7312d47a09137b32e094d33257096209.jpg")
     # =====================================
     # SECTION 1 : MAIN TITLE (NO IMAGE)
     # =====================================
     st.markdown("""
-    <div class="home-header"></div>
+    <div style="
+        flex:1;
+        min-width:3009x
+        padding:120px 20px;
+        text-align:center;
+    ">
+
+    <h1 style="font-size:90px;color:red;">
+    Fraud Analytics and ML Detection
+    </h1>
+
+    <h3 style="color:black;">
+    Machine Learning Forecast & Prediction
+    </h3>
+
+    </div>
+
+    <!-- RIGHT SIDE : IMAGE -->
+    <div style="flex:1; min-width:300px; text-align:center;">
+
+    <img src="https://i.pinimg.com/736x/b7/d2/c8/b7d2c894de9f7184f1b42c42d2cc9023.jpg"
+    style="
+        width:670px;
+        border-radius:15px;
+        box-shadow:0px 6px 25px rgba(0,0,0,0.6);
+        ">
+
+    </div>
     """, unsafe_allow_html=True)
 
-    st.markdown("<div style='margin-top:-250px'></div>", unsafe_allow_html=True)
+
     # =====================================
     # SECTION 2 : ABOUT PROJECT
     # IMAGE + 40% DARK OVERLAY

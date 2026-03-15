@@ -318,13 +318,13 @@ if nav == "Home":
         text-align:center;
     ">
 
-    <h2 style="text-align:center;color:white;">
+    <h2 style="text-align:center;color:black;">
     About This Project
     </h2>
 
     <br>
 
-    <p style="color:white;font-size:18px;text-align:center;max-width:900px;margin:auto;">
+    <p style="color:black;font-size:18px;text-align:center;max-width:900px;margin:auto;">
     Financial fraud is a growing threat, costing banks and e-commerce platforms billions of dollars annually.
     Recent studies show ensemble machine learning models, such as CatBoost and XGBoost, can achieve a 
     ROC-AUC of ~0.84 on temporal transaction datasets, highlighting the importance of feature engineering 
@@ -333,14 +333,14 @@ if nav == "Home":
 
     <br>
 
-    <p style="color:white;font-size:18px;text-align:center;max-width:900px;margin:auto;">
+    <p style="color:black;font-size:18px;text-align:center;max-width:900px;margin:auto;">
     The goal is to explores feature selection to reduce redundancy, baseline modeling with LightGBM
     model exploration using Random Forest, AdaBoost, and XGBoost and feature importance analysis to interpret results
     </p>
 
     <br>
 
-    <p style="text-align:center;color:white;">
+    <p style="text-align:center;color:black;">
     Data source:
     <a href="(https://www.kaggle.com/code/rohit8527kmr7518/fraud-detection-eda-modelling-0-84-auc/input" target="_blank" style="color:#FFD700;">Kaggle</a>
 
@@ -385,7 +385,7 @@ if nav == "Home":
 # =================================================
 elif nav == "Dashboard":
 
-    set_background("https://i.pinimg.com/736x/d4/6f/a1/d46fa14d874ee0be170864d08227ccc8.jpg")
+    set_background("https://i.pinimg.com/1200x/73/12/d4/7312d47a09137b32e094d33257096209.jpg")
 
     st.title("Fraud Dashboard")
 
@@ -485,12 +485,12 @@ elif nav == "Exploratory Data Analysis (EDA)":
         st.plotly_chart(fig,use_container_width=True)
 
         st.markdown("""
-**Key Findings**
+        **Key Findings**
 
-- Extreme class imbalance  
-- 98.4% transactions are non-fraud  
-- Only 1.62% are fraud  
-""")
+        - Extreme class imbalance  
+        - 98.4% transactions are non-fraud  
+        - Only 1.62% are fraud  
+        """)
 
     # =========================
     # Container 2
@@ -570,12 +570,12 @@ elif nav == "Exploratory Data Analysis (EDA)":
             st.plotly_chart(fig,use_container_width=True)
 
         st.markdown("""
-**Key Findings**
+        **Key Findings**
 
-- Transaction amount distributions overlap strongly.
-- Fraud activity increases slightly in evening hours.
-- Fraud shows a mild rise during later months of the year.
-""")
+        - Transaction amount distributions overlap strongly.
+        - Fraud activity increases slightly in evening hours.
+        - Fraud shows a mild rise during later months of the year.
+        """)
 
     # =========================
     # Container 3

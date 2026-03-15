@@ -1,7 +1,7 @@
 [theme]
-primaryColor="#DB6E00"
-backgroundColor="#FFFFFF"
-secondaryBackgroundColor="#DB0000"
+primaryColor="#e34449"
+backgroundColor="##c9231a"
+secondaryBackgroundColor="#cc4837"
 textColor="#FFFFFF"
 [server]
 enablesStaticServing = true

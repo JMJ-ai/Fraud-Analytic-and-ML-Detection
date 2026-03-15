@@ -730,7 +730,7 @@ elif nav == "ML Detection":
 
     st.title("ML Fraud Detection")
 
-     with st.container(key="main_container"):
+    with st.container(key="main_container"):
 
         sidebar, main_page = st.columns([1,2])
 

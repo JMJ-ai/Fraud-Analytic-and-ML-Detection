@@ -480,10 +480,15 @@ elif nav == "Exploratory Data Analysis (EDA)":
 
         fig.update_xaxes(title_font=dict(color="black"), tickfont=dict(color="black"), row=1,col=1)
         fig.update_yaxes(title_font=dict(color="black"), tickfont=dict(color="black"), row=1,col=1)
+        fig.update_xaxes(title_font=dict(color="black"), tickfont=dict(color="black"), row=1,col=2)
+        fig.update_yaxes(title_font=dict(color="black"), tickfont=dict(color="black"), row=1,col=2)
+
+        for ann in fig["layout"]["annotations"]:
+            ann["font"] = dict(color="black")
 
 
         fig.update_layout(
-                plot_bgcolor="rgba(0,0,0,0)",
+                plot_bgcolor="white",
                 paper_bgcolor="white"
         )
 
@@ -594,10 +599,13 @@ elif nav == "Exploratory Data Analysis (EDA)":
                 tickfont=dict(color="black"),
                 row=1, col=2
             )
+
+            for ann in fig["layout"]["annotations"]:
+                ann["font"] = dict(color="black"
             
             fig.update_layout(
                 plot_bgcolor="white",
-                paper_bgcolor="rgba(0,0,0,0)"
+                paper_bgcolor="white"
             )
 
             st.plotly_chart(fig,use_container_width=True)
@@ -654,7 +662,7 @@ elif nav == "Exploratory Data Analysis (EDA)":
             )
 
             fig.update_xaxes(
-                title_text=col,
+                title_text="Payment Channel",
                 title_font=dict(color="black"),
                 tickfont=dict(color="black"),
                 row=1, col=1
@@ -668,7 +676,7 @@ elif nav == "Exploratory Data Analysis (EDA)":
             )
 
             fig.update_xaxes(
-                title_text="col",
+                title_text="Device Type",
                 title_font=dict(color="black"),
                 tickfont=dict(color="black"),
                 row=1, col=2
@@ -681,11 +689,46 @@ elif nav == "Exploratory Data Analysis (EDA)":
                 row=1, col=2
             )
 
+            fig.update_xaxes(
+                title_text="Is_weekend",
+                tickvals=[0,1],
+                ticktext=["Not weekend","Weekend"],
+                title_font=dict(color="black"),
+                tickfont=dict(color="black"),
+                row=2, col=1
+            )
+
+            fig.update_yaxes(
+                title_text="Fraud Rate",
+                title_font=dict(color="black"),
+                tickfont=dict(color="black"),
+                row=2, col=1
+            )
+
+            fig.update_xaxes(
+                title_text="Is_international",
+                title_font=dict(color="black"),
+                tickvals=[0,1],
+                ticktext=["Domestic","International"],
+                tickfont=dict(color="black"),
+                row=2, col=2
+            )
+
+            fig.update_yaxes(
+                title_text="Fraud Rate",
+                title_font=dict(color="black"),
+                tickfont=dict(color="black"),
+                row=2, col=2
+            )
+
+             for ann in fig["layout"]["annotations"]:
+                ann["font"] = dict(color="black"
+
         fig.update_layout(
             height=600,
             showlegend=False,
             plot_bgcolor="white",
-            paper_bgcolor="rgba(0,0,0,0)"
+            paper_bgcolor="white"
         )
 
         st.plotly_chart(fig,use_container_width=True)
@@ -778,9 +821,12 @@ elif nav == "Exploratory Data Analysis (EDA)":
             row=1, col=2
         )
 
+         for ann in fig["layout"]["annotations"]:
+                ann["font"] = dict(color="black"
+        
         fig.update_layout(
                 plot_bgcolor="white",
-                paper_bgcolor="rgba(0,0,0,0)"
+                paper_bgcolor="white"
         )
 
         st.plotly_chart(fig,use_container_width=True)
@@ -820,7 +866,7 @@ elif nav == "ML Detection":
 
     /* MAIN CONTENT PANEL */
     .st-key-mainpanel{
-        background-color:rgba(0,0,0,0);
+        background-color:201, 214, 205, 0.8;
         padding:25px;
         border-radius:12px;
         min-height:450px;

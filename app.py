@@ -256,6 +256,50 @@ if nav == "Home":
     # =====================================
     # SECTION 1 : MAIN TITLE (NO IMAGE)
     # =====================================
+    st.markdown("""
+
+    <div style="
+        max-width:1100px;
+        margin:auto;
+        padding:80px 20px;
+    ">
+
+    <div style="
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:40px;
+        flex-wrap:wrap;
+    ">
+
+    <!-- LEFT SIDE -->
+    <div style="flex:1; min-width:300px; color:white;">
+
+    <h1 style="color:#961006;">
+    Fraud Analytics and ML Detection
+    </h1>
+
+    <h3 style="color:black;">
+    Machine Learning Forecast & Prediction
+    </h3>
+
+    </div>
+
+    <!-- RIGHT SIDE IMAGE -->
+    <div style="flex:1; min-width:300px; text-align:center;">
+
+    <img src="https://i.pinimg.com/736x/b7/d2/c8/b7d2c894de9f7184f1b42c42d2cc9023.jpg"
+    style="
+        width:670px;
+        border-radius:15px;
+        box-shadow:0px 6px 25px rgba(0,0,0,0.6);
+        ">
+
+    </div>
+
+    </div>
+
+
     <!-- CENTER BUTTONS -->
     <div style="
         margin-top:60px;
@@ -290,11 +334,21 @@ if nav == "Home":
         Problem Statement
         </button>
     </a>
+
     </div>
 
     </div>
 
     """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <style>
+    html {
+        scroll-behavior: smooth;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
     # =====================================
     # SECTION 2 : ABOUT PROJECT
     # IMAGE + 40% DARK OVERLAY
@@ -343,15 +397,6 @@ if nav == "Home":
 
     </div>
     """, unsafe_allow_html=True)
-
-    st.markdown("""
-    <style>
-    html {
-        scroll-behavior: smooth;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
     # =====================================
     # SECTION 3 : PROBLEM STATEMENT
     # DARK BACKGROUND

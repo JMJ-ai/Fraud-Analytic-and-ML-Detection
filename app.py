@@ -927,7 +927,7 @@ elif nav == "ML Detection":
 
     with st.container(key="main_container"):
 
-        sidebar, main_page = st.columns([1,2])
+        sidebar, main_page = st.columns([1,2], gap=None)
 
         # =========================
         # SIDEBAR

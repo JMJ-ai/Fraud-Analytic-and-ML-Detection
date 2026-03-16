@@ -472,14 +472,22 @@ elif nav == "Exploratory Data Analysis (EDA)":
                 labels=labels,
                 values=values,
                 marker=dict(colors=["steelblue","crimson"]),
+                textposition="outside",
+                rotation=90,
                 textinfo="percent+label"
             ),
             row=1,col=2
         )
 
+        fig.update_xaxes(title_font=dict(color="black"), tickfont=dict(color="black"), row=1,col=1)
+        fig.update_yaxes(title_font=dict(color="black"), tickfont=dict(color="black"), row=1,col=1)
+
+        for ann in fig["layout"]["annotations"]:
+        ann["font"] = dict(color="black")
+
         fig.update_layout(
                 plot_bgcolor="rgba(0,0,0,0)",
-                paper_bgcolor="rgba(0,0,0,0)"
+                paper_bgcolor="white"
         )
 
         st.plotly_chart(fig,use_container_width=True)
@@ -562,8 +570,14 @@ elif nav == "Exploratory Data Analysis (EDA)":
                 row=1,col=2
             )
 
+            fig.update_xaxes(title_font=dict(color="black"), tickfont=dict(color="black"), row=1,col=1)
+            fig.update_yaxes(title_font=dict(color="black"), tickfont=dict(color="black"), row=1,col=1)
+
+            for ann in fig["layout"]["annotations"]:
+            ann["font"] = dict(color="black")
+
             fig.update_layout(
-                plot_bgcolor="rgba(0,0,0,0)",
+                plot_bgcolor="white",
                 paper_bgcolor="rgba(0,0,0,0)"
             )
 
@@ -620,10 +634,16 @@ elif nav == "Exploratory Data Analysis (EDA)":
                 col=c
             )
 
+            fig.update_xaxes(title_font=dict(color="black"), tickfont=dict(color="black"), row=1,col=1)
+            fig.update_yaxes(title_font=dict(color="black"), tickfont=dict(color="black"), row=1,col=1)
+
+            for ann in fig["layout"]["annotations"]:
+            ann["font"] = dict(color="black")
+
         fig.update_layout(
             height=600,
             showlegend=False,
-            plot_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor="white",
             paper_bgcolor="rgba(0,0,0,0)"
         )
 
@@ -689,8 +709,14 @@ elif nav == "Exploratory Data Analysis (EDA)":
             row=1,col=2
         )
 
+        fig.update_xaxes(title_font=dict(color="black"), tickfont=dict(color="black"), row=1,col=1)
+        fig.update_yaxes(title_font=dict(color="black"), tickfont=dict(color="black"), row=1,col=1)
+
+        for ann in fig["layout"]["annotations"]:
+        ann["font"] = dict(color="black")
+
         fig.update_layout(
-                plot_bgcolor="rgba(0,0,0,0)",
+                plot_bgcolor="white",
                 paper_bgcolor="rgba(0,0,0,0)"
         )
 

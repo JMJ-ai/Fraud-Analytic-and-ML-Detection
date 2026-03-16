@@ -721,7 +721,7 @@ elif nav == "Exploratory Data Analysis (EDA)":
                 row=2, col=2
             )
 
-             for ann in fig["layout"]["annotations"]:
+            for ann in fig["layout"]["annotations"]:
                 ann["font"] = dict(color="black")
 
         fig.update_layout(

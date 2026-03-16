@@ -256,48 +256,45 @@ if nav == "Home":
     # =====================================
     # SECTION 1 : MAIN TITLE (NO IMAGE)
     # =====================================
-    st.markdown("""
-
+    <!-- CENTER BUTTONS -->
     <div style="
-        max-width:1100px;
-        margin:auto;
-        padding:80px 20px;
+        margin-top:60px;
+        text-align:center;
     ">
 
-    <div style="
-        display:flex;
-        align-items:center;
-        justify-content:space-between;
-        gap:40px;
-        flex-wrap:wrap;
-    ">
-    <!-- LEFT SIDE : TEXT -->
-    <div style="flex:1; min-width:300px; color:white;">
-
-    <h1 style="color:#961006;">
-    Fraud Analytics and ML Detection
-    </h1>
-
-    <h3 style="color:black;">
-    Machine Learning Forecast & Prediction
-    </h3>
-
-    </div>
-
-    <!-- RIGHT SIDE : IMAGE -->
-    <div style="flex:1; min-width:300px; text-align:center;">
-
-    <img src="https://i.pinimg.com/736x/b7/d2/c8/b7d2c894de9f7184f1b42c42d2cc9023.jpg"
-    style="
-        width:670px;
-        border-radius:15px;
-        box-shadow:0px 6px 25px rgba(0,0,0,0.6);
+    <a href="#about_project">
+        <button style="
+            background-color:#8a0b0b;
+            color:white;
+            padding:15px 30px;
+            border:none;
+            border-radius:8px;
+            font-size:16px;
+            margin-right:20px;
+            cursor:pointer;
         ">
+        About Project
+        </button>
+    </a>
+
+    <a href="#problem_statement">
+        <button style="
+            background-color:#961006;
+            color:white;
+            padding:15px 30px;
+            border:none;
+            border-radius:8px;
+            font-size:16px;
+            cursor:pointer;
+        ">
+        Problem Statement
+        </button>
+    </a>
+    </div>
 
     </div>
+
     """, unsafe_allow_html=True)
-
-
     # =====================================
     # SECTION 2 : ABOUT PROJECT
     # IMAGE + 40% DARK OVERLAY
@@ -347,7 +344,13 @@ if nav == "Home":
     </div>
     """, unsafe_allow_html=True)
 
-
+    st.markdown("""
+    <style>
+    html {
+        scroll-behavior: smooth;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
     # =====================================
     # SECTION 3 : PROBLEM STATEMENT

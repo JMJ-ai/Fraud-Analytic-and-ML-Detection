@@ -354,6 +354,7 @@ if nav == "Home":
     # IMAGE + 40% DARK OVERLAY
     # =====================================
     st.markdown("""
+    <div id="about_project"></div>
     <div style="
         width:100vw;
         margin-left:calc(-50vw + 50%);
@@ -402,6 +403,8 @@ if nav == "Home":
     # DARK BACKGROUND
     # =====================================
     st.markdown("""
+    <div id="problem_statement"></div>
+    
     <div style="
         width:100vw;
         margin-left:calc(-50vw + 50%);

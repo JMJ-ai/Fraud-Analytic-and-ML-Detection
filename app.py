@@ -901,7 +901,7 @@ elif nav == "ML Detection":
 
     /* MAIN CONTENT PANEL */
     .st-key-mainpanel{
-        background-color:#f2ebeb;
+        background-color:#a8a8a8;
         padding:25px;
         border-radius:12px;
         min-height:450px;

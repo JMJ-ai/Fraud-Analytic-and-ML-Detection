@@ -561,7 +561,6 @@ elif nav == "Exploratory Data Analysis (EDA)":
                 go.Box(
                     y=non_fraud,
                     name="Non Fraud",
-                    histnorm='probability density',
                     marker_color="steelblue"
                 ),
                 row=1,col=2
@@ -902,7 +901,7 @@ elif nav == "ML Detection":
 
     /* MAIN CONTENT PANEL */
     .st-key-mainpanel{
-        background-color:201, 214, 205;
+        background-color:#f2ebeb;
         padding:25px;
         border-radius:12px;
         min-height:450px;

@@ -385,7 +385,7 @@ if nav == "Home":
 # =================================================
 elif nav == "Dashboard":
 
-    set_background("https://i.pinimg.com/736x/43/ae/7a/43ae7a905d7834b6cc30d867b261ef90.jpg")
+    set_background("https://i.pinimg.com/1200x/73/12/d4/7312d47a09137b32e094d33257096209.jpg")
 
     st.title("Fraud Dashboard")
 
@@ -398,7 +398,7 @@ elif nav == "Dashboard":
 # =================================================
 elif nav == "Exploratory Data Analysis (EDA)":
 
-    set_background("https://i.pinimg.com/736x/43/ae/7a/43ae7a905d7834b6cc30d867b261ef90.jpg")
+    set_background("https://i.pinimg.com/1200x/73/12/d4/7312d47a09137b32e094d33257096209.jpg")
 
     st.title("Exploratory Data Analysis")
     eda_df = train_df.copy()
@@ -535,7 +535,7 @@ elif nav == "Exploratory Data Analysis (EDA)":
             fig.add_trace(
                 go.Histogram(
                     x=non_fraud,
-                    nbinsx=40,
+                    nbinsx=50,
                     opacity=0.6,
                     marker_color="steelblue",
                     name="Non Fraud"
@@ -546,18 +546,22 @@ elif nav == "Exploratory Data Analysis (EDA)":
             fig.add_trace(
                 go.Histogram(
                     x=fraud,
-                    nbinsx=40,
+                    nbinsx=50,
                     opacity=0.6,
                     marker_color="crimson",
+                    histnorm='probability density',
                     name="Fraud"
                 ),
                 row=1,col=1
             )
 
+            fig.update_layout(barmode='overlay')
+
             fig.add_trace(
                 go.Box(
                     y=non_fraud,
                     name="Non Fraud",
+                    histnorm='probability density',
                     marker_color="steelblue"
                 ),
                 row=1,col=2
@@ -612,10 +616,34 @@ elif nav == "Exploratory Data Analysis (EDA)":
 
         st.markdown("""
         **Key Findings**
+        **Transaction Amount vs. Fraud**
+        - Overlapping Distributions: Both fraudulent and 
+          non-fraudulent transactions are concentrated in lower amounts (0 to 5k).
 
-        - Transaction amount distributions overlap strongly.
-        - Fraud activity increases slightly in evening hours.
-        - Fraud shows a mild rise during later months of the year.
+        **Log Amount vs. Fraud**
+        - A similar normal distribution pattern centered around 7.5 to 8.0.
+        - No Clear Separation. Suggesting transaction amount alone is not a strong differentiator for detecting fraud.
+
+        **Hour vs. Fraud**
+        - There is a noticeable increase in fraud density during the evening hours (approx. 17:00 to 22:00)
+        - Generally, both classes are distributed across all 24 hours, but fraud appears slightly more "concentrated" in certain blocks than non-fraud
+
+        **Day vs. Fraud**
+        - Random Distribution: Fraud occurs fairly consistently throughout the month.
+        - Minor Fluctuations: There are small spikes around day 5 and day 20
+
+        **Month vs. Fraud**
+        - Late Year Surge: There is a distinct increase in the proportion of fraud during the later months, specifically months 7, 8, and 9
+        - Potential Seasonality: The boxplot for fraud shows a higher median month compared to non-fraud, suggesting fraud activity
+          may increase as the year progresses.
+
+        **Day of Week vs. Fraud**
+        - Weekend Spike: Fraudulent transactions show a slight peak on Day 4 and Day 5 (Friday/Saturday)
+
+        **Average Monthly Spend**
+        - The spending habits of users who were victims of fraud are nearly identical to those who were not
+        -   Both groups show a distribution peak around 5k, indicating that "high spenders" are not necessarily more or less targeted than "low spenders" in this dataset.
+        
         """)
 
     # =========================
@@ -741,13 +769,16 @@ elif nav == "Exploratory Data Analysis (EDA)":
 - Lowest risk: Wallet
 
 **Device Type**
-- Mobile and desktop show similar fraud rates.
+- Highest Risk: Mobile and desktop devices show nearly identical, elevated fraud rates.
+- Lowest Risk: Tablets have a slightly lower fraud rate compared to the other two device types.
+- Consistency: The device type does not appear to be a drastic differentiator, as all rates remain near the 0.016 mark.
 
 **Weekend**
 - Slight increase in fraud during weekends.
 
 **International Transactions**
-- Fraud rate is more than double domestic transactions.
+- International transaction have a much higher fraud rate than domestic transaction
+- Risk Magnitude: The international fraud rate (approx. 0.034) is more than double the domestic fraud rate (approx. 0.015).
 """)
 
     # =========================
@@ -834,9 +865,14 @@ elif nav == "Exploratory Data Analysis (EDA)":
         st.markdown("""
 **Key Findings**
 
+**Transactional Time Analysis: By Hour of Day**
 - Fraud peaks around evening hours (6-7 PM)
 - Early morning spike around 2 AM
-- Fraud rate increases slightly toward later months
+
+**Transactional Time Analysis: By Date**
+- The fraud rate shows a general increasing trend as the year progresses from January 2023 toward September 2023
+-  A noticeable shift to a higher baseline fraud rate occurs around July 2023, with the highest peaks reaching nearly 0. 3 in late August/early September.
+
 """)
    
    
@@ -866,7 +902,7 @@ elif nav == "ML Detection":
 
     /* MAIN CONTENT PANEL */
     .st-key-mainpanel{
-        background-color:201, 214, 205, 0.8;
+        background-color:201, 214, 205;
         padding:25px;
         border-radius:12px;
         min-height:450px;
@@ -886,7 +922,7 @@ elif nav == "ML Detection":
     </style>
     """, unsafe_allow_html=True)
 
-    set_background("https://i.pinimg.com/736x/43/ae/7a/43ae7a905d7834b6cc30d867b261ef90.jpg")
+    set_background("https://i.pinimg.com/1200x/73/12/d4/7312d47a09137b32e094d33257096209.jpg")
 
     st.title("ML Fraud Detection")
 
@@ -994,7 +1030,7 @@ elif nav == "ML Detection":
 # =================================================
 elif nav == "Methodology":
 
-    set_background("https://i.pinimg.com/736x/43/ae/7a/43ae7a905d7834b6cc30d867b261ef90.jpg")
+    set_background("https://i.pinimg.com/1200x/73/12/d4/7312d47a09137b32e094d33257096209.jpg")
 
     st.title("Project Methodology")
 

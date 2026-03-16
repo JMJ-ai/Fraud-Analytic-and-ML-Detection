@@ -331,7 +331,7 @@ if nav == "Home":
 
     <!-- CENTER BUTTONS -->
     <div style="
-        margin-top:60px;
+        margin-top:20px;
         text-align:center;
     ">
 

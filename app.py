@@ -547,13 +547,13 @@ elif nav == "Exploratory Data Analysis (EDA)":
         with st.container(key="graph_card_target"):
             st.plotly_chart(fig,use_container_width=True)
 
-        st.markdown("""
-        **Key Findings**
+    st.markdown("""
+**Key Findings**
 
-        - Extreme class imbalance  
-        - 98.4% transactions are non-fraud  
-        - Only 1.62% are fraud  
-        """)
+- Extreme class imbalance  
+- 98.4% transactions are non-fraud  
+- Only 1.62% are fraud   
+""")
     # =========================
     # Container 2
     # Numerical Distribution
@@ -635,37 +635,37 @@ elif nav == "Exploratory Data Analysis (EDA)":
             with st.container(key=f"graph_card_{col}"):
                 st.plotly_chart(fig,use_container_width=True) 
 
-            st.markdown("""
-            **Key Findings**
-            **Transaction Amount vs. Fraud**
-            - Overlapping Distributions: Both fraudulent and 
-              non-fraudulent transactions are concentrated in lower amounts (0 to 5k).
+        st.markdown("""
+    **Key Findings**
+     **Transaction Amount vs. Fraud**
+     - Overlapping Distributions: Both fraudulent and 
+       non-fraudulent transactions are concentrated in lower amounts (0 to 5k).
     
-            **Log Amount vs. Fraud**
-            - A similar normal distribution pattern centered around 7.5 to 8.0.
-            - No Clear Separation. Suggesting transaction amount alone is not a strong differentiator for detecting fraud.
+     **Log Amount vs. Fraud**
+     - A similar normal distribution pattern centered around 7.5 to 8.0.
+      - No Clear Separation. Suggesting transaction amount alone is not a strong differentiator for detecting fraud.
     
-            **Hour vs. Fraud**
-            - There is a noticeable increase in fraud density during the evening hours (approx. 17:00 to 22:00)
-            - Generally, both classes are distributed across all 24 hours, but fraud appears slightly more "concentrated" in certain blocks than non-fraud
+     **Hour vs. Fraud**
+     - There is a noticeable increase in fraud density during the evening hours (approx. 17:00 to 22:00)
+     - Generally, both classes are distributed across all 24 hours, but fraud appears slightly more "concentrated" in certain blocks than non-fraud
     
-            **Day vs. Fraud**
-            - Random Distribution: Fraud occurs fairly consistently throughout the month.
-            - Minor Fluctuations: There are small spikes around day 5 and day 20
+     **Day vs. Fraud**
+     - Random Distribution: Fraud occurs fairly consistently throughout the month.
+    - Minor Fluctuations: There are small spikes around day 5 and day 20
     
-            **Month vs. Fraud**
-            - Late Year Surge: There is a distinct increase in the proportion of fraud during the later months, specifically months 7, 8, and 9
-            - Potential Seasonality: The boxplot for fraud shows a higher median month compared to non-fraud, suggesting fraud activity
-              may increase as the year progresses.
+     **Month vs. Fraud**
+    - Late Year Surge: There is a distinct increase in the proportion of fraud during the later months, specifically months 7, 8, and 9
+    - Potential Seasonality: The boxplot for fraud shows a higher median month compared to non-fraud, suggesting fraud activity
+      may increase as the year progresses.
     
-            **Day of Week vs. Fraud**
-            - Weekend Spike: Fraudulent transactions show a slight peak on Day 4 and Day 5 (Friday/Saturday)
+     **Day of Week vs. Fraud**
+     - Weekend Spike: Fraudulent transactions show a slight peak on Day 4 and Day 5 (Friday/Saturday)
     
-            **Average Monthly Spend**
-            - The spending habits of users who were victims of fraud are nearly identical to those who were not
-            -   Both groups show a distribution peak around 5k, indicating that "high spenders" are not necessarily more or less targeted than "low spenders" in this dataset.
+     **Average Monthly Spend**
+     - The spending habits of users who were victims of fraud are nearly identical to those who were not
+     -   Both groups show a distribution peak around 5k, indicating that "high spenders" are not necessarily more or less targeted than "low spenders" in this dataset.
             
-            """)
+    """)
 
     # =========================
     # Container 3
@@ -735,25 +735,25 @@ elif nav == "Exploratory Data Analysis (EDA)":
         with st.container(key="graph_card_cat"):
             st.plotly_chart(fig,use_container_width=True)
             
-        st.markdown("""
-        **Key Findings**
+    st.markdown("""
+ **Key Findings**
         
-        **Payment Channel**
-        - Highest risk: Card
-        - Lowest risk: Wallet
+**Payment Channel**
+- Highest risk: Card
+ - Lowest risk: Wallet
         
-        **Device Type**
-        - Highest Risk: Mobile and desktop devices show nearly identical, elevated fraud rates.
-        - Lowest Risk: Tablets have a slightly lower fraud rate compared to the other two device types.
-        - Consistency: The device type does not appear to be a drastic differentiator, as all rates remain near the 0.016 mark.
+ **Device Type**
+- Highest Risk: Mobile and desktop devices show nearly identical, elevated fraud rates.
+- Lowest Risk: Tablets have a slightly lower fraud rate compared to the other two device types.
+- Consistency: The device type does not appear to be a drastic differentiator, as all rates remain near the 0.016 mark.
         
-        **Weekend**
-        - Slight increase in fraud during weekends.
+**Weekend**
+ - Slight increase in fraud during weekends.
         
-        **International Transactions**
-        - International transaction have a much higher fraud rate than domestic transaction
-        - Risk Magnitude: The international fraud rate (approx. 0.034) is more than double the domestic fraud rate (approx. 0.015).
-        """)
+ **International Transactions**
+ - International transaction have a much higher fraud rate than domestic transaction
+ - Risk Magnitude: The international fraud rate (approx. 0.034) is more than double the domestic fraud rate (approx. 0.015).
+ """)
 
     # =========================
     # Container 4
@@ -808,18 +808,18 @@ elif nav == "Exploratory Data Analysis (EDA)":
         with st.container(key="graph_card_time"):
             st.plotly_chart(fig,use_container_width=True)
 
-        st.markdown("""
-        **Key Findings**
+    st.markdown("""
+**Key Findings**
         
-        **Transactional Time Analysis: By Hour of Day**
-        - Fraud peaks around evening hours (6-7 PM)
-        - Early morning spike around 2 AM
+**Transactional Time Analysis: By Hour of Day**
+- Fraud peaks around evening hours (6-7 PM)
+- Early morning spike around 2 AM
         
-        **Transactional Time Analysis: By Date**
-        - The fraud rate shows a general increasing trend as the year progresses from January 2023 toward September 2023
-        -  A noticeable shift to a higher baseline fraud rate occurs around July 2023, with the highest peaks reaching nearly 0. 3 in late August/early September.
+**Transactional Time Analysis: By Date**
+- The fraud rate shows a general increasing trend as the year progresses from January 2023 toward September 2023
+-  A noticeable shift to a higher baseline fraud rate occurs around July 2023, with the highest peaks reaching nearly 0. 3 in late August/early September.
         
-        """)
+ """)
 # =================================================
 # TAB 4 ML DETECTION
 # =================================================
@@ -881,7 +881,7 @@ elif nav == "ML Detection":
             with st.container(key="sidebar"):
             
                 st.image("https://i.pinimg.com/1200x/fb/c2/24/fbc224806771400bb171344a8843036e.jpg")
-                st.write("Fill details below to predict crop production")
+                st.write("Fill details below to predict fraud probability")
 
                 payment_channel=st.selectbox(
                 "Payment Channel",

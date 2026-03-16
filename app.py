@@ -297,7 +297,7 @@ if nav == "Home":
         display:flex;
         align-items:center;
         justify-content:space-between;
-        gap:40px;
+        gap:20px;
         flex-wrap:wrap;
     ">
 

@@ -533,7 +533,7 @@ elif nav == "Exploratory Data Analysis (EDA)":
                 labels=labels,
                 values=values,
                 marker=dict(colors=["steelblue","crimson"]),
-                rotation=90
+                rotation=90,
                 textinfo="percent+label"
             ),
             row=1,col=2

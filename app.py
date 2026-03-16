@@ -751,7 +751,7 @@ elif nav == "Exploratory Data Analysis (EDA)":
         )
 
         fig.update_xaxes(
-            title_text="Hour"
+            title_text="Hour",
             title_font=dict(color="black"),
             tickfont=dict(color="black"),
             row=1, col=1

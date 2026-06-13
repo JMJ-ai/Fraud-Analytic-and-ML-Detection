@@ -309,7 +309,7 @@ if nav == "Home":
     </h1>
 
     <h3 style="color:black;">
-    Machine Learning Forecast & Prediction
+    Machine Learning Fraud Prediction
     </h3>
 
     </div>

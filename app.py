@@ -406,17 +406,23 @@ if nav == "Home":
     <br>
 
     <p style="color:black;font-size:18px;text-align:center;max-width:900px;margin:auto;">
-    Financial fraud is a growing threat, costing banks and e-commerce platforms billions of dollars annually.
-    Recent studies show ensemble machine learning models, such as CatBoost and XGBoost, can achieve a 
-    ROC-AUC of ~0.84 on temporal transaction datasets, highlighting the importance of feature engineering 
-    and robust model pipelines.
+    Financial fraud continues to pose a significant challenge to banks and e-commerce platforms, resulting in billions of dollars in losses annually. 
+    Recent studies have demonstrated that ensemble machine learning models, such as XGBoost and CatBoost, can achieve ROC-AUC scores of approximately 
+    0.84 on temporal transaction datasets, emphasizing the importance of effective feature engineering and robust predictive modeling.
     </p>
 
     <br>
 
     <p style="color:black;font-size:18px;text-align:center;max-width:900px;margin:auto;">
-    The goal is to explores feature selection to reduce redundancy, baseline modeling with LightGBM
-    model exploration using Random Forest, AdaBoost, and XGBoost and feature importance analysis to interpret results
+    Feature selection reduced the original feature set from 20 to 10 key features, including IP risk score, average monthly spend, account age, transaction amount, geographical distance, and transaction frequency indicators. Model performance was evaluated using Random Forest, AdaBoost, 
+    and XGBoost, with AdaBoost achieving the best performance (AUC = 0.8322)
+    </p>
+
+    <br>
+
+    <p style="color:black;font-size:18px;text-align:center;max-width:900px;margin:auto;">
+    Despite using only half the number of features compared to a previous study (10 vs. 20 features), the model achieved a comparable AUC score (0.8322 vs. 0.837),
+    demonstrating that effective feature selection can reduce complexity while maintaining strong fraud prediction performance.
     </p>
 
     <br>

@@ -1,21 +1,27 @@
 ![header](header.png)
 
-## Project Overview 
+## Project Overview
 
-**Project Background**
+Financial fraud continues to pose a significant challenge to banks and e-commerce platforms, resulting in billions of dollars in losses annually. Recent studies have demonstrated that ensemble machine learning models, such as XGBoost and CatBoost, can achieve ROC-AUC scores of approximately 0.84 on temporal transaction datasets, emphasizing the importance of effective feature engineering and robust predictive modeling.
 
-Financial fraud is a growing threat, costing banks and e-commerce platforms billions of dollars annually. Recent studies show ensemble machine learning models, such as CatBoost and XGBoost, can achieve a ROC-AUC of ~0.84 on temporal transaction datasets, highlighting the importance of feature engineering and robust model pipelines.
+This project aimed to develop an efficient fraud detection framework by identifying the most relevant predictive features, evaluating the performance of multiple ensemble machine learning models, and determining the most effective model for fraud prediction.
 
-This project explores:
+To reduce feature redundancy and improve model efficiency, feature selection techniques were applied, resulting in the identification of 10 key features that significantly contribute to fraud detection: IP risk score, average monthly spend, account age (days), geographical distance from the previous transaction, transaction amount, transaction amount deviation from user mean, transaction count within 24 hours, failed transaction count within 24 hours, transaction count within 1 hour, and transaction velocity indicators.
 
-- Feature selection to reduce redundancy
+The predictive performance of several ensemble learning algorithms was evaluated, including Random Forest, AdaBoost, and XGBoost, with LightGBM serving as the baseline model for comparison. Model performance was assessed using the Area Under the Receiver Operating Characteristic Curve (AUC-ROC), a widely used metric for fraud detection tasks.
 
-- Baseline modeling with LightGBM
+The results indicate that AdaBoost achieved the highest predictive performance with an AUC score of 0.8322, making it the best-performing model among those evaluated. Although the achieved AUC score was slightly lower than that reported in a previous study using the same dataset (0.8322 vs. 0.837), this project successfully reduced the number of input features from 20 to 10 while maintaining comparable predictive accuracy.
 
-- Model exploration using Random Forest, AdaBoost, and XGBoost
+Compared with previous research, this study demonstrates that effective feature selection can substantially reduce model complexity without significantly compromising performance. Unlike the previous study, which utilized XGBoost and CatBoost without feature selection, this project employed a feature selection approach and evaluated AdaBoost and XGBoost, ultimately identifying AdaBoost as the most effective fraud prediction model. These findings highlight the potential of streamlined feature engineering and ensemble learning techniques for developing efficient and scalable fraud detection systems.
 
-- Feature importance analysis to interpret results
+This project aims:
 
+- To identify relevant features to reduce redundancy
+
+- To evaluate performance of machine learning models in predicting fraud by using LightGBM as baseline model
+
+- To determine the best machine learning model in predicting fraud
+  
 **Tools & Tech**
 - PostgreSQL (Data Store)
 
@@ -49,6 +55,19 @@ Detecting fraudulent transactions is challenging due to class imbalance, tempora
 
 - Improve customer trust and retention
 
-- Enable banks and e-commerce platforms to monitor real-time transactions
-
 - Serve as a deployable ML pipeline integrated with dashboards for operational monitoring
+
+**Key Results**
+
+- 10 relevant features identified from the original feature set, reducing redundancy and model complexity.
+  
+- Models evaluated: LightGBM (baseline), Random Forest, AdaBoost, and XGBoost.
+  
+- Best-performing model: AdaBoost.
+  
+- Highest AUC score achieved: 0.8322.
+  
+- Reduced feature count by 50% (from 20 to 10 features) while maintaining performance comparable to previous studies.
+  
+- Demonstrated that feature selection can improve model efficiency without significant loss in predictive capability.
+

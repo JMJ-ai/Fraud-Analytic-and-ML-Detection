@@ -273,7 +273,7 @@ def embed_tableau(path, height=650):
 # -------------------------------------------------
 nav = st.radio(
     "",
-    ["Home","Dashboard","Exploratory Data Analysis (EDA)","ML Detection", "Methodology"],
+    ["Home","Analytics Dashboard","Exploratory Data Analysis (EDA)","Fraud Detection", "Methodology"],
     horizontal=True,
     label_visibility="collapsed"
 )
@@ -469,7 +469,7 @@ if nav == "Home":
 # =================================================
 # TAB 2 DASHBOARD
 # =================================================
-elif nav == "Dashboard":
+elif nav == "Analytics Dashboard":
 
     set_background("https://i.pinimg.com/1200x/73/12/d4/7312d47a09137b32e094d33257096209.jpg")
 
@@ -829,7 +829,7 @@ elif nav == "Exploratory Data Analysis (EDA)":
 # =================================================
 # TAB 4 ML DETECTION
 # =================================================
-elif nav == "ML Detection":
+elif nav == "Fraud Detection":
 
     st.markdown("""
     <style>
